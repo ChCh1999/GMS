@@ -7,23 +7,24 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class ChiefJudge {
+    final int PORT=10086;
+    final String ServerIP="127.0.0.1";
     public static void main(String[] args) {
         ChiefJudge m=new ChiefJudge();
-        m.startpro("体",0,true);
+        m.startpro("体操",0,true);
     }
 
     public boolean startpro(String pro,int group,boolean MaleOrFemale){
         try {
             System.out.println("启动");
-            int port = 10086;
-            Socket clientcp=new Socket("127.0.0.1",port);
+            int port = PORT;
+            Socket clientcp=new Socket(ServerIP,port);
             BufferedReader br=new BufferedReader(new InputStreamReader(clientcp.getInputStream()));
             BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(clientcp.getOutputStream(),"UTF-8"));
             TStartPro newpro=new TStartPro(clientcp,pro,group,MaleOrFemale);
             Thread request=new Thread(newpro);
             request.start();
             request.join();
-
             String feedback=br.readLine();
             bw.write("Finished");
             //br.close();

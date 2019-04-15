@@ -5,10 +5,16 @@ import org.javatuples.Pair;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+class ServerData{
+    final static int PORT1=10086;//总裁判连接监听端口
+    final static int PORT2=10087;//登录监听端口
+    final static int PORT3=10088;//连接裁判用端口
+}
 public class ProServer {
-    final int PORT1=10086;
+
     ArrayList<Thread> proline=new ArrayList<>();
     public static void main(String[] args) {
         ProServer test=new ProServer();
@@ -18,7 +24,9 @@ public class ProServer {
     public void start(){
         // 为了简单起见，所有的异常信息都往外抛
         try {
-            int port = 10086;
+            TLoginServer loginServer=new TLoginServer();
+            new Thread(loginServer).start();
+            int port = ServerData.PORT1;
             ServerSocket server = new ServerSocket(port);
             System.out.println("等待与客户端建立连接...");
             while (true) {
@@ -62,8 +70,8 @@ class TProMaster implements Runnable {
         BufferedWriter MessageToClient = new BufferedWriter(
                 new OutputStreamWriter(socket.getOutputStream()));
         String proName;
-        proName = br.readLine();
-        int group=Integer.parseInt(br.readLine());//
+        proName = br.readLine();//项目名
+        int group=Integer.parseInt(br.readLine());//组别
         boolean MOrF=Boolean.parseBoolean(br.readLine());//男生组String='true'
         System.out.println("Form Client：" + proName + "开始");
 //                创建项目信息处理线程是否进行
@@ -76,12 +84,10 @@ class TProMaster implements Runnable {
             System.out.println("Start");
             MessageToClient.flush();
             prohandle.join();
-            //MessageToClient.flush();
             MessageToClient.write("End"+'\n');
             MessageToClient.flush();
             System.out.println("End");
             System.out.println(br.readLine());
-            //MessageToClient.flush();
         }else {
             MessageToClient.write("Wrong");
         }
@@ -99,6 +105,8 @@ class TProHandle implements Runnable {
     private int group;
     private boolean MOrF;
     public Socket Chief;
+    private Socket Group;
+    private ArrayList<Socket> Judges;
     String IPOfGroup;
 
     ArrayList<String> IPOfJudges=new ArrayList<String>();
@@ -112,34 +120,54 @@ class TProHandle implements Runnable {
 
     @Override
     public void run(){
-        try {
-            Thread.sleep(6000);
-        }catch (Exception e){
-            e.toString();
-        }
-            //handlerSocket();
+//        try {
+//            Thread.sleep(6000);
+//        }catch (Exception e){
+//            e.toString();
+//        }//调试用
+            handlerSocket();
     }
 
     private void handlerSocket()  {
-        String[] Aths=new String[10];
-//        TODO:while ()获取选手名单不为空时{SendMessageOOfAthletes(Aths);}
+        ArrayList<Pair<String,String>>Aths=new ArrayList<>();
+//        TODO:while ()获取选手名单不为空时 最多循环10次 Aths.add(new Pair("001","张三"));
+
+        //        TODO:init读取各个裁判的ip
+        try{
+            IPOfGroup="127.0.0.1";
+            IPOfJudges.add("127.0.0.1");
+            Group = new Socket(IPOfGroup, ServerData.PORT3);
+            for (String ip:IPOfJudges) {
+                Socket Stemp=new Socket(ip,ServerData.PORT3);
+                Judges.add(Stemp);
+            }
+        }catch (UnknownHostException uhe){
+
+        }catch (IOException ioe){
+
+        }
+
         SendMessageOfAthletes(Aths);
+
+        //TODO:结束进程
     }
-    private void SendMessageOfAthletes(String[] Aths){
-//        TODO:init读取各个裁判的ip
-        IPOfGroup="127.0.0.1";
-        IPOfJudges.add("127.0.0.1");
+    private void SendMessageOfAthletes(ArrayList<Pair<String,String>> Aths){
+
+
         Thread GroupMessage;
         //记录run类与线程的数组
         ArrayList<TSendAthletesMessage> ListOfJudges=new ArrayList<>();
         ArrayList<Thread> ListOfThread=new ArrayList<>();
         ArrayList<TSendAthletesMessage> ListOfMarkTable=new ArrayList<>();
         try {
-            Socket chief = new Socket(IPOfGroup, 2019);
-            GroupMessage=new Thread(new TSendAthletesMessage(chief,Aths));
+
+            BufferedReader br=new BufferedReader(new InputStreamReader(Group.getInputStream()));
+            BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(Group.getOutputStream()));
+
+            GroupMessage=new Thread(new TSendAthletesMessage(Group,Aths));
             GroupMessage.start();
-            for (String ip:IPOfJudges) {
-                Socket Stemp=new Socket(ip,2019);
+
+            for (Socket Stemp:Judges) {
                 if(Stemp.isConnected()){
                     TSendAthletesMessage TSMtemp=new TSendAthletesMessage(Stemp,Aths);
                     Thread Ttemp=new Thread(TSMtemp);
@@ -148,17 +176,18 @@ class TProHandle implements Runnable {
                     Ttemp.start();
                 }
             }
+
             GroupMessage.join();
             //等待裁判完成打分
-            for (Thread t:ListOfThread
-                 ) {
+            for (Thread t:ListOfThread) {
                 t.join();
             }
+
+            bw.write("Send Start\n");
             for(TSendAthletesMessage mark:ListOfJudges){
-                SendMarkTable(chief,mark);
+                SendMarkTable(Group,mark);
             }
-            BufferedReader br=new BufferedReader(new InputStreamReader(chief.getInputStream()));
-            BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(chief.getOutputStream()));
+
             bw.write("FinishSendMarks");
             String feedback=br.readLine();
 //            br.close();
@@ -190,12 +219,12 @@ class TProHandle implements Runnable {
         bw.write("SendMarkTable");
         bw.write(message.NameOfJudge);
         while(!br.readLine().equals("ready"));//等待直到ready
-        for (Pair<String,Float> mark:message.MarkTable
+        for (Pair<String,Float> mark:message.MarkTable     //Pair<AthNum,Mark>
                 ) {
-            bw.write(mark.getValue0()+'\n');
+            bw.write(mark.getValue0().toString()+'\n');
             bw.write(mark.getValue1().toString()+'\n');
         }
-        bw.write("done");
+        bw.write("Done");
 //        bw.close();
 //        br.close();
     }
@@ -205,9 +234,9 @@ class TProHandle implements Runnable {
 class TSendAthletesMessage implements Runnable{
     Socket target;
     String NameOfJudge;
-    String[]Message;
+    ArrayList<Pair<String,String>> Message;
     ArrayList<Pair>MarkTable=new ArrayList<>();
-    public TSendAthletesMessage(Socket s,String[] a){
+    public TSendAthletesMessage(Socket s,ArrayList<Pair<String,String>> a){
         target=s;
         Message=a;
     }
@@ -220,27 +249,40 @@ class TSendAthletesMessage implements Runnable{
     }
 
 //    发送运动员名单
-    public void SendMessage(Socket s,String[] Aths)throws Exception{
+    public void SendMessage(Socket s,ArrayList<Pair<String,String>> Aths)throws Exception{
         BufferedReader br=new BufferedReader(new InputStreamReader(s.getInputStream()));
         BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-        bw.write("sendMessageOfAthlete\n");
-        NameOfJudge=br.readLine();
-        if(br.readLine().equals("ready")){
-            for (String Ath:Aths) {
-                bw.write(Ath+'\n');
-            }
-            bw.write("done");
+        int size=Aths.size();
+        if(size==0){
+            bw.write("Over");
         }
+        bw.write(Aths.size()+'\n');
+        NameOfJudge=br.readLine();
+        while(!br.readLine().equals("ready"));//阻塞直到裁判准备好
+        for (Pair<String,String> Ath:Aths) {
+            bw.write(Ath.getValue0()+'\n');
+            bw.write(Ath.getValue1()+'\n');
+        }
+        bw.write("Finished");
+//        if(br.readLine().equals("ready")){
+//            for (Pair<String,String> Ath:Aths) {
+//                bw.write(Ath.getValue0()+'\n');
+//                bw.write(Ath.getValue1()+'\n');
+//            }
+//            bw.write("Finished");
+//        }
         if(br.readLine().equals("GroupJudge")){
             return;//目标是小组裁判时结束
         }else{
             //TODO:获取分数
-            br.readLine();
-            String Name;
+            br.readLine();//等待客户端反馈命令
+            String command;
+            String AthNum;
             float Marks;
-            while((Name=br.readLine())!="Finished"){
+            while((command=br.readLine())!="Finished"){
+                AthNum=command;
                 Marks=Float.parseFloat(br.readLine());
-                MarkTable.add(new Pair(Name,Marks));
+                MarkTable.add(new Pair(AthNum,Marks));
             }
             //读取名字+分数直到null;
         }
@@ -250,13 +292,52 @@ class TSendAthletesMessage implements Runnable{
     }
 }
 
+//处理登陆连接的线程
 class TLoginServer implements Runnable{
     @Override
     public void run() {
+        try {
+            int port = ServerData.PORT2;
+            ServerSocket server = new ServerSocket(port);
+            System.out.println("等待登录请求...");
+            while (true) {
+                // server尝试接收其他Socket的连接请求，server的accept方法是阻塞式的
+                Socket socket = server.accept();
+                // 每接收到一个Socket就建立一个新的线程来处理它
+                Thread login=new Thread(new TProMaster(socket));
+                login.start();
+            }
+//            server.close();
+        } catch (Exception e) {
 
+        }
     }
 }
+class TLoginHandle implements Runnable{
+    Socket User;
+    TLoginHandle(Socket user){
+        this.User=user;
+    }
 
+    @Override
+    public void run() {
+        try {
+            BufferedReader br=new BufferedReader(new InputStreamReader(User.getInputStream()));
+            BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
+            String ID=br.readLine();
+            if(checkIDOfJudge(ID))
+                bw.write(Boolean.TRUE.toString());
+            else
+                bw.write(Boolean.FALSE.toString());
+        }catch (IOException ioe){
+            //TODO:exception handle
+        }
+    }
+    public boolean checkIDOfJudge(String id){
+        //TODO:验证身份，通过则返回true 并调整裁判的IP以及状态
+        return true;
+    }
+}
 
 
 
