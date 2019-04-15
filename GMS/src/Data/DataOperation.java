@@ -7,32 +7,32 @@ public class DataOperation {
     private Connection con=null;
     private Statement state=null;
     public ResultSet rst=null;
-//ÕâÀï³õÊ¼»¯µÄ±í»¹ÊÇÊÔÑéÊ±ºòµÄ±í
+//è¿™é‡Œåˆå§‹åŒ–çš„è¡¨è¿˜æ˜¯è¯•éªŒæ—¶å€™çš„è¡¨
     public DataOperation(){
         try{
-            //¼ÓÔØÇı¶¯
+            //åŠ è½½é©±åŠ¨
             Class.forName("com.mysql.cj.jdbc.Driver");
-            //getConnecting£¨£©·½·¨£¬ÓÃÀ´Á¬½ÓmysqlµÄÊı¾İ¿â
+            //getConnectingï¼ˆï¼‰æ–¹æ³•ï¼Œç”¨æ¥è¿æ¥mysqlçš„æ•°æ®åº“
             con= DriverManager.getConnection("jdbc:mysql://localhost:3306/mt?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false  ","root","123456");
             if(!con.isClosed()){
                 System.out.println("Succeeded connecting to the Database");
             }
-            //´´½¨statement ¶ÔÏó £¬ÓÃÀ´Ö´ĞĞsql Óï¾ä
+            //åˆ›å»ºstatement å¯¹è±¡ ï¼Œç”¨æ¥æ‰§è¡Œsql è¯­å¥
             state=con.createStatement();
         }catch (ClassNotFoundException e){
-            //Êı¾İ¿âÇı¶¯ÀàÒì³£´¦Àí
+            //æ•°æ®åº“é©±åŠ¨ç±»å¼‚å¸¸å¤„ç†
             System.out.println("can't find the Driver!");
             e.printStackTrace();
         }catch (SQLException e){
-            //Êı¾İ¿âÁ¬½ÓÊ§°ÜÒì³£´¦Àí
+            //æ•°æ®åº“è¿æ¥å¤±è´¥å¼‚å¸¸å¤„ç†
             e.printStackTrace();
         }catch (Exception e){
             e.printStackTrace(); //handle exception
         }
     }
 
-//Ôö¼Ó²Ù¶àÎªÖØÔØº¯Êı
-    //Ôö¼ÓÒ»¸ö´ú±í¶Ó ³õÊ¼»¯  È«
+//å¢åŠ æ“å¤šä¸ºé‡è½½å‡½æ•°
+    //å¢åŠ ä¸€ä¸ªä»£è¡¨é˜Ÿ åˆå§‹åŒ–  å…¨
     public boolean InsertData(String TName,String TID,String TPassword,String TDoc){
         String sql="insert into Team(TName,TID,TPassword,TDoc) values " +
                 "('"+TName+"','"+TID+"','"+TPassword+"','"+TDoc+"')";
@@ -40,12 +40,12 @@ public class DataOperation {
             state.executeUpdate(sql);
             return true;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âÔö¼Ó´ú±í¶Ó²Ù×÷³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“å¢åŠ ä»£è¡¨é˜Ÿæ“ä½œå‡ºç°é”™è¯¯");
             e.printStackTrace();
             return false;
         }
     }
-    //Ôö¼ÓÔË¶¯Ô±  ³õÊ¼»¯  È«
+    //å¢åŠ è¿åŠ¨å‘˜  åˆå§‹åŒ–  å…¨
     public boolean InsertData(String AName,String ID,int Age,int GroupID,int Grade,String AID,String TID){
         String sql="insert into athlete(AName,ID,Age,GroupID,Grade,AID,TID) values "+
                 "('"+AName+"','"+ID+"',"+Age+",'"+GroupID+"',"+Grade+",'"+AID+"','"+TID+"')";
@@ -53,12 +53,12 @@ public class DataOperation {
             state.executeUpdate(sql);
             return true;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âÔö¼ÓÔË¶¯Ô±²Ù×÷³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“å¢åŠ è¿åŠ¨å‘˜æ“ä½œå‡ºç°é”™è¯¯");
             e.printStackTrace();
             return false;
         }
     }
-    //Ôö¼Ó¹¤×÷ÈËÔ± ³õÊ¼»¯£¨Ã»ÓĞIP PID£©
+    //å¢åŠ å·¥ä½œäººå‘˜ åˆå§‹åŒ–ï¼ˆæ²¡æœ‰IP PIDï¼‰
     public boolean InsertData(String SID,String SName,String ID,String Tel,int SType){
         String sql="insert into stuff(SID,SName,ID,Tel,SType,IP,PID) values " +
                 "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,null)";
@@ -66,12 +66,12 @@ public class DataOperation {
             state.executeUpdate(sql);
             return true;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âÔö¼Ó¹¤×÷ÈËÔ±²Ù×÷³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“å¢åŠ å·¥ä½œäººå‘˜æ“ä½œå‡ºç°é”™è¯¯");
             e.printStackTrace();
             return false;
         }
     }
-    //Ôö¼ÓÏîÄ¿ ³õÊ¼»¯£¨Ã»ÓĞÈËÊı£©
+    //å¢åŠ é¡¹ç›® åˆå§‹åŒ–ï¼ˆæ²¡æœ‰äººæ•°ï¼‰
     public boolean InsertData(String PID,String PName){
         String sql="insert into project(PID,PName) values " +
                 "('"+PID+"','"+PName+"',0,0,0,0)";
@@ -79,12 +79,12 @@ public class DataOperation {
             state.executeUpdate(sql);
             return true;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âÔö¼ÓÏîÄ¿²Ù×÷³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“å¢åŠ é¡¹ç›®æ“ä½œå‡ºç°é”™è¯¯");
             e.printStackTrace();
             return false;
         }
     }
-    //Ôö¼Ómatch£¬³õÊ¼»¯Judge 0
+    //å¢åŠ matchï¼Œåˆå§‹åŒ–Judge 0
     public boolean InsertData(String PName,int GroupID,int Sex){
         String sql="insert into match(PName,GroupID,Sex,Judge) values " +
                 "('"+PName+"',"+GroupID+","+Sex+",0)";
@@ -92,12 +92,12 @@ public class DataOperation {
             state.executeUpdate(sql);
             return true;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âÔö¼Ómatch²Ù×÷³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“å¢åŠ matchæ“ä½œå‡ºç°é”™è¯¯");
             e.printStackTrace();
             return false;
         }
     }
-    //Ôö¼Ó³É¼¨ ³õÊ¼»¯£¨Ã»ÓĞÔ¤Èü³É¼¨ºÍ¾öÈü³É¼¨£©
+    //å¢åŠ æˆç»© åˆå§‹åŒ–ï¼ˆæ²¡æœ‰é¢„èµ›æˆç»©å’Œå†³èµ›æˆç»©ï¼‰
     public boolean InsertData(String PID,String AID,int GroupID){
         String sql="insert into gradegroup(PID,AID,GroupID,CScore,JScore) values " +
                 "('"+PID+"','"+AID+"','"+GroupID+"',0,0)";
@@ -105,64 +105,64 @@ public class DataOperation {
             state.executeUpdate(sql);
             return true;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âÔö¼Ó²Ù×÷³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“å¢åŠ æ“ä½œå‡ºç°é”™è¯¯");
             e.printStackTrace();
             return false;
         }
     }
 
-//É¾³ı²Ù×÷£¨ÓÃ¸÷¸öIDÀ´½øĞĞÉ¾³ı£©
-    //AIDÉ¾³ıÔË¶¯Ô±
+//åˆ é™¤æ“ä½œï¼ˆç”¨å„ä¸ªIDæ¥è¿›è¡Œåˆ é™¤ï¼‰
+    //AIDåˆ é™¤è¿åŠ¨å‘˜
     public boolean DeleteAthlete(String AID){
         String formName="athlete";
         String condition="AID=\'"+AID+"\'";
         boolean b=DeleteData(formName,condition);
         return b;
     }
-    //ÓÃPID,AIDÉ¾³ı³É¼¨
+    //ç”¨PID,AIDåˆ é™¤æˆç»©
     public boolean DeleteGradegroup(String PID,String AID){
         String formName="gradegroup";
         String condition="PID=\'"+PID+"\' AND AID=\'"+AID+"\'";
         boolean b=DeleteData(formName,condition);
         return b;
     }
-    //ÓÃPIDÉ¾³ıÒ»¸öÏîÄ¿±ÈÈü
+    //ç”¨PIDåˆ é™¤ä¸€ä¸ªé¡¹ç›®æ¯”èµ›
     public boolean DeleteProject(String PID){
         String formName="project";
         String condition="PID=\'"+PID+"\'";
         boolean b=DeleteData(formName,condition);
         return b;
     }
-    //ÓÃSIDÉ¾³ıÒ»¸ö¹¤×÷ÈËÔ±
+    //ç”¨SIDåˆ é™¤ä¸€ä¸ªå·¥ä½œäººå‘˜
     public boolean DeleteStuff(String SID){
         String formName="stuff";
         String condition="SID=\'"+SID+"\'";
         boolean b=DeleteData(formName,condition);
         return b;
     }
-    //ÓÃTIDÉ¾³ıÒ»¸ö¶ÓÎé
+    //ç”¨TIDåˆ é™¤ä¸€ä¸ªé˜Ÿä¼
     public boolean DeleteTeam(String TID){
         String formName="team";
         String condition="TID=\'"+TID+"\'";
         boolean b=DeleteData(formName,condition);
         return b;
     }
-    //É¾³ı±íÖĞµÄÊı¾İ ´«ÈëÊı¾İ±íÃû  É¾³ıµÄÌõ¼ş(»ù´¡µ÷ÓÃº¯Êı)
+    //åˆ é™¤è¡¨ä¸­çš„æ•°æ® ä¼ å…¥æ•°æ®è¡¨å  åˆ é™¤çš„æ¡ä»¶(åŸºç¡€è°ƒç”¨å‡½æ•°)
     public boolean DeleteData(String formName,String condition){
         String sql="delete from "+formName+" where "+condition;
         try{
             state.executeUpdate(sql);
             return true;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âÉ¾³ı³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“åˆ é™¤å‡ºç°é”™è¯¯");
             e.printStackTrace();
             return false;
         }
     }
 
 
-//ĞŞ¸Ä²Ù×÷(ÓÃ¸÷¸öIDÀ´ĞŞ¸ÄÏëÒªĞŞ¸ÄµÄÖµ)
-    //ÓÃSID×÷ÎªÌõ¼ş£¬³õÊ¼»¯PIDµÄÖµ
+//ä¿®æ”¹æ“ä½œ(ç”¨å„ä¸ªIDæ¥ä¿®æ”¹æƒ³è¦ä¿®æ”¹çš„å€¼)
+    //ç”¨SIDä½œä¸ºæ¡ä»¶ï¼Œåˆå§‹åŒ–PIDçš„å€¼
     public boolean ModifyPID(String SID,String PID){
         String formName="stuff";
         String condition="SID=\'"+SID+"\'" ;
@@ -170,7 +170,7 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //ÓÃSID×÷ÎªÌõ¼ş£¬ĞŞ¸Ä²ÃÅĞIP
+    //ç”¨SIDä½œä¸ºæ¡ä»¶ï¼Œä¿®æ”¹è£åˆ¤IP
     public boolean ModifyIP(String SID,String IP){
         String formName="stuff";
         String condition="SID=\'"+SID+"\'" ;
@@ -178,7 +178,7 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //ÓÃPID×÷ÎªÌõ¼ş£¬ĞŞ¸ÄCount1µÄÈËÊı
+    //ç”¨PIDä½œä¸ºæ¡ä»¶ï¼Œä¿®æ”¹Count1çš„äººæ•°
     public boolean ModifyCount1(String PID,int C){
         String formName="project";
         String condition="PID=\'"+PID+"\'" ;
@@ -188,7 +188,7 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //ÓÃPID×÷ÎªÌõ¼ş£¬ĞŞ¸ÄCount2µÄÈËÊı
+    //ç”¨PIDä½œä¸ºæ¡ä»¶ï¼Œä¿®æ”¹Count2çš„äººæ•°
     public boolean ModifyCount2(String PID,int C){
         String formName="project";
         String condition="PID=\'"+PID+"\'" ;
@@ -198,7 +198,7 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //ÓÃPID×÷ÎªÌõ¼ş£¬ĞŞ¸ÄCount3µÄÈËÊı
+    //ç”¨PIDä½œä¸ºæ¡ä»¶ï¼Œä¿®æ”¹Count3çš„äººæ•°
     public boolean ModifyCount3(String PID,int C){
         String formName="project";
         String condition="PID=\'"+PID+"\'" ;
@@ -208,7 +208,7 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //ÓÃPID×÷ÎªÌõ¼ş£¬ĞŞ¸ÄPerGroupCountµÄÈËÊı
+    //ç”¨PIDä½œä¸ºæ¡ä»¶ï¼Œä¿®æ”¹PerGroupCountçš„äººæ•°
     public boolean ModifyPerGroupCount(String PID,int C){
         String formName="project";
         String condition="PID=\'"+PID+"\'" ;
@@ -218,7 +218,7 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //ÓÃTID×÷ÎªÌõ¼ş£¬ĞŞ¸ÄTeamµÄÃÜÂë
+    //ç”¨TIDä½œä¸ºæ¡ä»¶ï¼Œä¿®æ”¹Teamçš„å¯†ç 
     public boolean ModifyTPassword(String TID,String TPassword){
         String formName="eam";
         String condition="TID=\'"+TID+"\'" ;
@@ -226,7 +226,7 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //PID£¬AIDĞŞ¸Ä³õÈü³É¼¨
+    //PIDï¼ŒAIDä¿®æ”¹åˆèµ›æˆç»©
     public boolean ModifyCScore(String PID,String AID,float C){
         String formName="gradegroup";
         String condition="PID=\'"+PID+"\' AND AID=\'"+AID+"\'" ;
@@ -235,7 +235,7 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //PID,AIDĞŞ¸Ä¾öÈü³É¼¨
+    //PID,AIDä¿®æ”¹å†³èµ›æˆç»©
     public boolean ModifyJScore(String PID,String AID,float C){
         String formName="gradegroup";
         String condition="PID=\'"+PID+"\' AND AID=\'"+AID+"\'" ;
@@ -244,99 +244,100 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
-    //ĞŞ¸ÄÊı¾İ¿â£¬´«Èë Êı¾İ±íÃû×Ö  Ô¼ÊøÌõ¼ş  ÏëÒªĞŞ¸ÄµÄÖµ(»ù´¡ĞŞ¸Ä²Ù×÷)
+    //ä¿®æ”¹æ•°æ®åº“ï¼Œä¼ å…¥ æ•°æ®è¡¨åå­—  çº¦æŸæ¡ä»¶  æƒ³è¦ä¿®æ”¹çš„å€¼(åŸºç¡€ä¿®æ”¹æ“ä½œ)
     public boolean ModifyData(String formName,String condition,String modified){
         String sql="update "+formName+" set "+modified+" where "+condition;
         try{
             state.executeUpdate(sql);
             return true;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âĞŞ¸Ä³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“ä¿®æ”¹å‡ºç°é”™è¯¯");
             e.printStackTrace();
             return false;
         }
     }
 
 
-//²éÑ¯
-    //ÓÃTID·µ»ØÒ»¸ö¶ÓÎé ¶ÓÃû ÔË¶¯Ô±Ãû×Ö ×éºÅ ³õÈü³É¼¨ ÏîÄ¿Ãû×Ö
+//æŸ¥è¯¢
+    //ç”¨TIDè¿”å›ä¸€ä¸ªé˜Ÿä¼ é˜Ÿå è¿åŠ¨å‘˜åå­— ç»„å· åˆèµ›æˆç»© é¡¹ç›®åå­—
     public ArrayList<Quintet<String,String,Integer,Float,String>> SearchInitialGrade(String teamID){
         String sql="select * from Search_Team_Initial_Core where TID='"+teamID+"'";
         String TName=null,AName=null,PName=null;
         int GroupID=0;
         float CSCore=0;
-        ArrayList<Quintet<String,String,String,Float,String>> al=new ArrayList();
+        ArrayList<Quintet<String,String,Integer,Float,String>> al=new ArrayList();
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
                 TName=rst.getString("TID");
                 AName=rst.getString("AID");
-                GroupID=rst.getString("GroupID");
+                GroupID=rst.getInt("GroupID");
                 CSCore=rst.getFloat("CScore");
                 PName=rst.getString("PID");
-                Quintet<String,String,String,Float,String> a=new Quintet<>(
+                Quintet<String,String,Integer,Float,String> a=new Quintet<>(
                         TName,AName,GroupID,CSCore,PName);
                 al.add(a);
-                return al;
             }
+            return al;
         }catch (SQLException e){
-            System.out.println("ÊÓÍ¼³õÈü²éÑ¯³öÏÖ´íÎó");
+            System.out.println("è§†å›¾åˆèµ›æŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
             return null;
         }
     }
-    //ÓÃTID·µ»ØÒ»¸ö¶ÓÎé ¶ÓÃû ÔË¶¯Ô±Ãû×Ö ×éºÅ ¾öÈü³É¼¨ ÏîÄ¿Ãû×Ö
+    //ç”¨TIDè¿”å›ä¸€ä¸ªé˜Ÿä¼ é˜Ÿå è¿åŠ¨å‘˜åå­— ç»„å· å†³èµ›æˆç»© é¡¹ç›®åå­—
     public ArrayList<Quintet<String,String,Integer,Float,String>> SearchFinalGrade(String teamID){
         String sql="select * from Search_Team_Final_Core where TID='"+teamID+"'";
         String TName=null,AName=null,PName=null;
         float JSCore=0;
         int GroupID=0;
-        ArrayList<Quintet<String,String,String,Float,String>> al=new ArrayList();
+        ArrayList<Quintet<String,String,Integer,Float,String>> al=new ArrayList();
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
                 TName=rst.getString("TID");
                 AName=rst.getString("AID");
-                GroupID=rst.getString("GroupID");
+                GroupID=rst.getInt("GroupID");
                 JSCore=rst.getFloat("JSCore");
                 PName=rst.getString("PID");
-                Quintet<String,String,String,Float,String> a=new Quintet<>(
+                Quintet<String,String,Integer,Float,String> a=new Quintet<>(
                         TName,AName,GroupID,JSCore,PName);
                 al.add(a);
-                return al;
             }
+            return al;
         }catch (SQLException e){
-            System.out.println("ÊÓÍ¼¾öÈü²éÑ¯³öÏÖ´íÎó");
+            System.out.println("è§†å›¾å†³èµ›æŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
             return null;
         }
     }
-    //ÓÃAID²éÑ¯¸öÈËµÄ³É¼¨£¨Î´Íê³É£©
-    public ArrayList<Quintet<String,String,String,Float,String>> SearchPersonalGrade(String athleteID){
+    //ç”¨AIDæŸ¥è¯¢ä¸ªäººçš„æˆç»©ï¼ˆæœªå®Œæˆï¼‰
+    public ArrayList<Quintet<String,String,Integer,Float,String>> SearchPersonalGrade(String athleteID){
         String sql="select * from gradegroup where AID='"+athleteID+"'";
-        String TName=null,AName=null,GroupID=null,PName=null;
+        String TName=null,AName=null,PName=null;
         float JSCore=0;
-        ArrayList<Quintet<String,String,String,Float,String>> al=new ArrayList();
+        int GroupID=0;
+        ArrayList<Quintet<String,String,Integer,Float,String>> al=new ArrayList();
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
                 TName=rst.getString("TID");
                 AName=rst.getString("AID");
-                GroupID=rst.getString("GroupID");
+                GroupID=rst.getInt("GroupID");
                 JSCore=rst.getFloat("JSCore");
                 PName=rst.getString("PID");
-                Quintet<String,String,String,Float,String> a=new Quintet<>(
+                Quintet<String,String,Integer,Float,String> a=new Quintet<>(
                         TName,AName,GroupID,JSCore,PName);
                 al.add(a);
-                return al;
             }
+            return al;
         }catch (SQLException e){
-            System.out.println("ÊÓÍ¼¾öÈü²éÑ¯³öÏÖ´íÎó");
+            System.out.println("è§†å›¾å†³èµ›æŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
             return null;
         }
     }
-    //ÓÃ²ÃÅĞµÄSIDÈ¥ËÑË÷IP
+    //ç”¨è£åˆ¤çš„SIDå»æœç´¢IP
     public String SearchIP(String SID){
         String sql="select * from stuff where SID='"+SID+"'";
         String IP=null;
@@ -344,47 +345,40 @@ public class DataOperation {
             rst=state.executeQuery(sql);
             while(rst.next()){
                 IP=rst.getString("IP");
-                return IP;
             }
+            return IP;
         }catch (SQLException e){
-            System.out.println("ÊÓÍ¼¾öÈü²éÑ¯³öÏÖ´íÎó");
+            System.out.println("è§†å›¾å†³èµ›æŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
             return null;
         }
     }
 
-    //ÓÃPName,GroupID,Sex²éÑ¯±ÈÈüÊÇ·ñÍê³É(·µ»Ø-1ÔòÎªÊı¾İ¿â´íÎó£¬0Îª±ÈÈüÎ´¿ªÊ¼£¬1Îª±ÈÈü¿ªÊ¼ÁË)
+    //ç”¨PName,GroupID,SexæŸ¥è¯¢æ¯”èµ›æ˜¯å¦å®Œæˆ(è¿”å›-1åˆ™ä¸ºæ•°æ®åº“é”™è¯¯ï¼Œ0ä¸ºæ¯”èµ›æœªå¼€å§‹ï¼Œ1ä¸ºæ¯”èµ›å¼€å§‹äº†)
     public  int SearchMatch(String PName,int GroupID,int Sex){
-        //ÅĞ¶Ï
-        boolean judge=false;
         int J=0;
-        //sqlÓï¾ä
+        //sqlè¯­å¥
         String sql="select * from match where PName='"+PName+"' AND GroupID="+GroupID+"' AND Sex="+Sex;
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
                 J=rst.getInt("Judge");
-                judge=true;
             }
+            return  J;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âmatch²éÑ¯³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“matchæŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
-        }finally {
-            if(judge){
-                return J;
-            }else {
-                return -1;
-            }
+            return 0;
         }
     }
-    //ÏîÄ¿ID ×é±ğ ¼ìË÷Ñ¡ÊÖ ĞÕÃû+±àºÅ  (ËùÓĞµÄ¸ÃÏîÄ¿µÄĞÕÃû+±àºÅ)
+    //é¡¹ç›®ID ç»„åˆ« æ£€ç´¢é€‰æ‰‹ å§“å+ç¼–å·  (æ‰€æœ‰çš„è¯¥é¡¹ç›®çš„å§“å+ç¼–å·)
     public ArrayList<Pair<String,String>> SearchPeopleList(String ProjectID,int GroupID){
-        //sqlÓï¾ä
+        //sqlè¯­å¥
         String sql="select * from gradegroup where PID='"+ProjectID+"' AND GroupID="+GroupID+"";
         ArrayList<String> ListAthleteID=new ArrayList();
-        ArrayList<Pair<String,String>> al=new new ArrayList();
+        ArrayList<Pair<String,String>> al= new ArrayList();
         String AID=null;
-        //ÔÚ³É¼¨±íÀï²éÑ¯¸ÃÏîÄ¿£¬¸Ã×é±ğµÄAID
+        //åœ¨æˆç»©è¡¨é‡ŒæŸ¥è¯¢è¯¥é¡¹ç›®ï¼Œè¯¥ç»„åˆ«çš„AID
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
@@ -392,11 +386,11 @@ public class DataOperation {
                 ListAthleteID.add(AID);
             }
         }catch(SQLException e){
-            System.out.println("¼ìË÷Ê§°Ü");
+            System.out.println("æ£€ç´¢å¤±è´¥");
             e.printStackTrace();
         }
         for (int i=0;ListAthleteID.get(i)!=null;i++){
-            //µÚÒ»¸ö²ÎÊıÊÇÓÃAID²éÑ¯Ñ¡ÊÖµÄÃû×Ö
+            //ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯ç”¨AIDæŸ¥è¯¢é€‰æ‰‹çš„åå­—
             Pair<String,String> Ath=new Pair<>(SearchAthlete(ListAthleteID.get(i)).get(0).getValue0(),
                     ListAthleteID.get(i));
             al.add(Ath);
@@ -405,14 +399,12 @@ public class DataOperation {
     }
 
 
-//²éÑ¯Ö®ÖĞËùÓĞµÄ»ù´¡²Ù×÷¡£
-    //ÓÃAID²éÑ¯ÔË¶¯Ô±ĞÅÏ¢
+//æŸ¥è¯¢ä¹‹ä¸­æ‰€æœ‰çš„åŸºç¡€æ“ä½œã€‚
+    //ç”¨AIDæŸ¥è¯¢è¿åŠ¨å‘˜ä¿¡æ¯
     public ArrayList<Septet<String,String,Integer,Integer,Integer,String,String>> SearchAthlete(String AthleteID){
-        //ÅĞ¶Ï
-        boolean judge=false;
-        //sqlÓï¾ä
+        //sqlè¯­å¥
         String sql="select * from athlete where AID='"+AthleteID+"'";
-        //³õÊ¼»¯
+        //åˆå§‹åŒ–
         String AName=null,ID=null,AID=null,TID=null;
         int Age=0,Grade=0,GroupID=0;
         ArrayList<Septet<String,String,Integer,Integer,Integer,String,String>> al=new ArrayList();
@@ -429,24 +421,18 @@ public class DataOperation {
                 Septet<String,String,Integer,Integer,Integer,String,String> AT=new Septet<>(AName,ID,Age,GroupID,Grade,AID,TID);
                 al.add(AT);
             }
+            return al;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âAthlete²éÑ¯³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“AthleteæŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
-        }finally {
-            if(judge){
-                return al;
-            }else {
-                return null;
-            }
+            return null;
         }
     }
-    //ÓÃTID²éÑ¯´ú±í¶ÓĞÅÏ¢
+    //ç”¨TIDæŸ¥è¯¢ä»£è¡¨é˜Ÿä¿¡æ¯
     public  ArrayList<Quartet<String,String,String,String>> SearchTeam(String TeamID){
-        //ÅĞ¶Ï
-        boolean judge=false;
-        //sqlÓï¾ä
+        //sqlè¯­å¥
         String sql="select * from team where TID='"+TeamID+"'";
-        //³õÊ¼»¯
+        //åˆå§‹åŒ–
         String TName=null,TID=null,TPassword=null,TDoc=null;
         ArrayList<Quartet<String,String,String,String>> al=new ArrayList();
         try{
@@ -459,24 +445,18 @@ public class DataOperation {
                 Quartet<String,String,String,String> TT=new Quartet<>(TName,TID,TPassword,TDoc);
                 al.add(TT);
             }
-        }catch (SQLException e){
-            System.out.println("Êı¾İ¿âTeam²éÑ¯³öÏÖ´íÎó");
+            return al;
+        }catch (SQLException e) {
+            System.out.println("æ•°æ®åº“TeamæŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
-        }finally {
-            if(judge){
-                return al;
-            }else {
-                return null;
-            }
+            return null;
         }
     }
-    //ÓÃPID²éÑ¯ÏîÄ¿ĞÅÏ¢
+    //ç”¨PIDæŸ¥è¯¢é¡¹ç›®ä¿¡æ¯
     public  ArrayList<Sextet<String,String,Integer,Integer,Integer,Integer>> SearchProject(String ProjectID){
-        //ÅĞ¶Ï
-        boolean judge=false;
-        //sqlÓï¾ä
+        //sqlè¯­å¥
         String sql="select * from project where PID='"+ProjectID+"'";
-        //³õÊ¼»¯
+        //åˆå§‹åŒ–
         String PID=null,PName=null;
         int Count1=0,Count2=0,Count3=0,PerGroupCount=0;
         ArrayList<Sextet<String,String,Integer,Integer,Integer,Integer>> al=new ArrayList();
@@ -492,24 +472,18 @@ public class DataOperation {
                 Sextet<String,String,Integer,Integer,Integer,Integer> PT=new Sextet<>(PID,PName,Count1,Count2,Count3,PerGroupCount);
                 al.add(PT);
             }
+            return al;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âProject²éÑ¯³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“ProjectæŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
-        }finally {
-            if(judge){
-                return al;
-            }else {
-                return null;
-            }
+            return null;
         }
     }
-    //SID²éÑ¯¹¤×÷ÈËÔ±µÄĞÅÏ¢
+    //SIDæŸ¥è¯¢å·¥ä½œäººå‘˜çš„ä¿¡æ¯
     public  ArrayList<Septet<String,String,String,String,Integer,String,String>> SearchStuff(String StuffID){
-        //ÅĞ¶Ï
-        boolean judge=false;
-        //sqlÓï¾ä
+        //sqlè¯­å¥
         String sql="select * from stuff where SID='"+StuffID+"'";
-        //³õÊ¼»¯
+        //åˆå§‹åŒ–
         String SID=null,SName=null,ID=null,Tel=null,IP=null,PID=null;
         int SType=0;
         ArrayList<Septet<String,String,String,String,Integer,String,String>> al=new ArrayList();
@@ -525,26 +499,19 @@ public class DataOperation {
                 PID=rst.getString("PID");
                 Septet<String,String,String,String,Integer,String,String> T=new Septet<>(SID,SName,ID,Tel,SType,IP,PID);
                 al.add(T);
-                judge=true;
             }
+            return al;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âStuff²éÑ¯³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“StuffæŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
-        }finally {
-            if(judge){
-                return al;
-            }else {
-                return null;
-            }
+            return null;
         }
     }
-    //ÓÃAID,PID¶şÕßºÏÒ»²éÑ¯³É¼¨±í
+    //ç”¨AID,PIDäºŒè€…åˆä¸€æŸ¥è¯¢æˆç»©è¡¨
     public  ArrayList<Quintet<String,String,Integer,Float,Float>> SearchGradeGroup(String ProjectID,String AthleteID){
-        //ÅĞ¶Ï
-        boolean judge=false;
-        //sqlÓï¾ä
+        //sqlè¯­å¥
         String sql="select * from gradegroup where PID='"+ProjectID+"' AND AID='"+AthleteID+"'";
-        //³õÊ¼»¯
+        //åˆå§‹åŒ–
         String PID=null,AID=null;
         int GroupID=0;
         float CScore=0.0f,JScore=0.0f;
@@ -559,26 +526,21 @@ public class DataOperation {
                 JScore=rst.getFloat("JScore");
                 Quintet<String,String,Integer,Float,Float> T=new Quintet<>(PID,AID,GroupID,CScore,JScore);
                 al.add(T);
-                judge=true;
             }
+            return al;
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âGradegroup²éÑ¯³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“GradegroupæŸ¥è¯¢å‡ºç°é”™è¯¯");
             e.printStackTrace();
-        }finally {
-            if(judge){
-                return al;
-            }else {
-                return null;
-            }
+            return null;
         }
     }
 
     public void finalize(){
         try{
             String sql="select * from student";
-            //ResultSetÀà£¬ÓÃÀ´±íÏÖÊı¾İ¿âµÄ
+            //ResultSetç±»ï¼Œç”¨æ¥è¡¨ç°æ•°æ®åº“çš„
             ResultSet rs=state.executeQuery(sql);
-            //ÏÔÊ¾Óï¾ä
+            //æ˜¾ç¤ºè¯­å¥
             long studentNumber =0;
             String name=null;
             while (rs.next()){
@@ -587,7 +549,7 @@ public class DataOperation {
                 System.out.println(studentNumber+"\t"+name);
             }
         }catch (SQLException e){
-            System.out.println("Êı¾İ¿âÉ¾³ı³öÏÖ´íÎó");
+            System.out.println("æ•°æ®åº“åˆ é™¤å‡ºç°é”™è¯¯");
             e.printStackTrace();
         }
     }
