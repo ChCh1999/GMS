@@ -31,7 +31,7 @@ public class DataOperation {
         }
     }
 
-//增加操多为重载函数
+//增加操作多为重载函数
     //增加一个代表队 初始化  全
     public boolean InsertData(String TName,String TID,String TPassword,String TDoc){
         String sql="insert into Team(TName,TID,TPassword,TDoc) values " +
@@ -58,10 +58,10 @@ public class DataOperation {
             return false;
         }
     }
-    //增加工作人员 初始化（没有IP PID）
+    //增加工作人员 初始化（没有IP PID SPassword）
     public boolean InsertData(String SID,String SName,String ID,String Tel,int SType){
         String sql="insert into stuff(SID,SName,ID,Tel,SType,IP,PID) values " +
-                "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,null)";
+                "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,null,null)";
         try {
             state.executeUpdate(sql);
             return true;
@@ -162,7 +162,7 @@ public class DataOperation {
 
 
 //修改操作(用各个ID来修改想要修改的值)
-    //用SID作为条件，初始化PID的值
+    //用SID作为条件，初始化PID的值（可修改）
     public boolean ModifyPID(String SID,String PID){
         String formName="stuff";
         String condition="SID=\'"+SID+"\'" ;
@@ -175,6 +175,14 @@ public class DataOperation {
         String formName="stuff";
         String condition="SID=\'"+SID+"\'" ;
         String modified="IP=\'"+IP+"\'";
+        boolean b=ModifyData(formName,condition,modified);
+        return b;
+    }
+    //用SID作为条件，初始化或添加SPassword
+    public boolean ModifySPassword(String SID,String SPassword){
+        String formName="stuff";
+        String condition="SID=\'"+SID+"\'" ;
+        String modified="SPassword=\'"+SPassword+"\'";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
