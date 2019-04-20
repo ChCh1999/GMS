@@ -411,6 +411,22 @@ public class DataOperation {
             return null;
         }
     }
+    //用裁判的SID 返回Stype
+    public int SearchStype(String SID){
+        String sql="select * from stuff where SID='"+SID+"'";
+        int SType=0;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                SType=rst.getInt("SType");
+            }
+            return SType;
+        }catch (SQLException e){
+            System.out.println("裁判IP错误");
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
     //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0为比赛未开始，1为比赛开始了)
     public  int SearchMatch(String PName,int GroupID){
