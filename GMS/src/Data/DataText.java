@@ -8,6 +8,5 @@ public class DataText {
         DataOperation dataOperation=new DataOperation();
         String formname="student",condition="201730258",modified="ут╠К";
         dataOperation.ModifyPID(condition,modified);
-        dataOperation.finalize();
     }
 }

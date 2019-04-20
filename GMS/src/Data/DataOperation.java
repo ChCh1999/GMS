@@ -13,7 +13,7 @@ public class DataOperation {
             //加载驱动
             Class.forName("com.mysql.cj.jdbc.Driver");
             //getConnecting（）方法，用来连接mysql的数据库
-            con= DriverManager.getConnection("jdbc:mysql://localhost:3306/mt?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false  ","root","123456");
+            con= DriverManager.getConnection("jdbc:mysql://localhost:3306/gms?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8&useSSL=false  ","root","123456");
             if(!con.isClosed()){
                 System.out.println("Succeeded connecting to the Database");
             }
@@ -100,7 +100,7 @@ public class DataOperation {
     //增加成绩 初始化（没有预赛成绩和决赛成绩）
     public boolean InsertData(String PID,String AID,int GroupID){
         String sql="insert into gradegroup(PID,AID,GroupID,CScore,JScore) values " +
-                "('"+PID+"','"+AID+"','"+GroupID+"',0,0)";
+                "('"+PID+"','"+AID+"','"+GroupID+"',0f,0f)";
         try {
             state.executeUpdate(sql);
             return true;
@@ -212,9 +212,7 @@ public class DataOperation {
     public boolean ModifyPerGroupCount(String PID,int C){
         String formName="project";
         String condition="PID=\'"+PID+"\'" ;
-        ArrayList<Sextet<String,String,Integer,Integer,Integer,Integer>> al=SearchProject(PID);
-        int PerGroupCount=al.get(0).getValue5()+C;
-        String modified="PerGroupCount=\'"+PerGroupCount+"\'";
+        String modified="PerGroupCount=\'"+C+"\'";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
@@ -264,7 +262,7 @@ public class DataOperation {
         String sql="select * from Search_Team_Initial_Core where TID='"+teamID+"'";
         String TName=null,AName=null,PName=null;
         int GroupID=0;
-        float CSCore=0;
+        float CSCore=0f;
         ArrayList<Quintet<String,String,Integer,Float,String>> al=new ArrayList();
         try{
             rst=state.executeQuery(sql);
@@ -280,7 +278,7 @@ public class DataOperation {
             }
             return al;
         }catch (SQLException e){
-            System.out.println("视图初赛查询出现错误");
+            System.out.println("视图队伍查询成绩错误");
             e.printStackTrace();
             return null;
         }
@@ -289,7 +287,7 @@ public class DataOperation {
     public ArrayList<Quintet<String,String,Integer,Float,String>> SearchFinalGrade(String teamID){
         String sql="select * from Search_Team_Final_Core where TID='"+teamID+"'";
         String TName=null,AName=null,PName=null;
-        float JSCore=0;
+        float JSCore=0f;
         int GroupID=0;
         ArrayList<Quintet<String,String,Integer,Float,String>> al=new ArrayList();
         try{
@@ -306,33 +304,77 @@ public class DataOperation {
             }
             return al;
         }catch (SQLException e){
-            System.out.println("视图决赛查询出现错误");
+            System.out.println("视图队伍成绩查询错误");
             e.printStackTrace();
             return null;
         }
     }
-    //用AID查询个人的成绩（未完成）
-    public ArrayList<Quintet<String,String,Integer,Float,String>> SearchPersonalGrade(String athleteID){
+    //用AID查询个人成绩 返回 运动员姓名 运动员ID 运动员组别 运动员初赛成绩
+    public ArrayList<Quartet<String,String,Integer,Float>> SearchPersonalInitialGrade(String athleteID){
         String sql="select * from gradegroup where AID='"+athleteID+"'";
-        String TName=null,AName=null,PName=null;
-        float JSCore=0;
-        int GroupID=0;
-        ArrayList<Quintet<String,String,Integer,Float,String>> al=new ArrayList();
+        String AID=null,AName=null;
+        float CSCore=0f;
+        int GroupID=0,i=0;
+        ArrayList<Quartet<String,String,Integer,Float>> a1=new ArrayList();
+        ArrayList<Triplet<String,Integer,Float>> a2=new ArrayList();
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
-                TName=rst.getString("TID");
-                AName=rst.getString("AID");
+                AID=rst.getString("AID");
+                GroupID=rst.getInt("GroupID");
+                CSCore=rst.getFloat("CSCore");
+                Triplet<String,Integer,Float> a=new Triplet<>(AID,GroupID,CSCore);
+                a2.add(a);
+            }
+            String sql2="select * from athlete where AID='"+athleteID+"'";
+            rst=state.executeQuery(sql2);
+            while(rst.next()){
+                AName=rst.getString("AName");
+                AID=a2.get(i).getValue0();
+                GroupID=a2.get(i).getValue1();
+                CSCore=a2.get(i).getValue2();
+                Quartet<String,String,Integer,Float> a=new Quartet<>(AName,AID,GroupID,CSCore);
+                a1.add(a);
+                i++;
+            }
+            return a1;
+        }catch (SQLException e){
+            System.out.println("个人成绩查询错误");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    //用AID查询个人成绩 返回 运动员姓名 运动员ID 运动员组别 运动员决赛成绩
+    public ArrayList<Quartet<String,String,Integer,Float>> SearchPersonalFinalGrade(String athleteID){
+        String sql="select * from gradegroup where AID='"+athleteID+"'";
+        String AID=null,AName=null;
+        float JSCore=0f;
+        int GroupID=0,i=0;
+        ArrayList<Quartet<String,String,Integer,Float>> a1=new ArrayList();
+        ArrayList<Triplet<String,Integer,Float>> a2=new ArrayList();
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                AID=rst.getString("AID");
                 GroupID=rst.getInt("GroupID");
                 JSCore=rst.getFloat("JSCore");
-                PName=rst.getString("PID");
-                Quintet<String,String,Integer,Float,String> a=new Quintet<>(
-                        TName,AName,GroupID,JSCore,PName);
-                al.add(a);
+                Triplet<String,Integer,Float> a=new Triplet<>(AID,GroupID,JSCore);
+                a2.add(a);
             }
-            return al;
+            String sql2="select * from athlete where AID='"+athleteID+"'";
+            rst=state.executeQuery(sql2);
+            while(rst.next()){
+                AName=rst.getString("AName");
+                AID=a2.get(i).getValue0();
+                GroupID=a2.get(i).getValue1();
+                JSCore=a2.get(i).getValue2();
+                Quartet<String,String,Integer,Float> a=new Quartet<>(AName,AID,GroupID,JSCore);
+                a1.add(a);
+                i++;
+            }
+            return a1;
         }catch (SQLException e){
-            System.out.println("视图决赛查询出现错误");
+            System.out.println("个人成绩查询错误");
             e.printStackTrace();
             return null;
         }
@@ -348,17 +390,17 @@ public class DataOperation {
             }
             return IP;
         }catch (SQLException e){
-            System.out.println("视图决赛查询出现错误");
+            System.out.println("裁判IP错误");
             e.printStackTrace();
             return null;
         }
     }
 
-    //用PName,GroupID,Sex查询比赛是否完成(返回-1则为数据库错误，0为比赛未开始，1为比赛开始了)
-    public  int SearchMatch(String PName,int GroupID,int Sex){
+    //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0为比赛未开始，1为比赛开始了)
+    public  int SearchMatch(String PName,int GroupID){
         int J=0;
         //sql语句
-        String sql="select * from match where PName='"+PName+"' AND GroupID="+GroupID+"' AND Sex="+Sex;
+        String sql="select * from match where PName='"+PName+"' AND GroupID="+GroupID+"'";
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
@@ -535,22 +577,4 @@ public class DataOperation {
         }
     }
 
-    public void finalize(){
-        try{
-            String sql="select * from student";
-            //ResultSet类，用来表现数据库的
-            ResultSet rs=state.executeQuery(sql);
-            //显示语句
-            long studentNumber =0;
-            String name=null;
-            while (rs.next()){
-                studentNumber=rs.getLong("StudentNumber");
-                name=rs.getString("Name");
-                System.out.println(studentNumber+"\t"+name);
-            }
-        }catch (SQLException e){
-            System.out.println("数据库删除出现错误");
-            e.printStackTrace();
-        }
-    }
 }
