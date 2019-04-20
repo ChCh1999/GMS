@@ -178,6 +178,14 @@ public class DataOperation {
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
+    //PID修改裁判的状态
+    public boolean ModifyStype(String PID,int Modify){
+        String formName="stuff";
+        String condition="PID=\'"+PID+"\'";
+        String modified="SType=\'"+Modify+"\'";
+        boolean b=ModifyData(formName,condition,modified);
+        return b;
+    }
     //用PID作为条件，修改Count1的人数
     public boolean ModifyCount1(String PID,int C){
         String formName="project";
