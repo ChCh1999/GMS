@@ -422,11 +422,64 @@ public class DataOperation {
             }
             return SType;
         }catch (SQLException e){
-            System.out.println("裁判IP错误");
+            System.out.println("裁判SType错误");
             e.printStackTrace();
             return 0;
         }
     }
+    //用ID查SID
+    public String SearchSId(String ID){
+        String sql="select * from stuff where ID='"+ID+"'";
+        String SID=null;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                SID=rst.getString("SID");
+            }
+            return SID;
+        }catch (SQLException e){
+            System.out.println("裁判SID错误");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    //SID password 返回bool
+    public boolean Stuff_Verify_password(String SID,String password){
+        String sql="select * from stuff where SID='"+SID+"'";
+        String SPassword=null;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                SPassword=rst.getString("SPassword");
+            }
+            if (SPassword == password){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (SQLException e){
+            System.out.println("裁判密码判断错误");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //用项目的名字查ID
+    public String SearchPID(String PName){
+        String sql="select * from project where PName='"+PName+"'";
+        String PID=null;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                PID=rst.getString("PID");
+            }
+            return PID;
+        }catch (SQLException e){
+            System.out.println("PID查询错误");
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0为比赛未开始，1为比赛开始了)
     public  int SearchMatch(String PName,int GroupID){
