@@ -498,7 +498,35 @@ public class DataOperation {
             return 0;
         }
     }
-    //项目ID 组别 检索选手 姓名+编号  (所有的该项目的姓名+编号)
+    //项目ID 组别 检索决赛选手 姓名+编号
+    public ArrayList<Pair<String,String>> SearchFinalPeopleList(String ProjectID,int GroupID){
+        //sql语句
+        String sql="select * from gradegroup where PID='"+ProjectID+"' AND GroupID="+GroupID+"  ORDER BY CScore DESC";
+        ArrayList<String> ListAthleteID=new ArrayList();
+        ArrayList<Pair<String,String>> al= new ArrayList();
+        String AID=null;
+        //在成绩表里查询该项目，该组别的AID
+        try{
+            rst=state.executeQuery(sql);
+            for(int i=0;i<10;i++){
+                if(rst.next()){
+                    AID=rst.getString("AID");
+                    ListAthleteID.add(AID);
+                }
+            }
+        }catch(SQLException e){
+            System.out.println("检索失败");
+            e.printStackTrace();
+        }
+        for (int i=0;ListAthleteID.get(i)!=null;i++){
+            //第一个参数是用AID查询选手的名字
+            Pair<String,String> Ath=new Pair<>(SearchAthlete(ListAthleteID.get(i)).get(0).getValue0(),
+                    ListAthleteID.get(i));
+            al.add(Ath);
+        }
+        return al;
+    }
+    //项目ID 组别 检索初赛选手 姓名+编号  (所有的该项目的姓名+编号)
     public ArrayList<Pair<String,String>> SearchPeopleList(String ProjectID,int GroupID){
         //sql语句
         String sql="select * from gradegroup where PID='"+ProjectID+"' AND GroupID="+GroupID+"";
