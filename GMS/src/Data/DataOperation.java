@@ -190,7 +190,7 @@ public class DataOperation {
     public boolean ModifyStype(String PID,int Modify){
         String formName="stuff";
         String condition="PID=\'"+PID+"\'";
-        String modified="SType=\'"+Modify+"\'";
+        String modified="SType="+Modify+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
@@ -200,7 +200,7 @@ public class DataOperation {
         String condition="PID=\'"+PID+"\'" ;
         ArrayList<Sextet<String,String,Integer,Integer,Integer,Integer>> al=SearchProject(PID);
         int Count1=al.get(0).getValue2()+C;
-        String modified="Count1=\'"+Count1+"\'";
+        String modified="Count1="+Count1+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
@@ -210,7 +210,7 @@ public class DataOperation {
         String condition="PID=\'"+PID+"\'" ;
         ArrayList<Sextet<String,String,Integer,Integer,Integer,Integer>> al=SearchProject(PID);
         int Count2=al.get(0).getValue3()+C;
-        String modified="Count2=\'"+Count2+"\'";
+        String modified="Count2="+Count2+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
@@ -220,7 +220,7 @@ public class DataOperation {
         String condition="PID=\'"+PID+"\'" ;
         ArrayList<Sextet<String,String,Integer,Integer,Integer,Integer>> al=SearchProject(PID);
         int Count3=al.get(0).getValue4()+C;
-        String modified="Count3=\'"+Count3+"\'";
+        String modified="Count3="+Count3+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
@@ -228,7 +228,7 @@ public class DataOperation {
     public boolean ModifyPerGroupCount(String PID,int C){
         String formName="project";
         String condition="PID=\'"+PID+"\'" ;
-        String modified="PerGroupCount=\'"+C+"\'";
+        String modified="PerGroupCount="+C+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
@@ -245,7 +245,7 @@ public class DataOperation {
         String formName="gradegroup";
         String condition="PID=\'"+PID+"\' AND AID=\'"+AID+"\'" ;
         float CScore=C;
-        String modified="CScore=\'"+CScore+"\'";
+        String modified="CScore="+CScore+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
@@ -254,7 +254,15 @@ public class DataOperation {
         String formName="gradegroup";
         String condition="PID=\'"+PID+"\' AND AID=\'"+AID+"\'" ;
         float JScore=C;
-        String modified="JScore=\'"+JScore+"\'";
+        String modified="JScore="+JScore+"";
+        boolean b=ModifyData(formName,condition,modified);
+        return b;
+    }
+    //修改match表的比赛状态
+    public boolean ModifyMatch_Judge(String PName,int Judge){
+        String formName="match";
+        String condition="PName=\'"+PName+"\'" ;
+        String modified="Judge="+Judge+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
