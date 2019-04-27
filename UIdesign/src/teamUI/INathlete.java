@@ -49,7 +49,7 @@ public class INathlete extends JFrame {
 	public INathlete() {
 		setTitle("运动员录入");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 689, 403);
+		setBounds(100, 100, 783, 442);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -88,6 +88,7 @@ public class INathlete extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				//关闭页面
 				dispose();
+				
 			}
 		});
 		btnNewButton_1.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -118,7 +119,7 @@ public class INathlete extends JFrame {
 		team.setColumns(10);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(121, 225, 372, 81);
+		panel.setBounds(121, 225, 491, 81);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -127,11 +128,11 @@ public class INathlete extends JFrame {
 		panel.add(checkBox_1);
 		
 		JCheckBox checkBox_2 = new JCheckBox("双杠");
-		checkBox_2.setBounds(75, 6, 56, 23);
+		checkBox_2.setBounds(97, 6, 56, 23);
 		panel.add(checkBox_2);
 		
 		JCheckBox checkBox_3 = new JCheckBox("吊环");
-		checkBox_3.setBounds(149, 6, 63, 23);
+		checkBox_3.setBounds(187, 6, 63, 23);
 		panel.add(checkBox_3);
 		
 		JCheckBox checkBox_4 = new JCheckBox("跳马");
@@ -139,23 +140,23 @@ public class INathlete extends JFrame {
 		panel.add(checkBox_4);
 		
 		JCheckBox checkBox_5 = new JCheckBox("自由体操");
-		checkBox_5.setBounds(224, 41, 80, 23);
+		checkBox_5.setBounds(292, 41, 80, 23);
 		panel.add(checkBox_5);
 		
 		JCheckBox checkBox_6 = new JCheckBox("鞍马");
-		checkBox_6.setBounds(226, 6, 56, 23);
+		checkBox_6.setBounds(292, 6, 56, 23);
 		panel.add(checkBox_6);
 		
 		JCheckBox checkBox_7 = new JCheckBox("蹦床");
-		checkBox_7.setBounds(297, 6, 63, 23);
+		checkBox_7.setBounds(402, 6, 63, 23);
 		panel.add(checkBox_7);
 		
 		JCheckBox checkBox_8 = new JCheckBox("高低杠");
-		checkBox_8.setBounds(75, 41, 69, 23);
+		checkBox_8.setBounds(97, 41, 69, 23);
 		panel.add(checkBox_8);
 		
 		JCheckBox checkBox_9 = new JCheckBox("平衡木");
-		checkBox_9.setBounds(149, 41, 63, 23);
+		checkBox_9.setBounds(187, 41, 80, 23);
 		panel.add(checkBox_9);
 		
 		

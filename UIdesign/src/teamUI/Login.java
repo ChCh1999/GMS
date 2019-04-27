@@ -63,47 +63,40 @@ public class Login {
 		JLabel name = new JLabel("用户名：");//用户名
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		name.setFont(new Font("宋体", Font.PLAIN, 18));
-		name.setBounds(45, 39, 80, 30);
+		name.setBounds(45, 74, 80, 30);
 		frame.getContentPane().add(name);
 		
 		JLabel password = new JLabel("密码：");//密码
 		password.setHorizontalAlignment(SwingConstants.CENTER);
 		password.setFont(new Font("宋体", Font.PLAIN, 18));
-		password.setBounds(45, 94, 80, 30);
+		password.setBounds(45, 140, 80, 30);
 		frame.getContentPane().add(password);
 		
 		nameField = new JTextField();//用户名输入框
-		nameField.setBounds(135, 42, 261, 30);
+		nameField.setBounds(135, 74, 261, 30);
 		frame.getContentPane().add(nameField);
 		nameField.setColumns(10);
 		
 		passwordField = new JPasswordField();//密码输入框
-		passwordField.setBounds(135, 94, 261, 30);
+		passwordField.setBounds(135, 140, 261, 30);
 		frame.getContentPane().add(passwordField);
 		
-		JComboBox accounttype = new JComboBox();
-		accounttype.setModel(new DefaultComboBoxModel(new String[] {"领队", "裁判", "管理员"}));
-		accounttype.setBounds(170, 145, 172, 30);
-		frame.getContentPane().add(accounttype);
-		
-		JLabel label = new JLabel("用户类型");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setFont(new Font("宋体", Font.PLAIN, 18));
-		label.setBounds(38, 143, 102, 30);
-		frame.getContentPane().add(label);
-		
-		JButton login_in = new JButton("\u767B\u5F55");//登录
+		JButton login_in = new JButton("登录");//登录
 		login_in.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				/*switch() {
+				case
 				//登录函数
-				Apply apply = new Apply();
+				
+				}*/
+				Apply apply = new Apply();//临时调试用
 			}
 		});
 		login_in.setBounds(270, 210, 102, 30);
 		frame.getContentPane().add(login_in);
 		
-		JButton reset = new JButton("\u6E05\u7A7A\u4FE1\u606F");//重置账号密码
+		JButton reset = new JButton("清空信息");//重置账号密码
 		reset.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
