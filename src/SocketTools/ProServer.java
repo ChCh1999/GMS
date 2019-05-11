@@ -168,8 +168,8 @@ class TProHandle implements Runnable {
 
         int count=Aths.size();
         //        TODO:init读取各个裁判的ip
-        IPOfGroup = "127.0.0.1";
-        IPOfJudges.add("127.0.0.1");
+        IPOfGroup = myConn.SearchProject_IP(ProID,2).get(0);
+        IPOfJudges=myConn.SearchProject_IP(ProID,1);
         try {
 
             Group = new Socket(IPOfGroup, ServerData.PORT3);
@@ -185,7 +185,7 @@ class TProHandle implements Runnable {
         int tag = 0;
         while (tag < Aths.size()) {
             ArrayList<Pair<String, String>> OneGroup = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 8; i++) {
                 if (tag < Aths.size()) {
                     OneGroup.add(Aths.get(tag));
                     tag++;
@@ -269,7 +269,7 @@ class TProHandle implements Runnable {
         }*/
         //输出成绩表中所有姓名+成绩
         bw.write("SendMarkTable");
-        bw.write(message.NameOfJudge);
+        bw.write(message.IDOfJudge);
         while (!br.readLine().equals("ready")) ;//等待直到ready
         for (Pair<String, Float> mark : message.MarkTable     //Pair<AthNum,Mark>
                 ) {
@@ -285,7 +285,7 @@ class TProHandle implements Runnable {
 //发送信息线程类 系统发送小组队员名单给裁判 暂存信息
 class TSendAthletesMessage implements Runnable {
     Socket target;
-    String NameOfJudge;
+    String IDOfJudge;
     ArrayList<Pair<String, String>> Message;
     ArrayList<Pair> MarkTable = new ArrayList<>();
 
@@ -311,7 +311,7 @@ class TSendAthletesMessage implements Runnable {
             bw.write("Over");
         }
         bw.write(Aths.size() + '\n');
-        NameOfJudge = br.readLine();
+        IDOfJudge = br.readLine();
         while (!br.readLine().equals("ready")) ;//阻塞直到裁判准备好
         for (Pair<String, String> Ath : Aths) {
             bw.write(Ath.getValue0() + '\n');
@@ -414,7 +414,7 @@ class TLoginHandle implements Runnable {
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
-        System.out.println("登录成功");
+        System.out.println("登录结束");
     }
 
     public boolean checkIDOfJudge(String sid,String passward) {

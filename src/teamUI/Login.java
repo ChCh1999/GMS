@@ -17,6 +17,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
+
+import SocketTools.ClientTool;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,7 +28,7 @@ public class Login {
 	private JFrame frame;
 	private JTextField nameField;
 	private JPasswordField passwordField;
-
+	private int state;
 	/**
 	 * Launch the application.
 	 */
@@ -54,6 +56,7 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		state=-1;
 		frame = new JFrame();
 		frame.setTitle("登录");//登录
 		frame.setBounds(100, 100, 450, 300);
@@ -82,15 +85,27 @@ public class Login {
 		frame.getContentPane().add(passwordField);
 		
 		JButton login_in = new JButton("登录");//登录
+
 		login_in.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				/*switch() {
-				case
+				String SID=nameField.getText();
+				String Password=String.valueOf(passwordField.getPassword());
+				if(SID==null||Password==null){
+					return;
+				}else {
+					state=ClientTool.login(SID,Password);
+				}
+				switch(state) {
+					case 0:
+					case 1:
+						Referee referee=new Referee();
+						break;
+
 				//登录函数
-				
-				}*/
-				Apply apply = new Apply();//临时调试用
+
+				}
+				//Apply apply = new Apply();//临时调试用
 			}
 		});
 		login_in.setBounds(270, 210, 102, 30);

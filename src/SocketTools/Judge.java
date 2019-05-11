@@ -14,7 +14,6 @@ public class Judge {
         ClientTool.login("1270.0.1","123456");
     }
 
-    final int PORT_LOGIN=10087;
     final int PORT_LISTEN=10088;
     final String IP_SERVER="/127.0.0.1";
 
@@ -31,30 +30,30 @@ public class Judge {
     public  boolean sendmark=false;//是否准备好接受队员表
     public boolean prodone=false;//项目结束
 
-    public boolean login(String id){
-        try {
-            Socket login=new Socket(IP_SERVER,PORT_LOGIN);
-            BufferedReader br_login=new BufferedReader(new InputStreamReader(login.getInputStream()));
-            BufferedWriter bw_login=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
-            bw_login.write("login"+'\n');
-            bw_login.write(id+'\n');
-            bw_login.write(id+'\n');
-            bw_login.flush();
-            if(Boolean.parseBoolean(br_login.readLine())){
-                int state=Integer.parseInt(br_login.readLine());
-                ID=id;
-                logined=true;
-                return true;
-            }else {
-                return false;
-            }
-        }catch (UnknownHostException une){
-            return false;
-        }catch (IOException e){
-            return false;
-        }
-
-    }
+//    public boolean login(String id){
+//        try {
+//            Socket login=new Socket(IP_SERVER,PORT_LOGIN);
+//            BufferedReader br_login=new BufferedReader(new InputStreamReader(login.getInputStream()));
+//            BufferedWriter bw_login=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
+//            bw_login.write("login"+'\n');
+//            bw_login.write(id+'\n');
+//            bw_login.write(id+'\n');
+//            bw_login.flush();
+//            if(Boolean.parseBoolean(br_login.readLine())){
+//                int state=Integer.parseInt(br_login.readLine());
+//                ID=id;
+//                logined=true;
+//                return true;
+//            }else {
+//                return false;
+//            }
+//        }catch (UnknownHostException une){
+//            return false;
+//        }catch (IOException e){
+//            return false;
+//        }
+//
+//    }
     public void start(){
         try {
             ServerSocket judge=new ServerSocket(PORT_LISTEN);
@@ -68,7 +67,9 @@ public class Judge {
         }
 
     }
-
+    public String getProName(){
+        return null;
+    }
     //获取服务器传输的运动员名单ArrayList<Pair<String,String>>（运动员编号，姓名）
     public ArrayList<Pair<String,String>> wait_Aths(){
         ArrayList<Pair<String,String>>Aths=new ArrayList<>();
@@ -76,12 +77,16 @@ public class Judge {
             try {
                 String Num;
                 String Name;
+//                while (connection==null);//等待连接成功
                 bw.write("ready");
                 while ((Num=br.readLine())!="Finished"){
                     Name=br.readLine();
+                    Pair<String,String> pa=new Pair<>(Num,Name);
                     Aths.add(new Pair<String,String>(Num,Name));
 
                 }
+
+
                 //获取完成
                 sendmark=true;
                 return Aths;

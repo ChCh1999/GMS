@@ -478,7 +478,7 @@ public class DataOperation {
             while(rst.next()){
                 SPassword=rst.getString("SPassword");
             }
-            if (SPassword == password){
+            if (SPassword.equals(password)){
                 return true;
             }else {
                 return false;

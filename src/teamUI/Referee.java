@@ -42,21 +42,21 @@ public class Referee extends JFrame {
 	private JTextField P_score7;
 	private JTextField P_score8;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Referee frame = new Referee();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					Referee frame = new Referee();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -270,5 +270,9 @@ public class Referee extends JFrame {
 		});
 		button.setBounds(202, 411, 99, 29);
 		contentPane.add(button);
+
+		this.setVisible(true);
+
 	}
+
 }
