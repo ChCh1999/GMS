@@ -1,6 +1,5 @@
-package Test;
+package SocketTools;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import javafx.util.Pair;
 
 import java.io.*;
@@ -12,13 +11,12 @@ import java.util.ArrayList;
 public class Judge {
 
     public static void main(String[] args) {
-        Judge test=new Judge();
-        test.login("19991206");
+        ClientTool.login("1270.0.1","123456");
     }
 
     final int PORT_LOGIN=10087;
     final int PORT_LISTEN=10088;
-    final String IP_SERVER="127.0.0.1";
+    final String IP_SERVER="/127.0.0.1";
 
     //属性
     private String ID;
@@ -40,7 +38,10 @@ public class Judge {
             BufferedWriter bw_login=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
             bw_login.write("login"+'\n');
             bw_login.write(id+'\n');
+            bw_login.write(id+'\n');
+            bw_login.flush();
             if(Boolean.parseBoolean(br_login.readLine())){
+                int state=Integer.parseInt(br_login.readLine());
                 ID=id;
                 logined=true;
                 return true;
