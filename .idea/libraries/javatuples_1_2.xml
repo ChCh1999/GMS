@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="javatuples-1.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/javatuples-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/miglayout15-swing.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/mysql-connector-java-8.0.15.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/src/miglayout-src.zip!/" />
+    </SOURCES>
+  </library>
+</component>
