@@ -1,4 +1,4 @@
-package Test;
+package Server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,17 +11,17 @@ public class ChiefJudge {
     final String ServerIP="127.0.0.1";
     public static void main(String[] args) {
         ChiefJudge m=new ChiefJudge();
-        m.startpro("体操",0,true);
+        m.startpro("体操",0);
     }
 
-    public boolean startpro(String pro,int group,boolean MaleOrFemale){
+    public boolean startpro(String pro,int group){
         try {
             System.out.println("启动");
             int port = PORT;
             Socket clientcp=new Socket(ServerIP,port);
             BufferedReader br=new BufferedReader(new InputStreamReader(clientcp.getInputStream()));
             BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(clientcp.getOutputStream(),"UTF-8"));
-            TStartPro newpro=new TStartPro(clientcp,pro,group,MaleOrFemale);
+            TStartPro newpro=new TStartPro(clientcp,pro,group);
             Thread request=new Thread(newpro);
             request.start();
             request.join();
@@ -57,11 +57,10 @@ class TStartPro implements Runnable{
     private Socket Server;
     public boolean success;//请求成功
     public boolean done;//比赛结束
-    TStartPro(Socket server,String pro,int group,boolean MaleOrFemale){
+    TStartPro(Socket server,String pro,int group){
         Server=server;
         ProName=pro;
         this.group=group;
-        MOrF=MaleOrFemale;
         success=false;
         done=false;
     }
@@ -90,7 +89,6 @@ class TStartPro implements Runnable{
             BufferedWriter bw1=new BufferedWriter(new OutputStreamWriter(cp.getOutputStream(),"UTF-8"));
             bw1.write(pro+'\n');
             bw1.write(group+"\n");
-            bw1.write(MaleOrFemale+"\n");
             bw1.flush();
 
             BufferedReader br1=new BufferedReader(new InputStreamReader(cp.getInputStream(),"utf-8"));

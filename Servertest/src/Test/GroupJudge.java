@@ -1,4 +1,4 @@
-package Test;
+package Server;
 
 import javafx.util.Pair;
 
@@ -12,9 +12,10 @@ public class GroupJudge{
     private boolean signed=false;
 
     //登录用
+    final String IP_SERVER="127.0.0.1";
     final int PORT_LOGIN=10087;
     final int PORT_LISTEN=10088;
-    final String IP_SERVER="127.0.0.1";
+
 
     //连接用
     private BufferedReader br;
@@ -25,38 +26,51 @@ public class GroupJudge{
     private ArrayList<ArrayList<Pair<String,Float>>> MarkTables;
     //监控用
     public  boolean logined=false;//是否成功登陆
-    public  boolean sendmark=false;//是否准备好接受队员表
+    public  boolean sendmark=true;//是否准备好接受队员表
     public boolean prodone=false;//项目结束
     public boolean MarkTableDone=false;//成绩表传输完毕
     private String ID;
+
     public static void main(String[] args) {
+        GroupJudge test=new GroupJudge();
+        //test.login("2019001");
+//        while (true){
+//            test.wait_Aths();
+//            test.getMarkTables();
+//            test.sendConform(true);
+//        }
 
     }
     GroupJudge(){
 
     }
 
-    public boolean login(String id){
-        try{
-            Socket login=new Socket(IP_SERVER,PORT_LOGIN);
-            BufferedReader br_login=new BufferedReader(new InputStreamReader(login.getInputStream()));
-            BufferedWriter bw_login=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
-            bw_login.write("login"+'\n');
-            bw_login.write(id+'\n');
-            if(Boolean.parseBoolean(br_login.readLine())){
-                logined=true;
-                ID=id;
-                return true;
-            }else {
-                return false;
-            }
-        }catch (UnknownHostException une){
-            return false;
-        }catch (IOException e){
-            return false;
-        }
-
-    }
+//    public boolean login(String id){
+//        try{
+//            Socket login=new Socket(IP_SERVER,PORT_LOGIN);
+//            BufferedReader br_login=new BufferedReader(new InputStreamReader(login.getInputStream()));
+//            BufferedWriter bw_login=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
+//
+//            bw_login.write(id+'\n'+'\n');
+//            bw_login.flush();
+//            //System.out.println(id);
+//            if(Boolean.parseBoolean(br_login.readLine())){
+//                logined=true;
+//                ID=id;
+//                System.out.println("登录成功");
+//                return true;
+//            }else {
+//                return false;
+//            }
+//        }catch (UnknownHostException une){
+//            System.out.println(une);
+//            return false;
+//        }catch (IOException ioe){
+//            System.out.println(ioe);
+//            return false;
+//        }
+//
+//    }
 
     public void start(){
         try {
@@ -96,7 +110,8 @@ public class GroupJudge{
 
     //接收成绩表
     public void getMarkTables(){
-        ArrayList<ArrayList<Pair<String,Float>>> res=new ArrayList<>();
+        //ArrayList<ArrayList<Pair<String,Float>>> res=new ArrayList<>();
+        MarkTables=new ArrayList<>();
         try {
             br.readLine();
             while (!br.readLine().equals("FinishSendMarks")){
@@ -116,6 +131,12 @@ public class GroupJudge{
 
     }
     public void sendConform(Boolean pass){
+        sendmark=true;
+        try {
+            bw.write(Boolean.TRUE.toString());
+        }catch (IOException ioe){
+            System.out.println("信号错误-小组裁判");
+        }
 
     }
 
