@@ -90,10 +90,11 @@ public class Login {
 				//登录函数
 				
 				}*/
-				Apply apply = new Apply();//临时调试用
+				//Apply apply = new Apply();//临时调试用
+				Referee referee = new Referee();
 			}
 		});
-		login_in.setBounds(270, 210, 102, 30);
+		login_in.setBounds(294, 210, 102, 30);
 		frame.getContentPane().add(login_in);
 		
 		JButton reset = new JButton("清空信息");//重置账号密码
@@ -104,8 +105,18 @@ public class Login {
 				passwordField.setText("");
 			}
 		});
-		reset.setBounds(88, 210, 102, 30);
+		reset.setBounds(169, 210, 102, 30);
 		frame.getContentPane().add(reset);
+		
+		JButton register = new JButton("录入信息");
+		register.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Apply apply = new Apply();
+			}
+		});
+		register.setBounds(45, 210, 102, 30);
+		frame.getContentPane().add(register);
 		
 		//插入图片背景
 		/*JLayeredPane backpic = new JLayeredPane();

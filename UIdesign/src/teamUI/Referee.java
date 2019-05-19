@@ -270,5 +270,6 @@ public class Referee extends JFrame {
 		});
 		button.setBounds(202, 411, 99, 29);
 		contentPane.add(button);
+		this.setVisible(true);
 	}
 }

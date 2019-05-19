@@ -17,6 +17,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 //裁判员页面
@@ -134,7 +136,7 @@ public class ChiefRE extends JFrame {
 	 * Create the frame.
 	 */
 	public ChiefRE() {
-		setTitle("总裁判页");//总裁判
+		setTitle("小组裁判页");//总裁判
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1098, 565);
 		contentPane = new JPanel();
@@ -298,7 +300,7 @@ public class ChiefRE extends JFrame {
 					jf.getContentPane().setLayout(null);
 					
 					JLabel jb = new JLabel("PB分不能为空");
-					jf.add(jb);
+					jf.getContentPane().add(jb);
 					jf.setVisible(true);
 				}
 				//测试用else dispose();
@@ -306,7 +308,7 @@ public class ChiefRE extends JFrame {
 			}
 		});
 		button.setFont(new Font("宋体", Font.PLAIN, 18));
-		button.setBounds(485, 474, 106, 30);
+		button.setBounds(661, 475, 100, 30);
 		contentPane.add(button);
 		
 		JLabel final_score = new JLabel("最后得分");
@@ -977,5 +979,45 @@ public class ChiefRE extends JFrame {
 		final_Num8.setColumns(10);
 		final_Num8.setBounds(965, 401, 84, 30);
 		contentPane.add(final_Num8);
+		
+		JButton ReButton = new JButton("重评");
+		ReButton.setFont(new Font("宋体", Font.PLAIN, 18));
+		ReButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFrame jf=new JFrame();
+				jf.setTitle("确认重评？");
+				jf.setBounds(250, 250, 450, 300);
+				jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jf.getContentPane().setLayout(null);
+				
+				JLabel rejl = new JLabel("请输入需要重评的裁判员号");
+				rejl.setFont(new Font("宋体", Font.PLAIN, 18));
+				rejl.setBounds(0, 0, 250, 30);
+				jf.getContentPane().add(rejl);
+				
+				JTextField retext = new JTextField();
+				retext.setFont(new Font("宋体", Font.PLAIN, 18));
+				retext.setBounds(0, 40, 250, 30);
+				jf.getContentPane().add(retext);
+				
+				JLabel rejl_2 = new JLabel("请输入运动员编号");
+				rejl_2.setFont(new Font("宋体", Font.PLAIN, 18));
+				rejl_2.setBounds(0,80, 250, 30);
+				jf.getContentPane().add(rejl_2);
+				
+				JTextField replayer = new JTextField();
+				replayer.setFont(new Font("宋体", Font.PLAIN, 18));
+				replayer.setBounds(0, 120, 250, 30);
+				jf.getContentPane().add(replayer);
+				
+				JButton rejb = new JButton("确认");
+				rejb.setFont(new Font("宋体",Font.PLAIN,18));
+				rejb.setBounds(180,200, 70, 30);
+				jf.getContentPane().add(rejb);
+				jf.setVisible(true);
+			}
+		});
+		ReButton.setBounds(260, 475, 100, 30);
+		contentPane.add(ReButton);
 	}
 }
