@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/src/teamUI/Apply.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/teamUI/ChiefRE.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/teamUI/INathlete.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/teamUI/Login.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/teamUI/MainRefe.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/teamUI/Massagesearch.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/teamUI/Referee.java" charset="UTF-8" />
+  </component>
+</project>
