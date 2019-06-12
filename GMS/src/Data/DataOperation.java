@@ -58,10 +58,10 @@ public class DataOperation {
             return false;
         }
     }
-    //增加工作人员 初始化（没有IP PID SPassword）
-    public boolean InsertData(String SID,String SName,String ID,String Tel,int SType){
+    //增加工作人员 初始化（没有IP PID SPassword,SLogin）
+    public boolean InsertData(String SID,String SName,String ID,String Tel,int SType,int SLogin){
         String sql="insert into stuff(SID,SName,ID,Tel,SType,IP,PID) values " +
-                "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,null,null)";
+                "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,null,null,0)";
         try {
             state.executeUpdate(sql);
             return true;
@@ -183,6 +183,21 @@ public class DataOperation {
         String formName="stuff";
         String condition="SID=\'"+SID+"\'" ;
         String modified="SPassword=\'"+SPassword+"\'";
+        boolean b=ModifyData(formName,condition,modified);
+        return b;
+    }
+    //用SID作为条件，修改SLogin的状态
+    public boolean ModifySLogin(String SID){
+        boolean judge=Search_SLogin(SID);
+        int SLogin=0;
+        if(judge){
+            SLogin=1;
+        }else {
+            SLogin=0;
+        }
+        String formName="stuff";
+        String condition="SID=\'"+SID+"\'" ;
+        String modified="SLogin="+SLogin+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
     }
@@ -505,6 +520,27 @@ public class DataOperation {
             return null;
         }
     }
+    //用SID查询SLogin的状态,true为已登陆，false为未登陆
+    public boolean Search_SLogin(String SID){
+        String sql="select * from stuff where SID='"+SID+"'";
+        int SLogin=0;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                SLogin=rst.getInt("SLogin");
+            }
+        }catch (SQLException e){
+            System.out.println("裁判SID错误");
+            e.printStackTrace();
+        }finally {
+            if(SLogin==1){
+                return true;
+            }else {
+                return false;
+            }
+        }
+    }
+
 
 
     //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0为比赛未开始，1为比赛开始了，2为比赛结束)

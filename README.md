@@ -8,6 +8,7 @@
    5 裁判归结于stuff表，非裁判无需填写IP,PID,SType是int型（'1'代表比赛未开始的裁判,'2'代表比赛开始的裁判,'3' 教练员信息）
    6 match表Sex int型（'1'男  '2' 女）Judge 判断比赛是否进行('0' 未开始 '1' 开始 '2' 比赛结束) 初始为0；
    7 SType 0表示没判的裁判 1表示判了的裁判   2小组裁判  3总裁判 4领队  5队医   6教练员 
+   8 新添加了Slogin表示是否登陆，查询调用Search_SLogin,返回值ture表示已登陆，false未登录。修改使用	ModifySLogin函数直接修改SLogin的状态，本身是什么状态，修改之后为他的相反状态
 关于初始化建表以及查询函数
    1 代表队表，运动员表完整建表
    2 裁判归属于stuff表,stuff表初始建表不传入IP PID,后续函数ModifyPID，ModifyIP对裁判的PID IP进行加入

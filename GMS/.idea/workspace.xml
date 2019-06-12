@@ -15,8 +15,8 @@
       <file leaf-file-name="DataOperation.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Data/DataOperation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="266" column="16" lean-forward="false" selection-start-line="266" selection-start-column="16" selection-end-line="266" selection-end-column="16" />
+            <state relative-caret-position="244">
+              <caret line="210" column="5" lean-forward="true" selection-start-line="210" selection-start-column="5" selection-end-line="210" selection-end-column="5" />
               <folding>
                 <element signature="method#InsertData#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#InsertData#1;class#DataOperation#0" expanded="false" />
@@ -33,6 +33,7 @@
                 <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+                <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -41,6 +42,7 @@
                 <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+                <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -52,6 +54,7 @@
                 <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+                <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
                 <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -102,8 +105,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="646" />
-    <option name="y" value="193" />
+    <option name="x" value="458" />
+    <option name="y" value="104" />
     <option name="width" value="1286" />
     <option name="height" value="799" />
   </component>
@@ -122,6 +125,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
@@ -147,12 +152,17 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="javatuples-1.2.jar" type="ab9368bb:PsiFileNode" />
             </path>
+            <path>
+              <item name="GMS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GMS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="javatuples-1.2.jar" type="ab9368bb:PsiFileNode" />
+              <item name="javatuples" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -353,7 +363,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="646" y="193" width="1286" height="799" extended-state="0" />
+    <frame x="458" y="104" width="1286" height="799" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -363,18 +373,18 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2286947" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2286947" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29042906" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30363035" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -414,6 +424,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -422,6 +433,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -433,6 +445,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -473,6 +486,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -481,6 +495,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -492,6 +507,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -532,6 +548,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -540,6 +557,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -551,6 +569,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -592,6 +611,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -600,6 +620,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -611,6 +632,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -652,6 +674,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -660,6 +683,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -671,6 +695,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -714,6 +739,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -722,6 +748,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -733,6 +760,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -776,6 +804,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -784,6 +813,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -795,6 +825,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -836,6 +867,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -844,6 +876,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -855,6 +888,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -896,6 +930,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -904,6 +939,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -915,6 +951,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -956,6 +993,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -964,6 +1002,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -975,6 +1014,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -1023,6 +1063,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -1031,6 +1072,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -1042,6 +1084,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -1124,18 +1167,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Data/DataText.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Data/DataOperation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="266" column="16" lean-forward="false" selection-start-line="266" selection-start-column="16" selection-end-line="266" selection-end-column="16" />
+        <state relative-caret-position="244">
+          <caret line="210" column="5" lean-forward="true" selection-start-line="210" selection-start-column="5" selection-end-line="210" selection-end-column="5" />
           <folding>
             <element signature="method#InsertData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#InsertData#1;class#DataOperation#0" expanded="false" />
@@ -1152,6 +1187,7 @@
             <element signature="method#ModifyPID#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyIP#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifySPassword#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifySLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyStype#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount1#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCount2#0;class#DataOperation#0" expanded="false" />
@@ -1160,6 +1196,7 @@
             <element signature="method#ModifyTPassword#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyCScore#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyJScore#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#ModifyMatch_Judge#0;class#DataOperation#0" expanded="false" />
             <element signature="method#ModifyData#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchInitialGrade#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalGrade#0;class#DataOperation#0" expanded="false" />
@@ -1171,6 +1208,7 @@
             <element signature="method#SearchSId#0;class#DataOperation#0" expanded="false" />
             <element signature="method#Stuff_Verify_password#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPID#0;class#DataOperation#0" expanded="false" />
+            <element signature="method#Search_SLogin#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchMatch#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchFinalPeopleList#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchPeopleList#0;class#DataOperation#0" expanded="false" />
@@ -1180,6 +1218,14 @@
             <element signature="method#SearchStuff#0;class#DataOperation#0" expanded="false" />
             <element signature="method#SearchGradeGroup#0;class#DataOperation#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data/DataText.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="10" column="5" lean-forward="false" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
