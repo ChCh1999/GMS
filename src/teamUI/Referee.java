@@ -1,5 +1,7 @@
 package teamUI;
 
+import SocketTools.Judge;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -14,7 +16,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Referee extends JFrame {
-
+//JFrame Component
 	private JPanel contentPane;
 	private JTextField P_name1;
 	private JTextField P_number1;
@@ -42,6 +44,8 @@ public class Referee extends JFrame {
 	private JTextField P_score7;
 	private JTextField P_score8;
 
+	//Socket tool
+	private Judge mReferee;
 	/**
 	 * Launch the application.
 	 */
@@ -81,7 +85,8 @@ public class Referee extends JFrame {
 		P_item.setEditable(false);
 		contentPane.add(P_item);
 		P_item.setColumns(10);
-		
+		P_item.setText("比赛未开始");
+
 		JLabel playername = new JLabel("运动员姓名");
 		playername.setFont(new Font("宋体", Font.PLAIN, 18));
 		playername.setBounds(55, 60, 99, 29);
@@ -256,7 +261,9 @@ public class Referee extends JFrame {
 		P_score8.setColumns(10);
 		P_score8.setBounds(338, 372, 118, 29);
 		contentPane.add(P_score8);
-		
+
+
+
 		JButton button = new JButton("提交");
 		button.addMouseListener(new MouseAdapter() {
 
@@ -268,11 +275,16 @@ public class Referee extends JFrame {
 				//提交成绩,导入下一位运动员
 			}
 		});
+
 		button.setBounds(202, 411, 99, 29);
 		contentPane.add(button);
 		this.setVisible(true);
-	}
 
+		mReferee.logined=true;
+		mReferee.start();
+		P_item.setText(mReferee.getProname());
+
+	}
 
 
 }

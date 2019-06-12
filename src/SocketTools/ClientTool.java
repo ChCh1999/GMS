@@ -10,8 +10,8 @@ public class ClientTool {
         login("2019001","000");
     }
 
-    final static String IP_SERVER="127.0.0.1";
-    final static int PORT_LOGIN=10087;
+    final static String IP_SERVER=ServerData.ipOfServer;
+    final static int PORT_LOGIN=ServerData.PORT_Login;
     public static int login(String SID,String Password){
         try{
             Socket login=new Socket(IP_SERVER,PORT_LOGIN);

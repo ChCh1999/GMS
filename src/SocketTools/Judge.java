@@ -14,11 +14,12 @@ public class Judge {
         ClientTool.login("1270.0.1","123456");
     }
 
-    final int PORT_LISTEN=10088;
-    final String IP_SERVER="/127.0.0.1";
+    final int PORT_LISTEN=ServerData.PORT_Judge;
+    final String IP_SERVER=ServerData.ipOfServer;
 
     //属性
     private String ID;
+    private String proname;
 
     //交互用
     private BufferedReader br;
@@ -27,7 +28,7 @@ public class Judge {
 
     //控制用
     public  boolean logined=false;//是否成功登陆
-    public  boolean sendmark=false;//是否准备好接受队员表
+    public  boolean sendmark=false;//是否接受了队员表
     public boolean prodone=false;//项目结束
 
     public void start(){
@@ -37,33 +38,35 @@ public class Judge {
             br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
             bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             connection=conn;
+            proname=br.readLine();
             return;
         }catch (IOException ioe){
             return;
         }
 
     }
-    public String getProName(){
-        return null;
-    }
     //获取服务器传输的运动员名单ArrayList<Pair<String,String>>（运动员编号，姓名）
     public ArrayList<Pair<String,String>> wait_Aths(){
         ArrayList<Pair<String,String>>Aths=new ArrayList<>();
-        if(logined){
+        if(logined&&!sendmark){
             try {
                 String Num;
                 String Name;
 //                while (connection==null);//等待连接成功
+                int amount=Integer.parseInt(br.readLine());
                 bw.write("ready");
-                while ((Num=br.readLine())!="Finished"){
-                    Name=br.readLine();
-                    Pair<String,String> pa=new Pair<>(Num,Name);
-                    Aths.add(new Pair<String,String>(Num,Name));
+                for(int i=0;i<amount;i++){
+                    if ((Num=br.readLine())!="Finished"){
+                        Name=br.readLine();
+                        Pair<String,String> pa=new Pair<>(Num,Name);
+                        Aths.add(new Pair<String,String>(Num,Name));
 
+                    }
                 }
-
-
+                bw.write("Judge\n");
                 //获取完成
+
+
                 sendmark=true;
                 return Aths;
             }catch (IOException ioe){
@@ -77,7 +80,7 @@ public class Judge {
     public boolean SendMarkTable(ArrayList<Pair<String,Float>> marktable ){
         if(logined&&sendmark){
             try {
-                bw.write(ID);
+                bw.write(ID+"SendMarkTable");
                 for(Pair<String,Float> a:marktable){
                     bw.write(a.getKey()+'\n');
                     bw.write(a.getValue().toString()+'\n');
@@ -91,5 +94,9 @@ public class Judge {
 
         }
         return false;
+    }
+
+    public String getProname() {
+        return proname;
     }
 }

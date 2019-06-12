@@ -7,8 +7,10 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 public class ChiefJudge {
-    final int PORT=10086;
-    final String ServerIP="127.0.0.1";
+    final int PORT=ServerData.PORT_Chief;
+    final String ServerIP=ServerData.ipOfServer;
+
+
     public static void main(String[] args) {
         ChiefJudge m=new ChiefJudge();
         m.startpro("体操",0);

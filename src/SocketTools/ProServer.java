@@ -27,7 +27,7 @@ public class ProServer {
         try {
             TLoginServer loginServer = new TLoginServer();
             new Thread(loginServer).start();
-            int port = ServerData.PORT1;
+            int port = ServerData.PORT_Chief;
             ServerSocket server = new ServerSocket(port);
             System.out.println("等待与客户端建立连接.....");
             while (true) {
@@ -169,10 +169,11 @@ class TProHandle implements Runnable {
         IPOfJudges=myConn.SearchProject_IP(ProID,1);
         try {
 
-            Group = new Socket(IPOfGroup, ServerData.PORT3);
+            Group = new Socket(IPOfGroup, ServerData.PORT_Judge);
             for (String ip : IPOfJudges) {
-                Socket Stemp = new Socket(ip, ServerData.PORT3);
+                Socket Stemp = new Socket(ip, ServerData.PORT_Judge);
                 Judges.add(Stemp);
+                new BufferedWriter(new OutputStreamWriter(Stemp.getOutputStream())).write(ProName+'\n');
             }
         } catch (UnknownHostException uhe) {
 
@@ -191,9 +192,11 @@ class TProHandle implements Runnable {
                 }
 
             }
-            if (OneGroup != null) {
-                SendMessageOfAthletes(OneGroup);
+            SendMessageOfAthletes(OneGroup);
+            if (OneGroup.size()!=0) {
+
             } else {
+
                 //TODO:结束进程
 
             }
@@ -237,11 +240,11 @@ class TProHandle implements Runnable {
                 SendMarkTable(Group, mark);
             }
 
-            bw.write("FinishSendMarks");
+            bw.write("FinishSendMarks\n");
             String feedback = br.readLine();
 //            br.close();
 //            bw.close();
-            if (feedback.equals("OK")) {
+            if (Boolean.valueOf(feedback)) {
                 //若确认通过则返回
                 //TODO 读取奖励分惩罚分
                 //TODO 统计最终分数存储到数据库
@@ -265,15 +268,15 @@ class TProHandle implements Runnable {
 
         }*/
         //输出成绩表中所有姓名+成绩
-        bw.write("SendMarkTable");
-        bw.write(message.IDOfJudge);
+        bw.write("SendMarkTable\n");
+        bw.write(message.IDOfJudge+"\n");
         while (!br.readLine().equals("ready")) ;//等待直到ready
         for (Pair<String, Float> mark : message.MarkTable     //Pair<AthNum,Mark>
                 ) {
             bw.write(mark.getValue0().toString() + '\n');
             bw.write(mark.getValue1().toString() + '\n');
         }
-        bw.write("Done");
+        bw.write("Done+\n");
 //        bw.close();
 //        br.close();
     }
@@ -350,7 +353,7 @@ class TLoginServer implements Runnable {
     @Override
     public void run() {
         try {
-            int port = ServerData.PORT2;
+            int port = ServerData.PORT_Login;
             loginserver = new ServerSocket(port);
             System.out.println("等待登录请求...");
             while (true) {

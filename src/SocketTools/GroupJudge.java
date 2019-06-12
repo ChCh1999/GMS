@@ -1,5 +1,6 @@
 package SocketTools;
 import javafx.util.Pair;
+import org.javatuples.Triplet;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -25,19 +26,16 @@ public class GroupJudge{
     private ArrayList<ArrayList<Pair<String,Float>>> MarkTables;
     //监控用
     public  boolean logined=false;//是否成功登陆
-    public  boolean sendmark=true;//是否准备好接受队员表
-    public boolean prodone=false;//项目结束
-    public boolean MarkTableDone=false;//成绩表传输完毕
+
+    public  boolean sendAth=true;//是否准备好接受队员表
+    public  boolean sendmark=false;
+    public  boolean sendConfirm=false;
+
     private String ID;
 
     public static void main(String[] args) {
         GroupJudge test=new GroupJudge();
-        //test.login("2019001");
-//        while (true){
-//            test.wait_Aths();
-//            test.getMarkTables();
-//            test.sendConform(true);
-//        }
+
 
     }
     GroupJudge(){
@@ -86,57 +84,93 @@ public class GroupJudge{
 
     //获取服务器传输的运动员名单ArrayList<Pair<String,String>>（运动员编号，姓名）
     public ArrayList<Pair<String,String>> wait_Aths(){
-        ArrayList<Pair<String,String>>Aths=new ArrayList<>();
-        if(logined){
-            try {
-                String Name;
-                String Num;
-                bw.write("ready");
-                while ((Num=br.readLine())!="Finished"){
-                    Name=br.readLine();
-                    Aths.add(new Pair<String,String>(Num,Name));
-                }
-                //获取完成
-                sendmark=true;
-                return Aths;
-            }catch (IOException a){
-                return null;
-            }
+       if(sendAth){
+           ArrayList<Pair<String,String>>Aths=new ArrayList<>();
+           if(logined){
+               try {
+                   String Name;
+                   String Num;
+                   int amount=Integer.parseInt(br.readLine());
+                   bw.write("ready");
+                   for(int i=0;i<amount;i++){
+                       if ((Num=br.readLine())!="Finished") {
 
-        }
-        return Aths;
+                           Name = br.readLine();
+                           Aths.add(new Pair<String, String>(Num, Name));
+                       }
+                   }
+                   //获取完成
+                   bw.write("GroupJudge\n");
+                   sendAth=false;
+                   sendmark=true;
+                   return Aths;
+               }catch (IOException a){
+                   return null;
+               }
+
+           }
+           return Aths;
+       }else {
+           return null;
+       }
     }
 
     //接收成绩表
     public void getMarkTables(){
-        //ArrayList<ArrayList<Pair<String,Float>>> res=new ArrayList<>();
-        MarkTables=new ArrayList<>();
-        try {
-            br.readLine();
-            while (!br.readLine().equals("FinishSendMarks")){
-                bw.write("ready\n");
-                ArrayList<Pair<String,Float>>MarkTable=new ArrayList<>();
-                String Num;
-                while (!(Num=br.readLine()).equals("Done")){
-                    float mark=Float.parseFloat(br.readLine());
-                    MarkTable.add(new Pair<>(Num,mark));
+        if(sendmark){
+            //ArrayList<ArrayList<Pair<String,Float>>> res=new ArrayList<>();
+            MarkTables=new ArrayList<>();
+            try {
+                br.readLine();//Send Start
+                while (!br.readLine().equals("FinishSendMarks")){
+                    br.readLine();//SendMarkTable
+                    br.readLine();//IDOfJudge
+                    bw.write("ready\n");
+                    ArrayList<Pair<String,Float>>MarkTable=new ArrayList<>();
+                    String Num;
+                    while (!(Num=br.readLine()).equals("Done")){
+                        float mark=Float.parseFloat(br.readLine());
+                        MarkTable.add(new Pair<>(Num,mark));
+                    }
+                    MarkTables.add(MarkTable);
                 }
-                MarkTables.add(MarkTable);
+                sendConfirm=true;
+                sendmark=false;
+            }catch (IOException ioe){
+
             }
-            MarkTableDone=true;
-        }catch (IOException ioe){
-
         }
 
-    }
-    public void sendConform(Boolean pass){
-        sendmark=true;
-        try {
-            bw.write(Boolean.TRUE.toString());
-        }catch (IOException ioe){
-            System.out.println("信号错误-小组裁判");
-        }
 
     }
 
+    public void sendConform(ArrayList<Triplet<String,Float,Float>> messages){//运动员编号、B分、P分
+        if(sendConfirm){
+            try {
+                bw.write(Boolean.TRUE.toString());
+                for (Triplet<String,Float,Float> message:messages) {
+                    bw.write(message.getValue0()+"\n");
+                    bw.write(message.getValue1()+"\n");
+                    bw.write(message.getValue2()+"\n");
+                }
+                sendAth=true;
+                sendConfirm=false;
+            }catch (IOException ioe){
+                System.out.println("信号错误-小组裁判");
+            }
+        }
+
+    }
+    public void sendConform(){//运动员编号、B分、P分
+        if(sendConfirm){
+            try {
+                bw.write(Boolean.FALSE.toString());
+                sendAth=true;
+                sendConfirm=false;
+            }catch (IOException ioe){
+                System.out.println("信号错误-小组裁判");
+            }
+        }
+
+    }
 }
