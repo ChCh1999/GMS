@@ -1,5 +1,8 @@
 package teamUI;
 
+import SocketTools.ChiefJudge;
+import SocketTools.GroupJudge;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -23,7 +26,7 @@ import java.awt.event.ActionEvent;
 
 //裁判员页面
 public class ChiefRE extends JFrame {
-
+//JFrame Component
 	private JPanel contentPane;
 	private JTextField score1_1;
 	private JTextField score1_2;
@@ -114,7 +117,8 @@ public class ChiefRE extends JFrame {
 	private JTextField P_Num8;
 	private JTextField final_Num8;
 
-
+//socket Tool
+	private GroupJudge mChiefRE;
 	//命名规则 运动员姓名playernameX 编号player_NumX 
 	//裁判打分score行_列  平均分 avgNumX B分 B_NumX P分 P_NumX 最终得分final_NumX
 
@@ -1021,5 +1025,9 @@ public class ChiefRE extends JFrame {
 		});
 		ReButton.setBounds(260, 475, 100, 30);
 		contentPane.add(ReButton);
+
+		mChiefRE=new GroupJudge();
+		mChiefRE.start();
+
 	}
 }

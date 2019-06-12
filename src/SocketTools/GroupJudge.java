@@ -38,9 +38,7 @@ public class GroupJudge{
 
 
     }
-    GroupJudge(){
 
-    }
 
 //    public boolean login(String id){
 //        try{
@@ -153,6 +151,7 @@ public class GroupJudge{
                     bw.write(message.getValue1()+"\n");
                     bw.write(message.getValue2()+"\n");
                 }
+                bw.write("Finished\n");
                 sendAth=true;
                 sendConfirm=false;
             }catch (IOException ioe){

@@ -1,6 +1,7 @@
 package teamUI;
 
 import SocketTools.Judge;
+import javafx.util.Pair;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -14,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class Referee extends JFrame {
 //JFrame Component
@@ -273,6 +275,15 @@ public class Referee extends JFrame {
 					
 				}*/
 				//提交成绩,导入下一位运动员
+				ArrayList<Pair<String,Float>> marktable=new ArrayList<>();
+				//TODO：判断数据完整性，将数据添加到marktable
+				if(mReferee.SendMarkTable(marktable)){
+					//TODO:清空页面中上一组的运动员信息
+					getAths();	//获取下一组运动员名单
+				}
+				else {
+					//TODO:一组运动员名单还没有传完 打分失败
+				}
 			}
 		});
 
@@ -283,8 +294,11 @@ public class Referee extends JFrame {
 		mReferee.logined=true;
 		mReferee.start();
 		P_item.setText(mReferee.getProname());
-
+		getAths();//第一组运动员名单
 	}
-
+	private void getAths(){
+		ArrayList<Pair<String,String>> aths = mReferee.wait_Aths();
+		//TODO:将aths的信息保存到界面
+	}
 
 }

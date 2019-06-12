@@ -65,8 +65,6 @@ public class Judge {
                 }
                 bw.write("Judge\n");
                 //获取完成
-
-
                 sendmark=true;
                 return Aths;
             }catch (IOException ioe){

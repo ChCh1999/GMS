@@ -3,6 +3,7 @@ package SocketTools;
 import Data.DataOperation;
 import org.javatuples.Pair;
 import org.javatuples.Quartet;
+import org.javatuples.Triplet;
 import sun.security.util.Password;
 
 import java.io.*;
@@ -10,7 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 
 public class ProServer {
@@ -211,6 +212,8 @@ class TProHandle implements Runnable {
         ArrayList<TSendAthletesMessage> ListOfJudges = new ArrayList<>();
         ArrayList<Thread> ListOfThread = new ArrayList<>();
         //ArrayList<TSendAthletesMessage> ListOfMarkTable=new ArrayList<>();
+        HashMap marktable=new HashMap<String,ArrayList<Float>>();
+
         try {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(Group.getInputStream()));
@@ -231,12 +234,22 @@ class TProHandle implements Runnable {
 
             GroupMessage.join();
             //等待裁判完成打分
+
+            for (Pair<String, String> ath:Aths
+                 ) {
+                marktable.put(ath.getValue1(),new ArrayList<Float>());
+            }
+
             for (Thread t : ListOfThread) {
                 t.join();
             }
 
             bw.write("Send Start\n");
             for (TSendAthletesMessage mark : ListOfJudges) {
+//                for (Pair<String, Float>  markpair : mark.MarkTable
+//                     ) {
+//                    ((ArrayList<Float>)marktable.get(markpair.getValue0())).add(markpair.getValue1());
+//                }
                 SendMarkTable(Group, mark);
             }
 
@@ -247,10 +260,52 @@ class TProHandle implements Runnable {
             if (Boolean.valueOf(feedback)) {
                 //若确认通过则返回
                 //TODO 读取奖励分惩罚分
-                //TODO 统计最终分数存储到数据库
+                ArrayList<Triplet<String,Float,Float>> bpMarkTable=new ArrayList<>();
+                String athNum;
+                while (!(athNum=br.readLine()).equals("Finished")){
+                    float bmark= Float.parseFloat(br.readLine());
+                    float pmark= Float.parseFloat(br.readLine());
+                    //TODO：传送全部裁判的打分 并存入哈希表 marktable
+                    bpMarkTable.add(new Triplet<>(athNum,bmark,pmark));
+                }
+
+                for (Triplet<String,Float,Float> bpmark:bpMarkTable
+                     ) {
+                    ArrayList<Float> marks= (ArrayList<Float>) marktable.get(bpmark.getValue0());
+                   if(marks.size()>2){
+                       float mark_sum=0f;
+                       float mark_max=marks.get(0);
+                       float mark_min=marks.get(0);
+                       for(float mark:marks){
+                           mark_sum+=mark;
+                           if(mark>mark_max){
+                               mark_max=mark;
+                               break;
+                           }
+
+                           if(mark<mark_min){
+                               mark_min=mark;
+                               break;
+                           }
+
+                       }
+                       mark_sum=(mark_sum-mark_min-mark_max)*marks.size()/(marks.size()-2)
+                               +bpmark.getValue1()-bpmark.getValue2();
+                       int indexOfj=ProName.indexOf("决赛");
+                       if(indexOfj!=-1){
+                           myConn.ModifyJScore(ProID,bpmark.getValue0(),mark_sum);
+                       }else {
+                           myConn.ModifyCScore(ProID,bpmark.getValue0(),mark_sum);
+                       }
+                   }else {
+                       System.out.println("运动员评分少于两个,为"+marks.size());
+                   }
+                }
+
                 return;
             } else {
-                SendMessageOfAthletes(Aths);
+//                SendMessageOfAthletes(Aths);
+                //TODO:某个裁判重新打分
                 return;
             }
         } catch (Exception x) {
