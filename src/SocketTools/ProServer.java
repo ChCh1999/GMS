@@ -2,6 +2,7 @@ package SocketTools;
 
 import Data.DataOperation;
 import org.javatuples.Pair;
+import org.javatuples.Quartet;
 import sun.security.util.Password;
 
 import java.io.*;
@@ -10,11 +11,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
-class ServerData {
-    final static int PORT1 = 10086;//总裁判连接监听端口
-    final static int PORT2 = 10087;//登录监听端口
-    final static int PORT3 = 10088;//连接裁判用端口
-}
+
 
 public class ProServer {
 
@@ -396,21 +393,47 @@ class TLoginHandle implements Runnable {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(User.getInputStream()));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
-            br.readLine();//"login request"
-            String SID = br.readLine();
-            String Password=br.readLine();
-            if (checkIDOfJudge(SID,Password)){
-                bw.write(Boolean.TRUE.toString() + '\n');
-                DataOperation dbo=new DataOperation();
-                System.out.println(User.getInetAddress().toString());
-                dbo.ModifyIP(SID,User.getInetAddress().toString());
+            String command=br.readLine();//"login request"
+            switch (command){
+                case "login request":
+                    String SID = br.readLine();
+                    String Password=br.readLine();
+                    if (checkIDOfJudge(SID,Password)){
+                        bw.write(Boolean.TRUE.toString() + '\n');
 
-                bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
+                        DataOperation dbo=new DataOperation();
+                        //TODO:状态检索以及相应的修改
+//                        if(dbo.SearchStype(SID)!=1){
+//                            System.out.println(User.getInetAddress().toString());
+//                            dbo.ModifyIP(SID,User.getInetAddress().toString());
+//                        }
+                        bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
+                    }
+                    else
+                        if(checkIDofGroup(SID,Password)){
+                            bw.write(Boolean.TRUE.toString() + '\n');
+                            bw.write(String.valueOf(ServerData.NumOfGroup)+ '\n');
+                        }else
+                            bw.write(Boolean.FALSE.toString() + '\n');
+
+                    bw.flush();
+                    break;
+                case "change password":
+                    String TID = br.readLine();
+                    String TPassword=br.readLine();
+                    String newpassword=br.readLine();
+                    if(changePassword(TID,TPassword,newpassword)){
+                        bw.write(Boolean.TRUE.toString() + '\n');
+                    }else {
+                        bw.write(Boolean.FALSE.toString() + '\n');
+                    }
+                    bw.flush();
+                    break;
+                default:
+                    System.out.println("wrong command");
+
             }
-            else
-                bw.write(Boolean.FALSE.toString() + '\n');
 
-            bw.flush();
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
@@ -428,6 +451,27 @@ class TLoginHandle implements Runnable {
         } else {
             return false;
         }
+    }
+    public  boolean checkIDofGroup(String tid,String passward){
+        Data.DataOperation dbo = new DataOperation();
+        ArrayList<Quartet<String,String,String,String>> team=dbo.SearchTeam(tid);
+        if(!team.isEmpty()){
+            if (team.size()==1&&team.get(0).getValue2().equals(passward))
+                return true;
+        }
+        return false;
+    }
+    public boolean changePassword(String id,String password,String newPassword){
+        if(checkIDOfJudge(id,password)){
+            Data.DataOperation dbo = new DataOperation();
+            return dbo.ModifySPassword(id,newPassword);
+        }else {
+            if(checkIDofGroup(id,password)){
+                Data.DataOperation dbo = new DataOperation();
+                return dbo.ModifyTPassword(id,newPassword);
+            }
+        }
+        return false;
     }
 }
 

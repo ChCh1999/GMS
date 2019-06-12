@@ -17,16 +17,18 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
+
+import SocketTools.ClientTool;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 
 public class Login {
 
 	private JFrame frame;
 	private JTextField nameField;
 	private JPasswordField passwordField;
-
 	/**
 	 * Launch the application.
 	 */
@@ -85,13 +87,25 @@ public class Login {
 		login_in.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				String userID=nameField.getText();
+				String password=String.valueOf(passwordField.getPassword());
+				if (!password.isEmpty()&&
+						!userID.isEmpty()){
+					int state=-1;
+					state=ClientTool.login(userID,password);
+					switch (state){
+						//TODO:0表示裁判  1裁判账号已登录，登陆失败 2小组裁判  3总裁判  4领队  5队医 6教练员 9(serverData.NumOfGroup)代表队账号
+						default:
+							//TODO：登陆失败
+					}
+				}
 				/*switch() {
 				case
 				//登录函数
 				
 				}*/
 				//Apply apply = new Apply();//临时调试用
-				Referee referee = new Referee();
+//				Referee referee = new Referee();
 			}
 		});
 		login_in.setBounds(294, 210, 102, 30);

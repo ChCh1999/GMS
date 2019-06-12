@@ -113,6 +113,8 @@ public class ChiefRE extends JFrame {
 	private JTextField B_Num8;
 	private JTextField P_Num8;
 	private JTextField final_Num8;
+
+
 	//命名规则 运动员姓名playernameX 编号player_NumX 
 	//裁判打分score行_列  平均分 avgNumX B分 B_NumX P分 P_NumX 最终得分final_NumX
 

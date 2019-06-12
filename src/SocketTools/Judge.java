@@ -61,6 +61,8 @@ public class Judge {
                     Aths.add(new Pair<String,String>(Num,Name));
 
                 }
+
+
                 //获取完成
                 sendmark=true;
                 return Aths;
@@ -71,7 +73,6 @@ public class Judge {
         }
         return Aths;
     }
-
     //发送完成的打分表
     public boolean SendMarkTable(ArrayList<Pair<String,Float>> marktable ){
         if(logined&&sendmark){
