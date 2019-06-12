@@ -1,5 +1,8 @@
 package teamUI;
 
+import SocketTools.Judge;
+import javafx.util.Pair;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -12,9 +15,10 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class Referee extends JFrame {
-
+//JFrame Component
 	private JPanel contentPane;
 	private JTextField P_name1;
 	private JTextField P_number1;
@@ -42,21 +46,23 @@ public class Referee extends JFrame {
 	private JTextField P_score7;
 	private JTextField P_score8;
 
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					Referee frame = new Referee();
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	//Socket tool
+	private Judge mReferee;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Referee frame = new Referee();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	/**
 	 * Create the frame.
@@ -81,7 +87,8 @@ public class Referee extends JFrame {
 		P_item.setEditable(false);
 		contentPane.add(P_item);
 		P_item.setColumns(10);
-		
+		P_item.setText("比赛未开始");
+
 		JLabel playername = new JLabel("运动员姓名");
 		playername.setFont(new Font("宋体", Font.PLAIN, 18));
 		playername.setBounds(55, 60, 99, 29);
@@ -256,7 +263,9 @@ public class Referee extends JFrame {
 		P_score8.setColumns(10);
 		P_score8.setBounds(338, 372, 118, 29);
 		contentPane.add(P_score8);
-		
+
+
+
 		JButton button = new JButton("提交");
 		button.addMouseListener(new MouseAdapter() {
 
@@ -266,13 +275,30 @@ public class Referee extends JFrame {
 					
 				}*/
 				//提交成绩,导入下一位运动员
+				ArrayList<Pair<String,Float>> marktable=new ArrayList<>();
+				//TODO：判断数据完整性，将数据添加到marktable
+				if(mReferee.SendMarkTable(marktable)){
+					//TODO:清空页面中上一组的运动员信息
+					getAths();	//获取下一组运动员名单
+				}
+				else {
+					//TODO:一组运动员名单还没有传完 打分失败
+				}
 			}
 		});
+
 		button.setBounds(202, 411, 99, 29);
 		contentPane.add(button);
-
 		this.setVisible(true);
 
+		mReferee.logined=true;
+		mReferee.start();
+		P_item.setText(mReferee.getProname());
+		getAths();//第一组运动员名单
+	}
+	private void getAths(){
+		ArrayList<Pair<String,String>> aths = mReferee.wait_Aths();
+		//TODO:将aths的信息保存到界面
 	}
 
 }

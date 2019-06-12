@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="javatuples-1.2">
+  <library name="miglayout15-swing">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/javatuples-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/miglayout15-swing.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

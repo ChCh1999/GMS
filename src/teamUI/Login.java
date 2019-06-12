@@ -28,11 +28,6 @@ public class Login {
 	private JFrame frame;
 	private JTextField nameField;
 	private JPasswordField passwordField;
-	private int state;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -56,7 +51,6 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		state=-1;
 		frame = new JFrame();
 		frame.setTitle("登录");//登录
 		frame.setBounds(100, 100, 450, 300);
@@ -85,30 +79,31 @@ public class Login {
 		frame.getContentPane().add(passwordField);
 		
 		JButton login_in = new JButton("登录");//登录
-
 		login_in.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				String SID=nameField.getText();
-				String Password=String.valueOf(passwordField.getPassword());
-				if(SID==null||Password==null){
-					return;
-				}else {
-					state=ClientTool.login(SID,Password);
+				String userID=nameField.getText();
+				String password=String.valueOf(passwordField.getPassword());
+				if (!password.isEmpty()&&
+						!userID.isEmpty()){
+					int state=-1;
+					state=ClientTool.login(userID,password);
+					switch (state){
+						//TODO:0表示裁判  1裁判账号已登录，登陆失败 2小组裁判  3总裁判  4领队  5队医 6教练员 9(serverData.NumOfGroup)代表队账号
+						default:
+							//TODO：登陆失败
+					}
 				}
-				switch(state) {
-					case 0:
-					case 1:
-						Referee referee=new Referee();
-						break;
-
+				/*switch() {
+				case
 				//登录函数
-
-				}
+				
+				}*/
 				//Apply apply = new Apply();//临时调试用
+//				Referee referee = new Referee();
 			}
 		});
-		login_in.setBounds(270, 210, 102, 30);
+		login_in.setBounds(294, 210, 102, 30);
 		frame.getContentPane().add(login_in);
 		
 		JButton reset = new JButton("清空信息");//重置账号密码
@@ -119,8 +114,18 @@ public class Login {
 				passwordField.setText("");
 			}
 		});
-		reset.setBounds(88, 210, 102, 30);
+		reset.setBounds(169, 210, 102, 30);
 		frame.getContentPane().add(reset);
+		
+		JButton register = new JButton("录入信息");
+		register.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				Apply apply = new Apply();
+			}
+		});
+		register.setBounds(45, 210, 102, 30);
+		frame.getContentPane().add(register);
 		
 		//插入图片背景
 		/*JLayeredPane backpic = new JLayeredPane();

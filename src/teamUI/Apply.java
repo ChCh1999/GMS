@@ -42,7 +42,7 @@ public class Apply extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -78,7 +78,7 @@ public class Apply extends JFrame {
 		
 		tnameText = new JTextField();
 		tnameText.setBounds(129, 10, 182, 27);
-		tnameText.setEditable(false);
+		//tnameText.setEditable(false);
 		contentPane.add(tnameText);
 		tnameText.setColumns(10);
 		
