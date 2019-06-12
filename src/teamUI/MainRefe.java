@@ -1,5 +1,8 @@
 package teamUI;
 
+import SocketTools.ChiefJudge;
+import SocketTools.Judge;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -64,7 +67,7 @@ public class MainRefe extends JFrame {
 		sex_panel.setBounds(117, 165, 491, 39);
 		contentPane.add(sex_panel);
 
-		JRadioButton radioB_man = new JRadioButton("男");
+		JRadioButton radioB_man = new JRadioButton("男",true);
 		radioB_man.setFont(new Font("宋体", Font.PLAIN, 18));
 		sex_panel.add(radioB_man);
 		
@@ -88,7 +91,7 @@ public class MainRefe extends JFrame {
 		age_panel.setBounds(117, 214, 491, 39);
 		contentPane.add(age_panel);
 		
-		JRadioButton radioButton_2 = new JRadioButton("7-8");
+		JRadioButton radioButton_2 = new JRadioButton("7-8",true);
 		radioButton_2.setFont(new Font("宋体", Font.PLAIN, 18));
 		age_panel.add(radioButton_2);
 		
@@ -179,7 +182,7 @@ public class MainRefe extends JFrame {
 		befinal_panel.setBounds(117, 351, 491, 39);
 		contentPane.add(befinal_panel);
 		
-		JRadioButton jRB_yusai = new JRadioButton("预赛");
+		JRadioButton jRB_yusai = new JRadioButton("预赛",true);
 		jRB_yusai.setFont(new Font("宋体", Font.PLAIN, 18));
 		befinal_panel.add(jRB_yusai);
 		
@@ -205,7 +208,12 @@ public class MainRefe extends JFrame {
 				String age=findthebuttonText(bg_age);
 				String befinal=findthebuttonText(bg_befinal);
 
-				
+				//最后传递给ChiefJudge的值
+				int groupID=JudgeTheAge(age);
+				String finalString=sex+"子"+age+"组"+game+befinal;
+
+				ChiefJudge chiefJudge=new ChiefJudge();
+				chiefJudge.startpro(finalString,groupID);
 			}
 		});
 		button.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -213,6 +221,19 @@ public class MainRefe extends JFrame {
 		contentPane.add(button);
 	}
 
+	//判断是哪个年龄组的
+	public int JudgeTheAge(String age){
+		switch (age){
+			case "7-8":
+				return 1;
+			case "9-10":
+				return 2;
+			case "11-12":
+				return 3;
+			default:
+				return -1;
+		}
+	}
 	//找到button组中的选项text值
 	public String findthebuttonText(ButtonGroup bg){
 		String Text=null;
