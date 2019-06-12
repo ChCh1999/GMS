@@ -108,7 +108,7 @@ public class Login {
 //				Referee referee = new Referee();
 			}
 		});
-		login_in.setBounds(294, 210, 102, 30);
+		login_in.setBounds(326, 210, 90, 30);
 		frame.getContentPane().add(login_in);
 		
 		JButton reset = new JButton("清空信息");//重置账号密码
@@ -119,7 +119,7 @@ public class Login {
 				passwordField.setText("");
 			}
 		});
-		reset.setBounds(169, 210, 102, 30);
+		reset.setBounds(126, 210, 90, 30);
 		frame.getContentPane().add(reset);
 		
 		JButton register = new JButton("录入信息");
@@ -129,9 +129,76 @@ public class Login {
 				Apply apply = new Apply();
 			}
 		});
-		register.setBounds(45, 210, 102, 30);
+		register.setBounds(26, 210, 90, 30);
 		frame.getContentPane().add(register);
-		
+
+		JButton reload = new JButton("重置密码");
+		reload.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				JFrame jf=new JFrame();
+				jf.setTitle("重置密码");
+				jf.setBounds(250,250,400,270);
+				jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jf.getContentPane().setLayout(null);
+
+				JLabel jb_1 = new JLabel("旧密码:");
+				jb_1.setFont(new Font("宋体", Font.PLAIN, 18));
+				jb_1.setBounds(20, 30, 90, 30);
+				jf.getContentPane().add(jb_1);
+
+				JTextField oldword = new JTextField();
+				oldword.setFont(new Font("宋体", Font.PLAIN, 18));
+				oldword.setBounds(100,30,250,30);
+				jf.getContentPane().add(oldword);
+
+				JLabel jb_2 = new JLabel("新密码：");
+				jb_2.setFont(new Font("宋体", Font.PLAIN, 18));
+				jb_2.setBounds(20, 70, 90, 30);
+				jf.getContentPane().add(jb_2);
+
+				JTextField newword = new JTextField();
+				newword.setFont(new Font("宋体", Font.PLAIN, 18));
+				newword.setBounds(100,70,250,30);
+				jf.getContentPane().add(newword);
+
+				JLabel jb_3 = new JLabel("确认密码：");
+				jb_3.setFont(new Font("宋体", Font.PLAIN, 18));
+				jb_3.setBounds(20, 110, 90, 30);
+				jf.getContentPane().add(jb_3);
+
+				JTextField renewword = new JTextField();
+				renewword.setFont(new Font("宋体", Font.PLAIN, 18));
+				renewword.setBounds(100,110,250,30);
+				jf.getContentPane().add(renewword);
+
+				JButton jb_4 = new JButton("确认修改");
+				jb_4.setFont(new Font("宋体",Font.PLAIN,18));
+				jb_4.setBounds(200,170, 110, 30);
+				jb_4.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+
+					}
+				});
+				jf.getContentPane().add(jb_4);
+
+				JButton jb_5 = new JButton("取消修改");
+				jb_5.setFont(new Font("宋体",Font.PLAIN,18));
+				jb_5.setBounds(30,170, 110, 30);
+				jb_5.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						jf.dispose();
+					}
+				});
+				jf.getContentPane().add(jb_5);
+
+				jf.setVisible(true);
+			}
+		});
+		reload.setBounds(226, 210, 90, 30);
+		frame.getContentPane().add(reload);
 		//插入图片背景
 		/*JLayeredPane backpic = new JLayeredPane();
 		backpic.setBounds(0, 0, 1, 1);
