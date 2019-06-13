@@ -46,6 +46,8 @@ public class Massagesearch extends JFrame {
 		setTitle("查询界面");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 777, 505);
+        setResizable(false);
+
 		p_contentPane = new JPanel();
 		p_contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(p_contentPane);

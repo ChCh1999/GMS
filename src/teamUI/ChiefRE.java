@@ -145,6 +145,7 @@ public class ChiefRE extends JFrame {
 		setTitle("小组裁判页");//总裁判
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1098, 565);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
