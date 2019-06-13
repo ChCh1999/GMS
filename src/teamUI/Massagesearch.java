@@ -8,16 +8,8 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 
 public class Massagesearch extends JFrame {
 
@@ -103,16 +95,22 @@ public class Massagesearch extends JFrame {
 		lblBisaixiangmu.setBounds(353, 23, 90, 20);
 		playersearch.add(lblBisaixiangmu);
 
-		JTextField gameText = new JTextField();
+		/*JTextField gameText = new JTextField();
 		gameText.setColumns(10);
 		gameText.setBounds(442, 21, 257, 30);
-		playersearch.add(gameText);
+		playersearch.add(gameText);*/
+
+		JComboBox pbisaixiangmu = new JComboBox();
+		pbisaixiangmu.setModel(new DefaultComboBoxModel(new String[] {"单杠", "双杠","吊环","鞍马","蹦床","跳马","高低杠","平衡木","自由体操"}));
+		pbisaixiangmu.setFont(new Font("宋体", Font.PLAIN, 18));
+		pbisaixiangmu.setBounds(439, 25, 104, 25);
+		playersearch.add(pbisaixiangmu);
 
 		JButton queryButton = new JButton("查询");
 		queryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-
+				//pbisaixiangmu.getSelectedItem()//获得所选
 			}
 		});
 		queryButton.setBounds(291, 61, 93, 30);
@@ -122,7 +120,7 @@ public class Massagesearch extends JFrame {
 		tabbedPane.addTab("团队查询", null, teamsearch, null);
 		teamsearch.setLayout(null);
 
-		String[] tcolumnNames = {"团队名","比赛项目","团队成绩"};
+		String[] tcolumnNames = {"团队名","比赛项目","团队成绩","团队排名"};
 
 		Object[][] trowData = {};
 
@@ -154,20 +152,21 @@ public class Massagesearch extends JFrame {
 		tNumLabel.setBounds(10, 23, 90, 20);
 		teamsearch.add(tNumLabel);
 
-		JTextField teamNumText = new JTextField();
+		/*JTextField teamNumText = new JTextField();
 		teamNumText.setBounds(110, 21, 215, 30);
 		teamNumText.setColumns(10);
-		teamsearch.add(teamNumText);
+		teamsearch.add(teamNumText);*/
+
+		//团队号
+		JComboBox teamNumBox = new JComboBox();
+		teamNumBox.setBounds(88, 25, 185, 25);
+		//TODO：拉取数据库信息置入
+		teamsearch.add(teamNumBox);
 
 		JLabel tlblBisaixiangmu = new JLabel("比赛项目");
 		tlblBisaixiangmu.setFont(new Font("宋体", Font.PLAIN, 18));
-		tlblBisaixiangmu.setBounds(353, 23, 90, 20);
+		tlblBisaixiangmu.setBounds(303, 25, 90, 20);
 		teamsearch.add(tlblBisaixiangmu);
-
-		JTextField tgameText = new JTextField();
-		tgameText.setColumns(10);
-		tgameText.setBounds(442, 21, 257, 30);
-		teamsearch.add(tgameText);
 
 		JButton tqueryButton = new JButton("查询");
 		tqueryButton.addMouseListener(new MouseAdapter() {
@@ -178,6 +177,24 @@ public class Massagesearch extends JFrame {
 		});
 		tqueryButton.setBounds(291, 61, 93, 30);
 		teamsearch.add(tqueryButton);
+
+		JComboBox txiangmuBox = new JComboBox();
+		txiangmuBox.setModel(new DefaultComboBoxModel(new String[] {"单杠", "双杠","吊环","鞍马","蹦床","跳马","高低杠","平衡木","自由体操"}));
+		txiangmuBox.setFont(new Font("宋体", Font.PLAIN, 18));
+		txiangmuBox.setToolTipText("");
+		txiangmuBox.setBounds(395, 25, 104, 25);
+		teamsearch.add(txiangmuBox);
+
+		JLabel agelabel = new JLabel("年龄组");
+		agelabel.setFont(new Font("宋体", Font.PLAIN, 18));
+		agelabel.setBounds(509, 25, 54, 20);
+		teamsearch.add(agelabel);
+
+		JComboBox ageBox = new JComboBox();
+		ageBox.setFont(new Font("宋体", Font.PLAIN, 18));
+		ageBox.setModel(new DefaultComboBoxModel(new String[] {"7-8", "9-10", "11-12"}));
+		ageBox.setBounds(573, 25, 77, 25);
+		teamsearch.add(ageBox);
 
 	}
 

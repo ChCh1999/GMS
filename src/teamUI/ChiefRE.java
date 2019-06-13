@@ -315,7 +315,7 @@ public class ChiefRE extends JFrame {
 			}
 		});
 		button.setFont(new Font("宋体", Font.PLAIN, 18));
-		button.setBounds(661, 475, 100, 30);
+		button.setBounds(761, 475, 100, 30);
 		contentPane.add(button);
 		
 		JLabel final_score = new JLabel("最后得分");
@@ -1008,9 +1008,20 @@ public class ChiefRE extends JFrame {
 				retext.setBounds(100, 100, 250, 30);
 				jf.getContentPane().add(retext);
 
+				JButton canceljb = new JButton("取消");
+				canceljb.setFont(new Font("宋体",Font.PLAIN,18));
+				canceljb.setBounds(100,200, 70, 30);
+				jf.getContentPane().add(canceljb);
+				canceljb.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						jf.dispose();
+					}
+				});
+
 				JButton rejb = new JButton("确认");
 				rejb.setFont(new Font("宋体",Font.PLAIN,18));
-				rejb.setBounds(180,200, 70, 30);
+				rejb.setBounds(250,200, 70, 30);
 				jf.getContentPane().add(rejb);
 				rejb.addMouseListener(new MouseAdapter() {
 					@Override
@@ -1022,8 +1033,20 @@ public class ChiefRE extends JFrame {
 				jf.setVisible(true);
 			}
 		});
-		ReButton.setBounds(260, 475, 100, 30);
+		ReButton.setBounds(510, 475, 100, 30);
 		contentPane.add(ReButton);
+
+		JButton logoutjb = new JButton("注销");
+		logoutjb.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//注销登录状态
+				dispose();
+			}
+		});
+		logoutjb.setFont(new Font("宋体", Font.PLAIN, 18));
+		logoutjb.setBounds(260, 475, 100, 30);
+		contentPane.add(logoutjb);
 
 		mChiefRE=new GroupJudge();
 		mChiefRE.start();

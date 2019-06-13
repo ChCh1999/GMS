@@ -301,6 +301,18 @@ public class Referee extends JFrame {
 		contentPane.add(messagetext);
 		messagetext.setColumns(10);
 
+		JButton logout = new JButton("注销");
+		logout.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//取消登录状态
+				dispose();
+			}
+		});
+		logout.setFont(new Font("宋体", Font.PLAIN, 18));
+		logout.setBounds(452, 0, 90, 30);
+		contentPane.add(logout);
+
 		this.setVisible(true);
 
 		mReferee.logined=true;
