@@ -995,32 +995,30 @@ public class ChiefRE extends JFrame {
 				jf.setTitle("确认重评？");
 				jf.setBounds(250, 250, 450, 300);
 				jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				jf.setResizable(false);
 				jf.getContentPane().setLayout(null);
-				
+
 				JLabel rejl = new JLabel("请输入需要重评的裁判员号");
 				rejl.setFont(new Font("宋体", Font.PLAIN, 18));
-				rejl.setBounds(0, 0, 250, 30);
+				rejl.setBounds(115, 40, 250, 30);
 				jf.getContentPane().add(rejl);
-				
+
 				JTextField retext = new JTextField();
 				retext.setFont(new Font("宋体", Font.PLAIN, 18));
-				retext.setBounds(0, 40, 250, 30);
+				retext.setBounds(100, 100, 250, 30);
 				jf.getContentPane().add(retext);
-				
-				JLabel rejl_2 = new JLabel("请输入运动员编号");
-				rejl_2.setFont(new Font("宋体", Font.PLAIN, 18));
-				rejl_2.setBounds(0,80, 250, 30);
-				jf.getContentPane().add(rejl_2);
-				
-				JTextField replayer = new JTextField();
-				replayer.setFont(new Font("宋体", Font.PLAIN, 18));
-				replayer.setBounds(0, 120, 250, 30);
-				jf.getContentPane().add(replayer);
-				
+
 				JButton rejb = new JButton("确认");
 				rejb.setFont(new Font("宋体",Font.PLAIN,18));
 				rejb.setBounds(180,200, 70, 30);
 				jf.getContentPane().add(rejb);
+				rejb.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+
+					}
+				});
+
 				jf.setVisible(true);
 			}
 		});
