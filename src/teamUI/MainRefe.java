@@ -14,7 +14,7 @@ import java.util.Enumeration;
 public class MainRefe extends JFrame {
 
 	private JPanel contentPane;
-
+	ChiefJudge chiefJudge=new ChiefJudge(this);
 	/**
 	 * Launch the application.
 	 */
@@ -213,7 +213,7 @@ public class MainRefe extends JFrame {
 				int groupID=JudgeTheAge(age);
 				String finalString=sex+"子"+age+"组"+game+befinal;
 
-				ChiefJudge chiefJudge=new ChiefJudge();
+
 				chiefJudge.startpro(finalString,groupID);
 			}
 		});

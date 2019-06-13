@@ -288,8 +288,19 @@ public class Referee extends JFrame {
 			}
 		});
 
-		button.setBounds(202, 411, 99, 29);
+		button.setBounds(357, 411, 99, 29);
 		contentPane.add(button);
+
+		JLabel label = new JLabel("提示信息");
+		label.setFont(new Font("宋体", Font.PLAIN, 18));
+		label.setBounds(10, 415, 80, 29);
+		contentPane.add(label);
+
+		JTextField messagetext = new JTextField();
+		messagetext.setBounds(95, 415, 238, 29);
+		contentPane.add(messagetext);
+		messagetext.setColumns(10);
+
 		this.setVisible(true);
 
 		mReferee.logined=true;

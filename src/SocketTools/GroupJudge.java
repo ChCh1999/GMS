@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GroupJudge{
     private boolean signed=false;
@@ -142,7 +143,8 @@ public class GroupJudge{
 
     }
 
-    public void sendConform(ArrayList<Triplet<String,Float,Float>> messages){//运动员编号、B分、P分
+    public void sendConform(ArrayList<Triplet<String,Float,Float>> messages,
+                            HashMap<String,ArrayList<Float>> marks){//运动员编号、B分、P分   marks
         if(sendConfirm){
             try {
                 bw.write(Boolean.TRUE.toString());

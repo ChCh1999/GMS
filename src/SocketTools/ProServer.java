@@ -26,7 +26,7 @@ public class ProServer {
     public void start() {
         // 为了简单起见，所有的异常信息都往外抛
         try {
-            TLoginServer loginServer = new TLoginServer();
+            TServer loginServer = new TServer();
             new Thread(loginServer).start();
             int port = ServerData.PORT_Chief;
             ServerSocket server = new ServerSocket(port);
@@ -83,8 +83,9 @@ class TProMaster implements Runnable {
 
         int index=proName.indexOf("决赛");
         //未进行的初赛、已完成相应初赛且尚未进行的决赛则进入后流程
-        if ((index==-1&&dbo.SearchMatch(proName,group)==0)
-                ||(index!=-1&&dbo.SearchMatch(proName.substring(0,index),group)==2)&&dbo.SearchMatch(proName,group)==0) {
+        if ((index==-1&&dbo.SearchMatch(proName,group)==0) ||
+                (index!=-1&&dbo.SearchMatch(proName.substring(0,index),group)==2)&&
+                        dbo.SearchMatch(proName,group)==0) {
             Thread prohandle = new Thread(new TProHandle(proName, group, socket));
 
             //开始处理比赛信息
@@ -102,7 +103,7 @@ class TProMaster implements Runnable {
             MessageToClient.write("End" + '\n');
             MessageToClient.flush();
             System.out.println("End");
-            System.out.println(br.readLine());
+//            System.out.println(br.readLine());
         } else {
             System.out.println("Wrong");
             MessageToClient.write("WrongRequest");
@@ -402,7 +403,7 @@ class TSendAthletesMessage implements Runnable {
 }
 
 //处理登陆连接的线程
-class TLoginServer implements Runnable {
+class TServer implements Runnable {
     ServerSocket loginserver;
 
     @Override
@@ -410,12 +411,12 @@ class TLoginServer implements Runnable {
         try {
             int port = ServerData.PORT_Login;
             loginserver = new ServerSocket(port);
-            System.out.println("等待登录请求...");
+            System.out.println("等待连接请求...");
             while (true) {
                 // server尝试接收其他Socket的连接请求，server的accept方法是阻塞式的
                 Socket socket = loginserver.accept();
                 // 每接收到一个Socket就建立一个新的线程来处理它
-                Thread login = new Thread(new TLoginHandle(socket));
+                Thread login = new Thread(new THandle(socket));
                 login.start();
             }
 
@@ -425,15 +426,15 @@ class TLoginServer implements Runnable {
     }
 
     public void stopLoginServer() {
-        //TODO:终止登录服务器
+        //TODO:终止服务器
     }
 }
 
-class TLoginHandle implements Runnable {
+class THandle implements Runnable {
     Socket User;
-//    BufferedReader br;
-//    BufferedWriter bw;
-    TLoginHandle(Socket user) {
+    private BufferedReader br;
+    private BufferedWriter bw;
+    THandle(Socket user) {
         this.User = user;
         System.out.println("处理登陆信息");
 //        try{
@@ -449,8 +450,8 @@ class TLoginHandle implements Runnable {
     public void run() {
 
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(User.getInputStream()));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
+            br = new BufferedReader(new InputStreamReader(User.getInputStream()));
+            bw = new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
             String command=br.readLine();//"login request"
             switch (command){
                 case "login request":
@@ -461,6 +462,9 @@ class TLoginHandle implements Runnable {
 
                         DataOperation dbo=new DataOperation();
                         //TODO:状态检索以及相应的修改
+                        if(dbo.Search_SLogin(SID)){
+
+                        }
 //                        if(dbo.SearchStype(SID)!=1){
 //                            System.out.println(User.getInetAddress().toString());
 //                            dbo.ModifyIP(SID,User.getInetAddress().toString());
@@ -476,6 +480,7 @@ class TLoginHandle implements Runnable {
 
                     bw.flush();
                     break;
+
                 case "change password":
                     String TID = br.readLine();
                     String TPassword=br.readLine();
@@ -487,6 +492,9 @@ class TLoginHandle implements Runnable {
                     }
                     bw.flush();
                     break;
+
+                case "search request":
+
                 default:
                     System.out.println("wrong command");
 

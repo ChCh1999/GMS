@@ -244,6 +244,16 @@ public class Apply extends JFrame {
 		});
 		messageup.setBounds(524, 246, 111, 28);
 		contentPane.add(messageup);
+
+		JButton backbutton = new JButton("返回");
+		backbutton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+			}
+		});
+		backbutton.setBounds(560, 15, 93, 23);
+		contentPane.add(backbutton);
 		
 		this.setVisible(true);
 	}
