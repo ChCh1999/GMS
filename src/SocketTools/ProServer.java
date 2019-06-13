@@ -1,7 +1,9 @@
-package Server;
+package SocketTools;
 
 import Data.DataOperation;
 import org.javatuples.Pair;
+import org.javatuples.Quartet;
+import org.javatuples.Triplet;
 import sun.security.util.Password;
 
 import java.io.*;
@@ -9,12 +11,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-class ServerData {
-    final static int PORT1 = 10086;//总裁判连接监听端口
-    final static int PORT2 = 10087;//登录监听端口
-    final static int PORT3 = 10088;//连接裁判用端口
-}
 
 public class ProServer {
 
@@ -30,7 +28,7 @@ public class ProServer {
         try {
             TServer loginServer = new TServer();
             new Thread(loginServer).start();
-            int port = ServerData.PORT1;
+            int port = ServerData.PORT_Chief;
             ServerSocket server = new ServerSocket(port);
             System.out.println("等待与客户端建立连接.....");
             while (true) {
@@ -169,14 +167,15 @@ class TProHandle implements Runnable {
 
         int count=Aths.size();
         //        TODO:init读取各个裁判的ip
-        IPOfGroup = "127.0.0.1";
-        IPOfJudges.add("127.0.0.1");
+        IPOfGroup = myConn.SearchProject_IP(ProID,2).get(0);
+        IPOfJudges=myConn.SearchProject_IP(ProID,1);
         try {
 
-            Group = new Socket(IPOfGroup, ServerData.PORT3);
+            Group = new Socket(IPOfGroup, ServerData.PORT_Judge);
             for (String ip : IPOfJudges) {
-                Socket Stemp = new Socket(ip, ServerData.PORT3);
+                Socket Stemp = new Socket(ip, ServerData.PORT_Judge);
                 Judges.add(Stemp);
+                new BufferedWriter(new OutputStreamWriter(Stemp.getOutputStream())).write(ProName+'\n');
             }
         } catch (UnknownHostException uhe) {
 
@@ -186,7 +185,7 @@ class TProHandle implements Runnable {
         int tag = 0;
         while (tag < Aths.size()) {
             ArrayList<Pair<String, String>> OneGroup = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 8; i++) {
                 if (tag < Aths.size()) {
                     OneGroup.add(Aths.get(tag));
                     tag++;
@@ -195,9 +194,11 @@ class TProHandle implements Runnable {
                 }
 
             }
-            if (OneGroup != null) {
-                SendMessageOfAthletes(OneGroup);
+            SendMessageOfAthletes(OneGroup);
+            if (OneGroup.size()!=0) {
+
             } else {
+
                 //TODO:结束进程
 
             }
@@ -212,6 +213,8 @@ class TProHandle implements Runnable {
         ArrayList<TSendAthletesMessage> ListOfJudges = new ArrayList<>();
         ArrayList<Thread> ListOfThread = new ArrayList<>();
         //ArrayList<TSendAthletesMessage> ListOfMarkTable=new ArrayList<>();
+        HashMap marktable=new HashMap<String,ArrayList<Float>>();
+
         try {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(Group.getInputStream()));
@@ -232,26 +235,78 @@ class TProHandle implements Runnable {
 
             GroupMessage.join();
             //等待裁判完成打分
+
+            for (Pair<String, String> ath:Aths
+                 ) {
+                marktable.put(ath.getValue1(),new ArrayList<Float>());
+            }
+
             for (Thread t : ListOfThread) {
                 t.join();
             }
 
             bw.write("Send Start\n");
             for (TSendAthletesMessage mark : ListOfJudges) {
+//                for (Pair<String, Float>  markpair : mark.MarkTable
+//                     ) {
+//                    ((ArrayList<Float>)marktable.get(markpair.getValue0())).add(markpair.getValue1());
+//                }
                 SendMarkTable(Group, mark);
             }
 
-            bw.write("FinishSendMarks");
+            bw.write("FinishSendMarks\n");
             String feedback = br.readLine();
 //            br.close();
 //            bw.close();
-            if (feedback.equals("OK")) {
+            if (Boolean.valueOf(feedback)) {
                 //若确认通过则返回
                 //TODO 读取奖励分惩罚分
-                //TODO 统计最终分数存储到数据库
+                ArrayList<Triplet<String,Float,Float>> bpMarkTable=new ArrayList<>();
+                String athNum;
+                while (!(athNum=br.readLine()).equals("Finished")){
+                    float bmark= Float.parseFloat(br.readLine());
+                    float pmark= Float.parseFloat(br.readLine());
+                    //TODO：传送全部裁判的打分 并存入哈希表 marktable
+                    bpMarkTable.add(new Triplet<>(athNum,bmark,pmark));
+                }
+
+                for (Triplet<String,Float,Float> bpmark:bpMarkTable
+                     ) {
+                    ArrayList<Float> marks= (ArrayList<Float>) marktable.get(bpmark.getValue0());
+                   if(marks.size()>2){
+                       float mark_sum=0f;
+                       float mark_max=marks.get(0);
+                       float mark_min=marks.get(0);
+                       for(float mark:marks){
+                           mark_sum+=mark;
+                           if(mark>mark_max){
+                               mark_max=mark;
+                               break;
+                           }
+
+                           if(mark<mark_min){
+                               mark_min=mark;
+                               break;
+                           }
+
+                       }
+                       mark_sum=(mark_sum-mark_min-mark_max)*marks.size()/(marks.size()-2)
+                               +bpmark.getValue1()-bpmark.getValue2();
+                       int indexOfj=ProName.indexOf("决赛");
+                       if(indexOfj!=-1){
+                           myConn.ModifyJScore(ProID,bpmark.getValue0(),mark_sum);
+                       }else {
+                           myConn.ModifyCScore(ProID,bpmark.getValue0(),mark_sum);
+                       }
+                   }else {
+                       System.out.println("运动员评分少于两个,为"+marks.size());
+                   }
+                }
+
                 return;
             } else {
-                SendMessageOfAthletes(Aths);
+//                SendMessageOfAthletes(Aths);
+                //TODO:某个裁判重新打分
                 return;
             }
         } catch (Exception x) {
@@ -269,15 +324,15 @@ class TProHandle implements Runnable {
 
         }*/
         //输出成绩表中所有姓名+成绩
-        bw.write("SendMarkTable");
-        bw.write(message.NameOfJudge);
+        bw.write("SendMarkTable\n");
+        bw.write(message.IDOfJudge+"\n");
         while (!br.readLine().equals("ready")) ;//等待直到ready
         for (Pair<String, Float> mark : message.MarkTable     //Pair<AthNum,Mark>
                 ) {
             bw.write(mark.getValue0().toString() + '\n');
             bw.write(mark.getValue1().toString() + '\n');
         }
-        bw.write("Done");
+        bw.write("Done+\n");
 //        bw.close();
 //        br.close();
     }
@@ -286,7 +341,7 @@ class TProHandle implements Runnable {
 //发送信息线程类 系统发送小组队员名单给裁判 暂存信息
 class TSendAthletesMessage implements Runnable {
     Socket target;
-    String NameOfJudge;
+    String IDOfJudge;
     ArrayList<Pair<String, String>> Message;
     ArrayList<Pair> MarkTable = new ArrayList<>();
 
@@ -312,7 +367,7 @@ class TSendAthletesMessage implements Runnable {
             bw.write("Over");
         }
         bw.write(Aths.size() + '\n');
-        NameOfJudge = br.readLine();
+        IDOfJudge = br.readLine();
         while (!br.readLine().equals("ready")) ;//阻塞直到裁判准备好
         for (Pair<String, String> Ath : Aths) {
             bw.write(Ath.getValue0() + '\n');
@@ -354,7 +409,7 @@ class TServer implements Runnable {
     @Override
     public void run() {
         try {
-            int port = ServerData.PORT2;
+            int port = ServerData.PORT_Login;
             loginserver = new ServerSocket(port);
             System.out.println("等待连接请求...");
             while (true) {
@@ -395,19 +450,6 @@ class THandle implements Runnable {
     public void run() {
 
         try {
-<<<<<<< Updated upstream:Servertest/src/Test/ProServer.java
-            BufferedReader br = new BufferedReader(new InputStreamReader(User.getInputStream()));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
-            br.readLine();//"login request"
-            String SID = br.readLine();
-            String Password=br.readLine();
-            if (checkIDOfJudge(SID,Password)){
-                bw.write(Boolean.TRUE.toString() + '\n');
-                DataOperation dbo=new DataOperation();
-                System.out.println(User.getInetAddress().toString());
-                dbo.ModifyIP(SID,User.getInetAddress().toString());
-                bw.write("1"+ '\n');//裁判状态（总裁判/小组裁判/裁判）
-=======
             br = new BufferedReader(new InputStreamReader(User.getInputStream()));
             bw = new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
             String command=br.readLine();//"login request"
@@ -456,16 +498,12 @@ class THandle implements Runnable {
                 default:
                     System.out.println("wrong command");
 
->>>>>>> Stashed changes:src/SocketTools/ProServer.java
             }
-            else
-                bw.write(Boolean.FALSE.toString() + '\n');
 
-            bw.flush();
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
-        System.out.println("登录成功");
+        System.out.println("登录结束");
     }
 
     public boolean checkIDOfJudge(String sid,String passward) {
@@ -479,6 +517,27 @@ class THandle implements Runnable {
         } else {
             return false;
         }
+    }
+    public  boolean checkIDofGroup(String tid,String passward){
+        Data.DataOperation dbo = new DataOperation();
+        ArrayList<Quartet<String,String,String,String>> team=dbo.SearchTeam(tid);
+        if(!team.isEmpty()){
+            if (team.size()==1&&team.get(0).getValue2().equals(passward))
+                return true;
+        }
+        return false;
+    }
+    public boolean changePassword(String id,String password,String newPassword){
+        if(checkIDOfJudge(id,password)){
+            Data.DataOperation dbo = new DataOperation();
+            return dbo.ModifySPassword(id,newPassword);
+        }else {
+            if(checkIDofGroup(id,password)){
+                Data.DataOperation dbo = new DataOperation();
+                return dbo.ModifyTPassword(id,newPassword);
+            }
+        }
+        return false;
     }
 }
 

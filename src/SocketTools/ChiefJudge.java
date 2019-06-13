@@ -1,4 +1,4 @@
-package Server;
+package SocketTools;
 
 import teamUI.MainRefe;
 
@@ -6,13 +6,6 @@ import java.io.*;
 import java.net.Socket;
 
 public class ChiefJudge {
-<<<<<<< Updated upstream:Servertest/src/Test/ChiefJudge.java
-    final int PORT=10086;
-    final String ServerIP="127.0.0.1";
-    public static void main(String[] args) {
-        ChiefJudge m=new ChiefJudge();
-        m.startpro("体操",0);
-=======
     final int PORT=ServerData.PORT_Chief;
     final String ServerIP=ServerData.ipOfServer;
 
@@ -23,7 +16,6 @@ public class ChiefJudge {
 //    }
     public ChiefJudge(MainRefe mRe){
         mReferee=mRe;
->>>>>>> Stashed changes:src/SocketTools/ChiefJudge.java
     }
     public void startpro(String pro,int group){
         try {
