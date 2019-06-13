@@ -39,4 +39,35 @@ public class ClientTool {
             return -1;
         }
     }
+<<<<<<< Updated upstream:Servertest/src/Test/ClientTool.java
+=======
+    public static boolean changePassword(String SID,String Password,String newPassword){
+        try{
+            Socket login=new Socket(IP_SERVER,PORT_LOGIN);
+            BufferedReader br_login=new BufferedReader(new InputStreamReader(login.getInputStream()));
+            BufferedWriter bw_login=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
+
+            bw_login.write("change password"+'\n');
+            bw_login.write(SID+'\n');
+            bw_login.write(Password+'\n');
+            bw_login.write(newPassword+'\n');
+            bw_login.flush();
+            //System.out.println(id);
+            if(Boolean.parseBoolean(br_login.readLine())){
+                System.out.println("修改成功");
+                return true;
+            }else {
+                System.out.println("修改失败");
+                return false;
+            }
+        }catch (UnknownHostException une){
+            System.out.println(une);
+            return false;
+        }catch (IOException ioe){
+            System.out.println(ioe);
+            return false;
+        }
+    }
+    
+>>>>>>> Stashed changes:src/SocketTools/ClientTool.java
 }

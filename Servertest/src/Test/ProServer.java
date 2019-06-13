@@ -28,7 +28,7 @@ public class ProServer {
     public void start() {
         // 为了简单起见，所有的异常信息都往外抛
         try {
-            TLoginServer loginServer = new TLoginServer();
+            TServer loginServer = new TServer();
             new Thread(loginServer).start();
             int port = ServerData.PORT1;
             ServerSocket server = new ServerSocket(port);
@@ -85,8 +85,9 @@ class TProMaster implements Runnable {
 
         int index=proName.indexOf("决赛");
         //未进行的初赛、已完成相应初赛且尚未进行的决赛则进入后流程
-        if ((index==-1&&dbo.SearchMatch(proName,group)==0)
-                ||(index!=-1&&dbo.SearchMatch(proName.substring(0,index),group)==2)&&dbo.SearchMatch(proName,group)==0) {
+        if ((index==-1&&dbo.SearchMatch(proName,group)==0) ||
+                (index!=-1&&dbo.SearchMatch(proName.substring(0,index),group)==2)&&
+                        dbo.SearchMatch(proName,group)==0) {
             Thread prohandle = new Thread(new TProHandle(proName, group, socket));
 
             //开始处理比赛信息
@@ -104,7 +105,7 @@ class TProMaster implements Runnable {
             MessageToClient.write("End" + '\n');
             MessageToClient.flush();
             System.out.println("End");
-            System.out.println(br.readLine());
+//            System.out.println(br.readLine());
         } else {
             System.out.println("Wrong");
             MessageToClient.write("WrongRequest");
@@ -347,7 +348,7 @@ class TSendAthletesMessage implements Runnable {
 }
 
 //处理登陆连接的线程
-class TLoginServer implements Runnable {
+class TServer implements Runnable {
     ServerSocket loginserver;
 
     @Override
@@ -355,12 +356,12 @@ class TLoginServer implements Runnable {
         try {
             int port = ServerData.PORT2;
             loginserver = new ServerSocket(port);
-            System.out.println("等待登录请求...");
+            System.out.println("等待连接请求...");
             while (true) {
                 // server尝试接收其他Socket的连接请求，server的accept方法是阻塞式的
                 Socket socket = loginserver.accept();
                 // 每接收到一个Socket就建立一个新的线程来处理它
-                Thread login = new Thread(new TLoginHandle(socket));
+                Thread login = new Thread(new THandle(socket));
                 login.start();
             }
 
@@ -370,15 +371,15 @@ class TLoginServer implements Runnable {
     }
 
     public void stopLoginServer() {
-        //TODO:终止登录服务器
+        //TODO:终止服务器
     }
 }
 
-class TLoginHandle implements Runnable {
+class THandle implements Runnable {
     Socket User;
-//    BufferedReader br;
-//    BufferedWriter bw;
-    TLoginHandle(Socket user) {
+    private BufferedReader br;
+    private BufferedWriter bw;
+    THandle(Socket user) {
         this.User = user;
         System.out.println("处理登陆信息");
 //        try{
@@ -394,6 +395,7 @@ class TLoginHandle implements Runnable {
     public void run() {
 
         try {
+<<<<<<< Updated upstream:Servertest/src/Test/ProServer.java
             BufferedReader br = new BufferedReader(new InputStreamReader(User.getInputStream()));
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
             br.readLine();//"login request"
@@ -405,6 +407,56 @@ class TLoginHandle implements Runnable {
                 System.out.println(User.getInetAddress().toString());
                 dbo.ModifyIP(SID,User.getInetAddress().toString());
                 bw.write("1"+ '\n');//裁判状态（总裁判/小组裁判/裁判）
+=======
+            br = new BufferedReader(new InputStreamReader(User.getInputStream()));
+            bw = new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
+            String command=br.readLine();//"login request"
+            switch (command){
+                case "login request":
+                    String SID = br.readLine();
+                    String Password=br.readLine();
+                    if (checkIDOfJudge(SID,Password)){
+                        bw.write(Boolean.TRUE.toString() + '\n');
+
+                        DataOperation dbo=new DataOperation();
+                        //TODO:状态检索以及相应的修改
+                        if(dbo.Search_SLogin(SID)){
+
+                        }
+//                        if(dbo.SearchStype(SID)!=1){
+//                            System.out.println(User.getInetAddress().toString());
+//                            dbo.ModifyIP(SID,User.getInetAddress().toString());
+//                        }
+                        bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
+                    }
+                    else
+                        if(checkIDofGroup(SID,Password)){
+                            bw.write(Boolean.TRUE.toString() + '\n');
+                            bw.write(String.valueOf(ServerData.NumOfGroup)+ '\n');
+                        }else
+                            bw.write(Boolean.FALSE.toString() + '\n');
+
+                    bw.flush();
+                    break;
+
+                case "change password":
+                    String TID = br.readLine();
+                    String TPassword=br.readLine();
+                    String newpassword=br.readLine();
+                    if(changePassword(TID,TPassword,newpassword)){
+                        bw.write(Boolean.TRUE.toString() + '\n');
+                    }else {
+                        bw.write(Boolean.FALSE.toString() + '\n');
+                    }
+                    bw.flush();
+                    break;
+
+                case "search request":
+
+                default:
+                    System.out.println("wrong command");
+
+>>>>>>> Stashed changes:src/SocketTools/ProServer.java
             }
             else
                 bw.write(Boolean.FALSE.toString() + '\n');
