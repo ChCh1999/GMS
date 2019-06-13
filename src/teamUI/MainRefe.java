@@ -38,6 +38,7 @@ public class MainRefe extends JFrame {
 		setTitle("总裁判您好");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 718, 494);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -211,7 +212,6 @@ public class MainRefe extends JFrame {
 				//最后传递给ChiefJudge的值
 				int groupID=JudgeTheAge(age);
 				String finalString=sex+"子"+age+"组"+game+befinal;
-
 
 				chiefJudge.startpro(finalString,groupID);
 			}

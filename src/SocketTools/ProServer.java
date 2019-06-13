@@ -480,7 +480,6 @@ class THandle implements Runnable {
 
                     bw.flush();
                     break;
-
                 case "change password":
                     String TID = br.readLine();
                     String TPassword=br.readLine();
