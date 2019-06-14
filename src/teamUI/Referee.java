@@ -314,11 +314,11 @@ public class Referee extends JFrame {
 		logout.setFont(new Font("宋体", Font.PLAIN, 18));
 		logout.setBounds(452, 0, 90, 30);
 		contentPane.add(logout);
-
+		
 		this.setVisible(true);
 
 		mReferee.logined=true;
-		mReferee.start();
+		mReferee.start(SID);
 		P_item.setText(mReferee.getProname());
 		getAths();//第一组运动员名单
 	}
