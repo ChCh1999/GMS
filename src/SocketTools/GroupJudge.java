@@ -25,6 +25,8 @@ public class GroupJudge{
 
     //数据
     private ArrayList<ArrayList<Pair<String,Float>>> MarkTables;
+    private ArrayList<String> IDOfJudges;
+    private int judgeAmount=0;
     //监控用
     public  boolean logined=false;//是否成功登陆
 
@@ -75,6 +77,7 @@ public class GroupJudge{
             connection=conn;
             br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
             bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            judgeAmount=Integer.parseInt(br.readLine());
             return;
         }catch (IOException ioe){
             return;
@@ -118,12 +121,13 @@ public class GroupJudge{
     public void getMarkTables(){
         if(sendmark){
             //ArrayList<ArrayList<Pair<String,Float>>> res=new ArrayList<>();
+            IDOfJudges=new ArrayList<>();
             MarkTables=new ArrayList<>();
             try {
                 br.readLine();//Send Start
                 while (!br.readLine().equals("FinishSendMarks")){
                     br.readLine();//SendMarkTable
-                    br.readLine();//IDOfJudge
+                    IDOfJudges.add(br.readLine());//IDOfJudge
                     bw.write("ready\n");
                     ArrayList<Pair<String,Float>>MarkTable=new ArrayList<>();
                     String Num;
@@ -152,7 +156,14 @@ public class GroupJudge{
                     bw.write(message.getValue0()+"\n");
                     bw.write(message.getValue1()+"\n");
                     bw.write(message.getValue2()+"\n");
+                    ArrayList<Float> jmarks=marks.get(message.getValue0());
+                    bw.write(jmarks.size()+"\n");
+                    for(Float mark:jmarks){
+                        bw.write(mark+"\n");
+                    }
                 }
+
+
                 bw.write("Finished\n");
                 sendAth=true;
                 sendConfirm=false;
@@ -162,16 +173,37 @@ public class GroupJudge{
         }
 
     }
-    public void sendConform(){//运动员编号、B分、P分
+    public void sendConform(String IDOfJudge){//调用否定函数需要刷新成绩表
         if(sendConfirm){
             try {
-                bw.write(Boolean.FALSE.toString());
-                sendAth=true;
+                bw.write(Boolean.FALSE.toString()+"\n");
+                bw.write(IDOfJudge+"\n");
                 sendConfirm=false;
+
+                br.readLine();//Send Start
+                if (!br.readLine().equals("FinishSendMarks")){
+                    br.readLine();//SendMarkTable
+                    IDOfJudges.add(br.readLine());//IDOfJudge
+                    bw.write("ready\n");
+                    ArrayList<Pair<String,Float>>MarkTable=new ArrayList<>();
+                    String Num;
+                    while (!(Num=br.readLine()).equals("Done")){
+                        float mark=Float.parseFloat(br.readLine());
+                        MarkTable.add(new Pair<>(Num,mark));
+                    }
+                    MarkTables.set(IDOfJudges.indexOf(IDOfJudge),MarkTable);
+                }
+                //TODO：前端刷新成绩表
+                sendConfirm=true;
+
             }catch (IOException ioe){
                 System.out.println("信号错误-小组裁判");
             }
         }
+
+    }
+
+    public void getRemark(){
 
     }
 }

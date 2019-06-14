@@ -47,7 +47,8 @@ public class Referee extends JFrame {
 	private JTextField P_score8;
 
 	//Socket tool
-	private Judge mReferee;
+	private String SID="";
+	private Judge mReferee=new Judge();
 	/**
 	 * Launch the application.
 	 */
@@ -56,6 +57,7 @@ public class Referee extends JFrame {
 			public void run() {
 				try {
 					Referee frame = new Referee();
+					frame.SID="S1";
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

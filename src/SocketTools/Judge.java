@@ -31,8 +31,9 @@ public class Judge {
     public  boolean sendmark=false;//是否接受了队员表
     public boolean prodone=false;//项目结束
 
-    public void start(){
+    public void start(String SID){
         try {
+            ID=SID;
             ServerSocket judge=new ServerSocket(PORT_LISTEN);
             Socket conn = judge.accept();
             br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -78,7 +79,7 @@ public class Judge {
     public boolean SendMarkTable(ArrayList<Pair<String,Float>> marktable ){
         if(logined&&sendmark){
             try {
-                bw.write(ID+"SendMarkTable");
+                bw.write(ID);
                 for(Pair<String,Float> a:marktable){
                     bw.write(a.getKey()+'\n');
                     bw.write(a.getValue().toString()+'\n');
@@ -96,5 +97,21 @@ public class Judge {
 
     public String getProname() {
         return proname;
+    }
+
+    public boolean exit() {
+        if(sendmark){
+            //有比赛未完成，无法退出
+            return false;
+        }else {
+            try {
+                bw.write("Exit\n");
+                bw.write(ID);
+                return true;
+            }catch (IOException ioe){
+                return false;
+            }
+
+        }
     }
 }

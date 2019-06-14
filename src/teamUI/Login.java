@@ -95,7 +95,7 @@ public class Login {
 					int state=-1;
 					state=ClientTool.login(userID,password);
 					switch (state){
-						//TODO:0表示裁判  1裁判账号已登录，登陆失败 2小组裁判  3总裁判  4领队  5队医 6教练员 9(serverData.NumOfGroup)代表队账号
+						//TODO:-1账号已经在线  0登录失败 1裁判 2小组裁判  3总裁判  4领队  5队医 6教练员 9(serverData.NumOfGroup)代表队账号
 						default:
 							//TODO：登陆失败
 					}

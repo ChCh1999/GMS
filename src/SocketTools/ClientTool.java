@@ -1,8 +1,11 @@
 package SocketTools;
 
+import org.javatuples.Septet;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class ClientTool {
 
@@ -29,7 +32,7 @@ public class ClientTool {
                 return state;
             }else {
                 System.out.println("登录失败");
-                return -1;
+                return 0;
             }
         }catch (UnknownHostException une){
             System.out.println(une);
@@ -66,5 +69,18 @@ public class ClientTool {
             return false;
         }
     }
-    
+    public static ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>>SearchByName(String atnName){
+//        Socket login= null;
+//        ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>>res=new ArrayList<>();
+//        try {
+//            login = new Socket(IP_SERVER,PORT_LOGIN);
+//            BufferedReader br=new BufferedReader(new InputStreamReader(login.getInputStream()));
+//            BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
+//            bw.write("Search by name\n");
+//            bw.write(atnName+"\n");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+return null;
+    }
 }
