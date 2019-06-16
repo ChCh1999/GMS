@@ -93,18 +93,81 @@ public class Login {
 				if (!password.isEmpty()&&
 						!userID.isEmpty()){
 					int state=-1;
-					state=ClientTool.login(userID,password);
+					//state=ClientTool.login(userID,password);
 					switch (state){
+						case-1:
+							JFrame jf=new JFrame();
+							jf.setTitle("请勿重复登录");
+							jf.setBounds(250, 250, 300, 200);
+							jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							jf.setResizable(false);
+							jf.getContentPane().setLayout(null);
+
+							JLabel rejl = new JLabel("该账号已处于登录状态");
+							rejl.setFont(new Font("宋体", Font.PLAIN, 18));
+							rejl.setBounds(50, 40, 250, 30);
+							jf.getContentPane().add(rejl);
+
+							JButton canceljb = new JButton("返回");
+							canceljb.setFont(new Font("宋体",Font.PLAIN,18));
+							canceljb.setBounds(110,100, 70, 30);
+							jf.getContentPane().add(canceljb);
+							canceljb.addMouseListener(new MouseAdapter() {
+								@Override
+								public void mouseClicked(MouseEvent arg0) {
+									jf.dispose();
+								}
+							});
+
+							jf.setVisible(true);
+							break;
+						case 0:
+							JFrame jf2=new JFrame();
+							jf2.setTitle("登录失败");
+							jf2.setBounds(250, 250, 300, 200);
+							jf2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							jf2.setResizable(false);
+							jf2.getContentPane().setLayout(null);
+
+							JLabel jl2 = new JLabel("登录失败");
+							jl2.setFont(new Font("宋体", Font.PLAIN, 18));
+							jl2.setBounds(110, 40, 250, 30);
+							jf2.getContentPane().add(jl2);
+
+							JButton canceljb2 = new JButton("返回");
+							canceljb2.setFont(new Font("宋体",Font.PLAIN,18));
+							canceljb2.setBounds(110,100, 70, 30);
+							jf2.getContentPane().add(canceljb2);
+							canceljb2.addMouseListener(new MouseAdapter() {
+								@Override
+								public void mouseClicked(MouseEvent arg0) {
+									jf2.dispose();
+								}
+							});
+
+							jf2.setVisible(true);
+							break;
+						case 1:
+							Referee referee = new Referee();
+							break;
+						case 2:
+							ChiefRE chiefre = new ChiefRE();
+							break;
+						case 3:
+							MainRefe mainrefe = new MainRefe();
+							break;
+						case 4:
+						case 5:
+						case 6:
+						case 9:
+							Massagesearch messagesearch = new Massagesearch();
+							break;
 						//TODO:-1账号已经在线  0登录失败 1裁判 2小组裁判  3总裁判  4领队  5队医 6教练员 9(serverData.NumOfGroup)代表队账号
 						default:
 							//TODO：登陆失败
 					}
 				}
-				/*switch() {
-				case
-				//登录函数
-				
-				}*/
+
 				//Apply apply = new Apply();//临时调试用
 //				Referee referee = new Referee();
 			}
@@ -189,7 +252,10 @@ public class Login {
 				jb_4.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-
+						//TODO:判别用户名密码是否正确
+						if(!newword.getText().equals("")&&newword.getText().equals(renewword)){
+							//TODO:更换密码
+						}
 					}
 				});
 				jf.getContentPane().add(jb_4);

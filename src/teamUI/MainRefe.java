@@ -248,4 +248,11 @@ public class MainRefe extends JFrame {
 		}
 		return Text;
 	}
+
+	//添加信息到通知栏
+	void addmessageArea(JTextArea a,String str) {
+		a.append(str);
+	}
 }
+
+

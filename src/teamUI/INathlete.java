@@ -167,7 +167,7 @@ public class INathlete extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//提交信息并清空内容
+				//TODO：提交信息并清空内容
 				name.setText("");
 				IDnumber.setText("");
 				age.setText("");

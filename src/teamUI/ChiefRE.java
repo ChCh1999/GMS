@@ -294,24 +294,37 @@ public class ChiefRE extends JFrame {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//这里判定条件好像没写对
-				if(B_Num1.getText() == null||B_Num2 == null||B_Num3 == null||B_Num4 == null
-						||B_Num5 == null||B_Num6 == null||B_Num7 == null||B_Num8 == null
-						||P_Num1 == null||P_Num2 == null||P_Num3 == null||P_Num4 == null
-						||P_Num5 == null||P_Num6 == null||P_Num7 == null||P_Num8 == null
-						) {
+
+				if(B_Num1.getText().equals("")||B_Num2.getText().equals("")||B_Num3.getText().equals("")||B_Num4.getText().equals("")
+						||B_Num5.getText().equals("")||B_Num6.getText().equals("")||B_Num7.getText().equals("")||B_Num8.getText().equals("")
+						||P_Num1.getText().equals("")||P_Num2.getText().equals("")||P_Num3.getText().equals("")||P_Num4.getText().equals("")
+						||P_Num5.getText().equals("")||P_Num6.getText().equals("")||P_Num7.getText().equals("")||P_Num8.getText().equals("")
+				) {
 					JFrame jf=new JFrame();
 					jf.setTitle("PB分为空");
-					jf.setBounds(100, 100, 450, 300);
+					jf.setBounds(400, 250, 450, 300);
 					jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					jf.getContentPane().setLayout(null);
-					
-					JLabel jb = new JLabel("PB分不能为空");
-					jf.getContentPane().add(jb);
+
+					JLabel jl = new JLabel("PB分不能为空");
+					jl.setFont(new Font("宋体", Font.PLAIN, 18));
+					jl.setBounds(170, 100, 200, 30);
+					jf.getContentPane().add(jl);
 					jf.setVisible(true);
+
+					JButton jb = new JButton("返回");
+					jb.setFont(new Font("宋体", Font.PLAIN, 18));
+					jb.setBounds(170, 150, 100, 30);
+					jb.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+							jf.dispose();
+						}
+					});
+					jf.getContentPane().add(jb);
 				}
-				//测试用else dispose();
-				//计算总分,上传数据,导入下一位运动员
+
+				//TODO：计算总分,上传数据,导入下一位运动员
 			}
 		});
 		button.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -1053,3 +1066,5 @@ public class ChiefRE extends JFrame {
 
 	}
 }
+
+

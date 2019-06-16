@@ -213,9 +213,9 @@ public class Apply extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//点击跳转录入队员信息页面
-				//同时提交已录入数据
+				//TODO:同时提交已录入数据
 				INathlete inathlete =new INathlete();
-				//dispose();
+				dispose();
 			}
 		});
 		btnNewButton.addActionListener(new ActionListener() {
@@ -240,7 +240,7 @@ public class Apply extends JFrame {
 		messageup.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//点击事件
+				//TODO:上传文件
 			}
 		});
 		messageup.setBounds(524, 246, 111, 28);
