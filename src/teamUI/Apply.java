@@ -208,6 +208,7 @@ public class Apply extends JFrame {
 		buttonGroup.add(radioButton);
 		
 		JButton btnNewButton = new JButton("录入队员信息");
+		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 18));
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -221,7 +222,7 @@ public class Apply extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(198, 287, 220, 40);
+		btnNewButton.setBounds(355, 287, 220, 40);
 		contentPane.add(btnNewButton);
 		
 		readyNum = new JLabel("已录入人员数");
@@ -234,7 +235,7 @@ public class Apply extends JFrame {
 		readytext.setEditable(false);
 		contentPane.add(readytext);
 		readytext.setColumns(10);
-		
+
 		JButton messageup = new JButton("上传文件");//上传文件
 		messageup.addMouseListener(new MouseAdapter() {
 			@Override
@@ -246,14 +247,25 @@ public class Apply extends JFrame {
 		contentPane.add(messageup);
 
 		JButton backbutton = new JButton("返回");
+		backbutton.setFont(new Font("宋体", Font.PLAIN, 18));
 		backbutton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				dispose();
 			}
 		});
-		backbutton.setBounds(560, 15, 93, 23);
+		backbutton.setBounds(113, 287, 200, 40);
 		contentPane.add(backbutton);
+
+		JTextField teamnumber = new JTextField();
+		teamnumber.setBounds(433, 13, 182, 27);
+		contentPane.add(teamnumber);
+		teamnumber.setColumns(10);
+
+		JLabel lblNewLabel = new JLabel("代表队账号");
+		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
+		lblNewLabel.setBounds(331, 10, 97, 29);
+		contentPane.add(lblNewLabel);
 		
 		this.setVisible(true);
 	}

@@ -208,6 +208,16 @@ public class INathlete extends JFrame {
 		radioButton_1.setFont(new Font("宋体", Font.PLAIN, 18));
 		buttonGroup.add(radioButton_1);
 		panel_1.add(radioButton_1);
+
+		JLabel subjectGradLabel = new JLabel("文化课成绩");
+		subjectGradLabel.setFont(new Font("宋体", Font.PLAIN, 18));
+		subjectGradLabel.setBounds(235, 10, 113, 30);
+		contentPane.add(subjectGradLabel);
+
+		JTextField subGradetext = new JTextField();
+		subGradetext.setBounds(361, 13, 176, 30);
+		contentPane.add(subGradetext);
+		subGradetext.setColumns(10);
 		
 		this.setVisible(true);
 	}
