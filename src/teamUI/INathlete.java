@@ -212,6 +212,7 @@ public class INathlete extends JFrame {
 				for(int i = 0;i <numpid;i++){
 					if(((JCheckBox)panel.getComponent(i)).isSelected()){
 						check[i]=i+1;
+						System.out.println(check[i]);
 						enter.subgrade(Integer.toString(check[i]),GroupID);
 					}
 				}

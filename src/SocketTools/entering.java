@@ -10,8 +10,6 @@ public class entering {
     final static int port=10000;
     private BufferedWriter bw;
     public static void main(String[] args) {
-        Thread rec= new Thread(new receive());
-        rec.start();
     }
     public void subteam(String Tname,String TID, String TPassword ,String TDoc){
         try {

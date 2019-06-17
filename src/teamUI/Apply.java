@@ -1,5 +1,7 @@
 package teamUI;
 
+import Data.DataOperation;
+import SocketTools.data;
 import SocketTools.entering;
 import SocketTools.receive;
 
@@ -50,6 +52,7 @@ public class Apply extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
+
                     Thread rec= new Thread(new receive());
                     rec.start();
                     Apply frame = new Apply();
@@ -255,6 +258,10 @@ public class Apply extends JFrame {
                 judgeid=refeID.getText();
                 judgetel = refePhNum.getText();
                 TID= teamnumber.getText();
+                data aaa=new data();
+                aaa.SID=Integer.parseInt(TID)*50;
+                aaa.AIDmen=Integer.parseInt(TID)*50;
+				aaa.AIDwomen=Integer.parseInt(TID)*50;
                 entering enter = new entering();
                 enter.subteam(Tname,TID,TPassword,TDoc);
                 enter.substuff(leadname,leadid,leadtel,4,0);

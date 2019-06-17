@@ -6,10 +6,7 @@ import Data.*;
 import Data.DataOperation;
 public class receive implements Runnable  {
     final static int port = 10000;
-    static int AIDmen=000;
-    static int AIDwomen=001;
-    static int SID=001;
-    static  int AID=0;
+
     public void run(){
         try {
             ServerSocket subserver = new ServerSocket(port);
@@ -26,12 +23,13 @@ public class receive implements Runnable  {
 }
 class TsubHandle implements  Runnable{
     Socket Sub;
-    receive aaa = new receive();
+    data aaa=new data();
     int AIDmen=aaa.AIDmen;
     int AIDwomen=aaa.AIDwomen;
     int SID=aaa.SID;
     String AID =Integer.toString(aaa.AID);
     TsubHandle(Socket sub) {
+
         this.Sub = sub;
         System.out.println("处理登陆信息");
     }
@@ -48,11 +46,7 @@ class TsubHandle implements  Runnable{
                 TID=br.readLine();
                 TPassword = br.readLine();
                 TDoc = br.readLine();
-//                System.out.println(Tname);
-//                System.out.println(TID);
-//                System.out.println(TPassword);
-//                System.out.println(TDoc);
-               DataOperation con = new DataOperation();
+                DataOperation con = new DataOperation();
                 con.InsertData(Tname,TID,TPassword,TDoc);
                 while(br.readLine().equals("end")){
                     br.close();
@@ -79,13 +73,7 @@ class TsubHandle implements  Runnable{
                     aaa.AID=AIDwomen;
                     aaa.AIDwomen+=2;
                 }
-//                System.out.println(Aname);
-//                System.out.println(ID);
-//                System.out.println(Age);
-//                System.out.println(GroupID);
-//                System.out.println(Grade);
-//                System.out.println(AID);
-               //System.out.println(TID);
+
                 DataOperation con1 = new DataOperation();
                 con1.InsertData(Aname,ID,Age,GroupID,Grade,AID,TID);
                 while(br.readLine().equals("end")){
@@ -102,13 +90,7 @@ class TsubHandle implements  Runnable{
                 TEL = br.readLine();
                 Stype = Integer.parseInt(br.readLine());
                 SLogin= Integer.parseInt(br.readLine());
-//                System.out.println(SID);
-//                System.out.println(Sname);
-//                System.out.println(ID);
-//                System.out.println(TEL);
-//                System.out.println(Stype);
-//                System.out.println(SLogin);
-               DataOperation con1 = new DataOperation();
+                DataOperation con1 = new DataOperation();
                 con1.InsertData(Integer.toString(SID), Sname, ID, TEL, Stype,SLogin);
                 aaa.SID++;
                 while (br.readLine().equals("end")) {
@@ -122,9 +104,6 @@ class TsubHandle implements  Runnable{
                 GroupID = Integer.parseInt(br.readLine());
                 DataOperation con1 = new DataOperation();
                 con1.InsertData(PID,AID,GroupID);
-//                System.out.println(PID);
-//                System.out.println(AID);
-//                System.out.println(GroupID);
                 while (br.readLine().equals("end")) {
                     br.close();
                 }
