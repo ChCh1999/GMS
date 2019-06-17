@@ -279,14 +279,68 @@ public class Referee extends JFrame {
 				}*/
 				//提交成绩,导入下一位运动员
 				ArrayList<Pair<String,Float>> marktable=new ArrayList<>();
-				//TODO：判断数据完整性，将数据添加到marktable
-				if(mReferee.SendMarkTable(marktable)){
-					//TODO:清空页面中上一组的运动员信息
-					getAths();	//获取下一组运动员名单
+				//TODO：判断数据完整性，将数据添加到marktable√
+				Pair<String,Float> pair1 = new Pair<String,Float>(P_number1.getText(),Float.valueOf(P_score1.getText()));
+				Pair<String,Float> pair2 = new Pair<String,Float>(P_number2.getText(),Float.valueOf(P_score2.getText()));
+				Pair<String,Float> pair3 = new Pair<String,Float>(P_number3.getText(),Float.valueOf(P_score3.getText()));
+				Pair<String,Float> pair4 = new Pair<String,Float>(P_number4.getText(),Float.valueOf(P_score4.getText()));
+				Pair<String,Float> pair5 = new Pair<String,Float>(P_number5.getText(),Float.valueOf(P_score5.getText()));
+				Pair<String,Float> pair6 = new Pair<String,Float>(P_number6.getText(),Float.valueOf(P_score6.getText()));
+				Pair<String,Float> pair7 = new Pair<String,Float>(P_number7.getText(),Float.valueOf(P_score7.getText()));
+				Pair<String,Float> pair8 = new Pair<String,Float>(P_number8.getText(),Float.valueOf(P_score8.getText()));
+
+				marktable.add(pair1);
+				marktable.add(pair2);
+				marktable.add(pair3);
+				marktable.add(pair4);
+				marktable.add(pair5);
+				marktable.add(pair6);
+				marktable.add(pair7);
+				marktable.add(pair8);
+
+				// TODO:一组运动员名单还没有传完 打分失败√
+				if(P_score1.getText().equals("")||P_score2.getText().equals("")||P_score3.getText().equals("")||
+						P_score4.getText().equals("")||P_score5.getText().equals("")||P_score6.getText().equals("")||
+						P_score7.getText().equals("")||P_score8.getText().equals("")){
+					JFrame jf=new JFrame();
+					jf.setTitle("注意");
+					jf.setBounds(400, 250, 450, 300);
+					jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					jf.getContentPane().setLayout(null);
+
+					JLabel jl = new JLabel("请确认运动员成绩已全部填写");
+					jl.setFont(new Font("宋体", Font.PLAIN, 18));
+					jl.setBounds(110, 100, 250, 30);
+					jf.getContentPane().add(jl);
+					jf.setVisible(true);
+
+					JButton jb = new JButton("返回");
+					jb.setFont(new Font("宋体", Font.PLAIN, 18));
+					jb.setBounds(170, 150, 100, 30);
+					jb.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+							jf.dispose();
+						}
+					});
+					jf.getContentPane().add(jb);
 				}
-				else {
-					//TODO:一组运动员名单还没有传完 打分失败
+				else{
+					if(mReferee.SendMarkTable(marktable)){
+						//TODO:清空页面中上一组的运动员信息√
+						P_score1.setText("");
+						P_score2.setText("");
+						P_score3.setText("");
+						P_score4.setText("");
+						P_score5.setText("");
+						P_score6.setText("");
+						P_score7.setText("");
+						P_score8.setText("");
+						getAths();	//获取下一组运动员名单
+					}
 				}
+
+
 			}
 		});
 
@@ -307,7 +361,7 @@ public class Referee extends JFrame {
 		logout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//取消登录状态
+				//TODO：取消登录状态
 				dispose();
 			}
 		});
@@ -324,7 +378,24 @@ public class Referee extends JFrame {
 	}
 	private void getAths(){
 		ArrayList<Pair<String,String>> aths = mReferee.wait_Aths();
-		//TODO:将aths的信息保存到界面
+		//TODO:将aths的信息保存到界面√
+		P_name1.setText(aths.get(0).getKey());
+		P_name2.setText(aths.get(1).getKey());
+		P_name3.setText(aths.get(2).getKey());
+		P_name4.setText(aths.get(3).getKey());
+		P_name5.setText(aths.get(4).getKey());
+		P_name6.setText(aths.get(5).getKey());
+		P_name7.setText(aths.get(6).getKey());
+		P_name8.setText(aths.get(7).getKey());
+
+		P_number1.setText(aths.get(0).getValue());
+		P_number2.setText(aths.get(1).getValue());
+		P_number3.setText(aths.get(2).getValue());
+		P_number4.setText(aths.get(3).getValue());
+		P_number5.setText(aths.get(4).getValue());
+		P_number6.setText(aths.get(5).getValue());
+		P_number7.setText(aths.get(6).getValue());
+		P_number8.setText(aths.get(7).getValue());
 	}
 
 }
