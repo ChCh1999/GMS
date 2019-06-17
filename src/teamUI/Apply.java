@@ -110,17 +110,22 @@ public class Apply extends JFrame {
 		referee.setFont(new Font("宋体", Font.PLAIN, 18));
 		referee.setBounds(10, 195, 97, 29);
 		contentPane.add(referee);
-		
+
+        JLabel SIDLabel = new JLabel("工号");
+        SIDLabel.setFont(new Font("宋体", Font.PLAIN, 18));
+        SIDLabel.setBounds(108, 47, 54, 29);
+        contentPane.add(SIDLabel);
+
 		JLabel name = new JLabel("姓名");//姓名
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		name.setFont(new Font("宋体", Font.PLAIN, 18));
-		name.setBounds(129, 47, 66, 29);
+        name.setBounds(186, 47, 66, 29);
 		contentPane.add(name);
 		
 		JLabel IDnumber = new JLabel("身份证号");//身份证号
 		IDnumber.setHorizontalAlignment(SwingConstants.CENTER);
 		IDnumber.setFont(new Font("宋体", Font.PLAIN, 18));
-		IDnumber.setBounds(216, 47, 137, 29);
+        IDnumber.setBounds(273, 47, 137, 29);
 		contentPane.add(IDnumber);
 		
 		leadername = new JTextField();//领队姓名
@@ -131,82 +136,70 @@ public class Apply extends JFrame {
 				
 			}
 		});
-		leadername.setBounds(129, 83, 66, 23);
+        leadername.setBounds(186, 83, 66, 23);
 		contentPane.add(leadername);
 		leadername.setColumns(10);
 
 		JLabel phonenumber = new JLabel("电话号码");//电话号码
 		phonenumber.setHorizontalAlignment(SwingConstants.CENTER);
 		phonenumber.setFont(new Font("宋体", Font.PLAIN, 18));
-		phonenumber.setBounds(388, 47, 137, 29);
+        phonenumber.setBounds(445, 47, 137, 29);
 		contentPane.add(phonenumber);
 
-		leaderID = new JTextField();//领队身份证号
-		leaderID.setColumns(10);
-		leaderID.setBounds(210, 84, 168, 23);
-		contentPane.add(leaderID);
-        leadid=leaderID.getText();
+        leaderID = new JTextField();//领队身份证号
+        leaderID.setColumns(10);
+        leaderID.setBounds(267, 84, 168, 23);
+        contentPane.add(leaderID);
 
-		
-		leaderPhNum = new JTextField();//领队电话号码
-		leaderPhNum.setColumns(10);
-		leaderPhNum.setBounds(388, 83, 168, 23);
-		contentPane.add(leaderPhNum);
-        leadtel=leaderPhNum.getText();
-		
-		Dname = new JTextField();//队医姓名
-		Dname.setColumns(10);
-		Dname.setBounds(129, 123, 66, 23);
-		contentPane.add(Dname);
-        doctorname = Dname.getText();
-		
-		DID = new JTextField();//队医身份证号
-		DID.setColumns(10);
-		DID.setBounds(210, 122, 168, 23);
-		contentPane.add(DID);
-        doctorid=DID.getText();
+        leaderPhNum = new JTextField();//领队电话号码
+        leaderPhNum.setColumns(10);
+        leaderPhNum.setBounds(445, 83, 168, 23);
+        contentPane.add(leaderPhNum);
 
-		DPhNum = new JTextField();
-		DPhNum.setColumns(10);
-		DPhNum.setBounds(388, 123, 168, 23);
-		contentPane.add(DPhNum);
-        doctortel=DPhNum.getText();
-		
-		trainername = new JTextField();//教练员姓名
-		trainername.setColumns(10);
-		trainername.setBounds(129, 162, 66, 23);
-		contentPane.add(trainername);
-        trainname=trainername.getText();
-		
-		trainerID = new JTextField();//教练员身份证号
-		trainerID.setColumns(10);
-		trainerID.setBounds(210, 162, 168, 23);
-		contentPane.add(trainerID);
-        trainid=trainerID.getText();
-		
-		trainerPhNum = new JTextField();//教练员电话号码
-		trainerPhNum.setColumns(10);
-		trainerPhNum.setBounds(388, 161, 168, 23);
-		contentPane.add(trainerPhNum);
-        traintel=trainerPhNum.getText();
-		
-		refename = new JTextField();//裁判员姓名
-		refename.setColumns(10);
-		refename.setBounds(129, 201, 66, 23);
-		contentPane.add(refename);
-        judgename=refename.getText();
-		
-		refeID = new JTextField();//裁判员身份证号
-		refeID.setColumns(10);
-		refeID.setBounds(210, 201, 168, 23);
-		contentPane.add(refeID);
-        judgeid=refeID.getText();
-		
-		refePhNum = new JTextField();//裁判员电话号码
-		refePhNum.setColumns(10);
-		refePhNum.setBounds(388, 201, 168, 23);
-		contentPane.add(refePhNum);
-        judgetel = refePhNum.getText();
+        Dname = new JTextField();//队医姓名
+        Dname.setColumns(10);
+        Dname.setBounds(186, 123, 66, 23);
+        contentPane.add(Dname);
+
+        DID = new JTextField();//队医身份证号
+        DID.setColumns(10);
+        DID.setBounds(267, 122, 168, 23);
+        contentPane.add(DID);
+
+        DPhNum = new JTextField();//队医电话号码
+        DPhNum.setColumns(10);
+        DPhNum.setBounds(445, 123, 168, 23);
+        contentPane.add(DPhNum);
+
+        trainername = new JTextField();//教练员姓名
+        trainername.setColumns(10);
+        trainername.setBounds(186, 162, 66, 23);
+        contentPane.add(trainername);
+
+        trainerID = new JTextField();//教练员身份证号
+        trainerID.setColumns(10);
+        trainerID.setBounds(267, 162, 168, 23);
+        contentPane.add(trainerID);
+
+        trainerPhNum = new JTextField();//教练员电话号码
+        trainerPhNum.setColumns(10);
+        trainerPhNum.setBounds(445, 161, 168, 23);
+        contentPane.add(trainerPhNum);
+
+        refename = new JTextField();//裁判员姓名
+        refename.setColumns(10);
+        refename.setBounds(186, 201, 66, 23);
+        contentPane.add(refename);
+
+        refeID = new JTextField();//裁判员身份证号
+        refeID.setColumns(10);
+        refeID.setBounds(267, 201, 168, 23);
+        contentPane.add(refeID);
+
+        refePhNum = new JTextField();//裁判员电话号码
+        refePhNum.setColumns(10);
+        refePhNum.setBounds(445, 201, 168, 23);
+        contentPane.add(refePhNum);
 
         JTextField teamnumber = new JTextField();
         teamnumber.setBounds(433, 13, 182, 27);
@@ -297,7 +290,25 @@ public class Apply extends JFrame {
 		backbutton.setBounds(77, 287, 200, 40);
 		contentPane.add(backbutton);
 
+        JTextField leaderSID = new JTextField();
+        leaderSID.setBounds(87, 83, 75, 23);
+        contentPane.add(leaderSID);
+        leaderSID.setColumns(10);
 
+        JTextField DrSID = new JTextField();
+        DrSID.setColumns(10);
+        DrSID.setBounds(87, 123, 75, 23);
+        contentPane.add(DrSID);
+
+        JTextField trainerSID = new JTextField();
+        trainerSID.setColumns(10);
+        trainerSID.setBounds(87, 162, 75, 23);
+        contentPane.add(trainerSID);
+
+        JTextField refeSID = new JTextField();
+        refeSID.setColumns(10);
+        refeSID.setBounds(87, 201, 75, 23);
+        contentPane.add(refeSID);
 		
 		this.setVisible(true);
 	}
