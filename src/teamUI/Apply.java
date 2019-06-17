@@ -1,27 +1,29 @@
 package teamUI;
 
+import SocketTools.entering;
+import SocketTools.receive;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
-import javax.swing.JTextField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 public class Apply extends JFrame {
-
+    int count=0;
+    String Tname,TID,TDoc;
+    String TPassword="123456";
+    String leadname,doctorname,trainname,judgename;
+    String leadid,doctorid,trainid,judgeid;
+    String leadtel,doctortel,traintel,judgetel;
 	private JPanel contentPane;
 	private JTextField tnameText;
 	private JTextField leadername;
@@ -38,23 +40,26 @@ public class Apply extends JFrame {
 	private JTextField refePhNum;
 	private JLabel readyNum;
 	private JTextField readytext;
+    private JFileChooser fileChooser = new JFileChooser();
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Apply frame = new Apply();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Thread rec= new Thread(new receive());
+                    rec.start();
+                    Apply frame = new Apply();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 	/**
 	 * Create the frame.
 	 */
@@ -79,9 +84,9 @@ public class Apply extends JFrame {
 		
 		tnameText = new JTextField();
 		tnameText.setBounds(129, 10, 182, 27);
-		//tnameText.setEditable(false);
 		contentPane.add(tnameText);
 		tnameText.setColumns(10);
+
 		
 		JLabel leader = new JLabel("领队");//领队
 		leader.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -116,6 +121,7 @@ public class Apply extends JFrame {
 		contentPane.add(IDnumber);
 		
 		leadername = new JTextField();//领队姓名
+        leadname=leadername.getText();
 		leadername.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -142,56 +148,68 @@ public class Apply extends JFrame {
 		leaderID.setColumns(10);
 		leaderID.setBounds(210, 84, 168, 23);
 		contentPane.add(leaderID);
+        leadid=leaderID.getText();
+
 		
 		leaderPhNum = new JTextField();//领队电话号码
 		leaderPhNum.setColumns(10);
 		leaderPhNum.setBounds(388, 83, 168, 23);
 		contentPane.add(leaderPhNum);
+        leadtel=leaderPhNum.getText();
 		
 		Dname = new JTextField();//队医姓名
 		Dname.setColumns(10);
 		Dname.setBounds(129, 123, 66, 23);
 		contentPane.add(Dname);
+        doctorname = Dname.getText();
 		
 		DID = new JTextField();//队医身份证号
 		DID.setColumns(10);
 		DID.setBounds(210, 122, 168, 23);
 		contentPane.add(DID);
-		
+        doctorid=DID.getText();
+
 		DPhNum = new JTextField();
 		DPhNum.setColumns(10);
 		DPhNum.setBounds(388, 123, 168, 23);
 		contentPane.add(DPhNum);
+        doctortel=DPhNum.getText();
 		
 		trainername = new JTextField();//教练员姓名
 		trainername.setColumns(10);
 		trainername.setBounds(129, 162, 66, 23);
 		contentPane.add(trainername);
+        trainname=trainername.getText();
 		
 		trainerID = new JTextField();//教练员身份证号
 		trainerID.setColumns(10);
 		trainerID.setBounds(210, 162, 168, 23);
 		contentPane.add(trainerID);
+        trainid=trainerID.getText();
 		
 		trainerPhNum = new JTextField();//教练员电话号码
 		trainerPhNum.setColumns(10);
 		trainerPhNum.setBounds(388, 161, 168, 23);
 		contentPane.add(trainerPhNum);
+        traintel=trainerPhNum.getText();
 		
 		refename = new JTextField();//裁判员姓名
 		refename.setColumns(10);
 		refename.setBounds(129, 201, 66, 23);
 		contentPane.add(refename);
+        judgename=refename.getText();
 		
 		refeID = new JTextField();//裁判员身份证号
 		refeID.setColumns(10);
 		refeID.setBounds(210, 201, 168, 23);
 		contentPane.add(refeID);
+        judgeid=refeID.getText();
 		
 		refePhNum = new JTextField();//裁判员电话号码
 		refePhNum.setColumns(10);
 		refePhNum.setBounds(388, 201, 168, 23);
 		contentPane.add(refePhNum);
+        judgetel = refePhNum.getText();
 		
 		ButtonGroup buttonGroup = new ButtonGroup();//实现单选
 		JPanel panel = new JPanel();
@@ -206,15 +224,44 @@ public class Apply extends JFrame {
 		panel.add(radioButton);
 		radioButton.setFont(new Font("宋体", Font.PLAIN, 18));
 		buttonGroup.add(radioButton);
+
+        JTextField teamnumber = new JTextField();
+        teamnumber.setBounds(433, 13, 182, 27);
+        contentPane.add(teamnumber);
+        teamnumber.setColumns(10);
+        TID= teamnumber.getText();
+
+        JLabel lblNewLabel = new JLabel("代表队账号");
+        lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
+        lblNewLabel.setBounds(331, 10, 97, 29);
+        contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("录入队员信息");
 		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 18));
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//点击跳转录入队员信息页面
-				//TODO:同时提交已录入数据
-				INathlete inathlete =new INathlete();
+			    Tname=tnameText.getText();
+                leadname=leadername.getText();
+                leadid=leaderID.getText();
+                leadtel=leaderPhNum.getText();
+                doctorname = Dname.getText();
+                doctorid=DID.getText();
+                doctortel=DPhNum.getText();
+                trainname=trainername.getText();
+                trainid=trainerID.getText();
+                traintel=trainerPhNum.getText();
+                judgename=refename.getText();
+                judgeid=refeID.getText();
+                judgetel = refePhNum.getText();
+                TID= teamnumber.getText();
+                entering enter = new entering();
+                enter.subteam(Tname,TID,TPassword,TDoc);
+                enter.substuff(leadname,leadid,leadtel,4,0);
+                enter.substuff(doctorname,doctorid,doctortel,5,0);
+                enter.substuff(trainname,trainid,traintel,6,0);
+                enter.substuff(judgename,judgeid,judgetel,1,0);
+                INathlete inathlete =new INathlete(TID);
 				dispose();
 			}
 		});
@@ -229,18 +276,24 @@ public class Apply extends JFrame {
 		readyNum.setFont(new Font("宋体", Font.PLAIN, 18));
 		readyNum.setBounds(10, 244, 131, 29);
 		contentPane.add(readyNum);
+
 		
 		readytext = new JTextField();
 		readytext.setBounds(147, 247, 78, 27);
 		readytext.setEditable(false);
 		contentPane.add(readytext);
 		readytext.setColumns(10);
+        readytext.setText(Integer.toString(count));
 
 		JButton messageup = new JButton("上传文件");//上传文件
 		messageup.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//TODO:上传文件
+                int i = fileChooser.showOpenDialog(getContentPane());// 显示文件选择对话框
+                if (i == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();// 获得选中的文件对象
+                    TDoc=selectedFile.getAbsolutePath();
+                }
 			}
 		});
 		messageup.setBounds(524, 246, 111, 28);
@@ -257,15 +310,7 @@ public class Apply extends JFrame {
 		backbutton.setBounds(113, 287, 200, 40);
 		contentPane.add(backbutton);
 
-		JTextField teamnumber = new JTextField();
-		teamnumber.setBounds(433, 13, 182, 27);
-		contentPane.add(teamnumber);
-		teamnumber.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("代表队账号");
-		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
-		lblNewLabel.setBounds(331, 10, 97, 29);
-		contentPane.add(lblNewLabel);
 		
 		this.setVisible(true);
 	}

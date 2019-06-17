@@ -4,52 +4,25 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import Data.*;
 import Data.DataOperation;
-public class receive  implements Runnable {
+public class receive implements Runnable  {
     final static int port = 10000;
     static int AIDmen=000;
     static int AIDwomen=001;
-    static int SID=0;
+    static int SID=001;
+    static  int AID=0;
     public void run(){
         try {
             ServerSocket subserver = new ServerSocket(port);
             while(true){
                 Socket socket = subserver.accept();
                 Thread sub= new Thread(new TsubHandle(socket));
+                sub.run();
                 sub.start();
             }
         }
         catch(IOException e){
         }
     }
-
-//    public static void receiveFile(Socket socket) {
-//        byte[] inputByte = null;
-//        int length = 0;
-//        DataInputStream dis = null;
-//        FileOutputStream fos = null;
-//        try {
-//            try {
-//                dis = new DataInputStream(socket.getInputStream());
-//                fos = new FileOutputStream(new File(""));
-//                inputByte = new byte[1024];
-//                System.out.println("开始接收数据...");
-//                while ((length = dis.read(inputByte, 0, inputByte.length)) > 0) {
-//                    System.out.println(length);
-//                    fos.write(inputByte, 0, length);
-//                    fos.flush();
-//                }
-//                System.out.println("完成接收");
-//            } finally {
-//                if (fos != null)
-//                    fos.close();
-//                if (dis != null)
-//                    dis.close();
-//                if (socket != null)
-//                    socket.close();
-//            }
-//        } catch (Exception e) {
-//        }
-//    }
 }
 class TsubHandle implements  Runnable{
     Socket Sub;
@@ -57,7 +30,7 @@ class TsubHandle implements  Runnable{
     int AIDmen=aaa.AIDmen;
     int AIDwomen=aaa.AIDwomen;
     int SID=aaa.SID;
-    String AID=null;
+    String AID =Integer.toString(aaa.AID);
     TsubHandle(Socket sub) {
         this.Sub = sub;
         System.out.println("处理登陆信息");
@@ -67,15 +40,19 @@ class TsubHandle implements  Runnable{
     public void run() {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(Sub.getInputStream()));
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(Sub.getOutputStream()));
             String func = br.readLine();
+            System.out.println(func);
             if(func.equals("tosubteam")){
                 String Tname,TID,TPassword,TDoc;
                 Tname=br.readLine();
                 TID=br.readLine();
                 TPassword = br.readLine();
                 TDoc = br.readLine();
-                DataOperation con = new DataOperation();
+//                System.out.println(Tname);
+//                System.out.println(TID);
+//                System.out.println(TPassword);
+//                System.out.println(TDoc);
+               DataOperation con = new DataOperation();
                 con.InsertData(Tname,TID,TPassword,TDoc);
                 while(br.readLine().equals("end")){
                     br.close();
@@ -86,19 +63,29 @@ class TsubHandle implements  Runnable{
                 int Age,GroupID,Grade;
                 Aname=br.readLine();
                 ID=br.readLine();
-                Age=br.read();
-                GroupID=br.read();
-                Grade=br.read();
+                Age=Integer.parseInt(br.readLine());
+                GroupID=Integer.parseInt(br.readLine());
+                Grade=Integer.parseInt(br.readLine());
                 sex=br.readLine();
                 TID=br.readLine();
                 if(sex.equals("men")){
-                    AID=Integer.toString(AIDmen + 2);
+                    AID=Integer.toString(AIDmen );
+                    aaa.AID=AIDmen;
                    aaa.AIDmen+=2;
+
                 }
                 else if(sex.equals("women")){
-                    AID = Integer.toString(AIDwomen +2);
+                    AID = Integer.toString(AIDwomen );
+                    aaa.AID=AIDwomen;
                     aaa.AIDwomen+=2;
                 }
+//                System.out.println(Aname);
+//                System.out.println(ID);
+//                System.out.println(Age);
+//                System.out.println(GroupID);
+//                System.out.println(Grade);
+//                System.out.println(AID);
+               //System.out.println(TID);
                 DataOperation con1 = new DataOperation();
                 con1.InsertData(Aname,ID,Age,GroupID,Grade,AID,TID);
                 while(br.readLine().equals("end")){
@@ -108,13 +95,20 @@ class TsubHandle implements  Runnable{
             }
             else if(func.equals("tosubstuff")){
                 String Sname, ID, TEL;
-                int Stype,SLogin;
+                int Stype;
+                int SLogin;
                 Sname = br.readLine();
                 ID = br.readLine();
                 TEL = br.readLine();
-                Stype = br.read();
-                SLogin= br.read();
-                DataOperation con1 = new DataOperation();
+                Stype = Integer.parseInt(br.readLine());
+                SLogin= Integer.parseInt(br.readLine());
+//                System.out.println(SID);
+//                System.out.println(Sname);
+//                System.out.println(ID);
+//                System.out.println(TEL);
+//                System.out.println(Stype);
+//                System.out.println(SLogin);
+               DataOperation con1 = new DataOperation();
                 con1.InsertData(Integer.toString(SID), Sname, ID, TEL, Stype,SLogin);
                 aaa.SID++;
                 while (br.readLine().equals("end")) {
@@ -125,15 +119,18 @@ class TsubHandle implements  Runnable{
                 String PID;
                 int GroupID;
                 PID=br.readLine();
-                GroupID = br.read();
+                GroupID = Integer.parseInt(br.readLine());
                 DataOperation con1 = new DataOperation();
                 con1.InsertData(PID,AID,GroupID);
+//                System.out.println(PID);
+//                System.out.println(AID);
+//                System.out.println(GroupID);
                 while (br.readLine().equals("end")) {
                     br.close();
                 }
             }
             else {
-                System.out.println("error");
+                System.out.println("error...");
                 return;
             }
 
