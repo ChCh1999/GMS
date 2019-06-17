@@ -28,7 +28,6 @@ public class INathlete extends JFrame {
 	private JTextField name;
 	private JTextField IDnumber;
 	private JTextField age;
-	private JTextField team;
 	String Aname,ID,TID,sex;
 	int Age, GroupID, Grade;
 	/**
@@ -63,11 +62,6 @@ public class INathlete extends JFrame {
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
 		lblNewLabel.setBounds(28, 118, 75, 20);
 		contentPane.add(lblNewLabel);
-		
-		JLabel label_2 = new JLabel("组别");
-		label_2.setFont(new Font("宋体", Font.PLAIN, 18));
-		label_2.setBounds(28, 167, 75, 20);
-		contentPane.add(label_2);
 		
 		JLabel label_3 = new JLabel("比赛项目");
 		label_3.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -107,14 +101,6 @@ public class INathlete extends JFrame {
 		age.setBounds(102, 116, 70, 30);
 		contentPane.add(age);
 		age.setColumns(10);
-
-		
-		team = new JTextField();//组别
-		team.setText("");
-		team.setBounds(102, 165, 70, 30);
-		contentPane.add(team);
-		team.setColumns(10);
-
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(121, 225, 491, 81);
@@ -162,11 +148,11 @@ public class INathlete extends JFrame {
 
 		JLabel label_4 = new JLabel("性别");
 		label_4.setFont(new Font("宋体", Font.PLAIN, 18));
-		label_4.setBounds(302, 167, 62, 20);
+		label_4.setBounds(28, 170, 62, 20);
 		contentPane.add(label_4);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(361, 156, 165, 39);
+		panel_1.setBounds(102, 164, 165, 39);
 		contentPane.add(panel_1);
 
 		ButtonGroup buttonGroup = new ButtonGroup();//实现单选
@@ -197,8 +183,10 @@ public class INathlete extends JFrame {
 				Aname=name.getText();
 				ID=IDnumber.getText();
 				Grade=Integer.parseInt(subGradetext.getText());
-				GroupID=Integer.parseInt(team.getText());
 				Age=Integer.parseInt(age.getText());
+				if(Age==7||Age==8) GroupID=1;
+				else if(Age==9||Age==10) GroupID=2;
+				else if (Age==11||Age==12) GroupID=3;
 				entering enter = new entering();
 				if(((JRadioButton)panel_1.getComponent(0)).isSelected()){
 					sex="men";
@@ -220,7 +208,6 @@ public class INathlete extends JFrame {
 				name.setText("");
 				IDnumber.setText("");
 				age.setText("");
-				team.setText("");
 				subGradetext.setText("");
 				checkBox_1.setSelected(false);
 				checkBox_2.setSelected(false);

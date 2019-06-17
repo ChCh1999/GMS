@@ -69,7 +69,7 @@ public class Apply extends JFrame {
 	public Apply() {
 		setTitle("代表队报名");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 696, 387);
+		setBounds(100, 100, 639, 387);
 		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -131,22 +131,16 @@ public class Apply extends JFrame {
 				
 			}
 		});
-		
+		leadername.setBounds(129, 83, 66, 23);
+		contentPane.add(leadername);
+		leadername.setColumns(10);
+
 		JLabel phonenumber = new JLabel("电话号码");//电话号码
 		phonenumber.setHorizontalAlignment(SwingConstants.CENTER);
 		phonenumber.setFont(new Font("宋体", Font.PLAIN, 18));
 		phonenumber.setBounds(388, 47, 137, 29);
 		contentPane.add(phonenumber);
-		
-		JLabel sex = new JLabel("性别");
-		sex.setHorizontalAlignment(SwingConstants.CENTER);
-		sex.setFont(new Font("宋体", Font.PLAIN, 18));
-		sex.setBounds(569, 47, 66, 29);
-		contentPane.add(sex);
-		leadername.setBounds(129, 83, 66, 23);
-		contentPane.add(leadername);
-		leadername.setColumns(10);
-		
+
 		leaderID = new JTextField();//领队身份证号
 		leaderID.setColumns(10);
 		leaderID.setBounds(210, 84, 168, 23);
@@ -213,20 +207,6 @@ public class Apply extends JFrame {
 		refePhNum.setBounds(388, 201, 168, 23);
 		contentPane.add(refePhNum);
         judgetel = refePhNum.getText();
-		
-		ButtonGroup buttonGroup = new ButtonGroup();//实现单选
-		JPanel panel = new JPanel();
-		panel.setBounds(560, 156, 109, 29);
-		contentPane.add(panel);
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("男");
-		panel.add(rdbtnNewRadioButton);
-		rdbtnNewRadioButton.setFont(new Font("宋体", Font.PLAIN, 18));
-		buttonGroup.add(rdbtnNewRadioButton);
-		
-		JRadioButton radioButton = new JRadioButton("女");
-		panel.add(radioButton);
-		radioButton.setFont(new Font("宋体", Font.PLAIN, 18));
-		buttonGroup.add(radioButton);
 
         JTextField teamnumber = new JTextField();
         teamnumber.setBounds(433, 13, 182, 27);
@@ -276,7 +256,7 @@ public class Apply extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnNewButton.setBounds(355, 287, 220, 40);
+		btnNewButton.setBounds(310, 287, 220, 40);
 		contentPane.add(btnNewButton);
 		
 		readyNum = new JLabel("已录入人员数");
@@ -303,7 +283,7 @@ public class Apply extends JFrame {
                 }
 			}
 		});
-		messageup.setBounds(524, 246, 111, 28);
+		messageup.setBounds(446, 246, 111, 28);
 		contentPane.add(messageup);
 
 		JButton backbutton = new JButton("返回");
@@ -314,7 +294,7 @@ public class Apply extends JFrame {
 				dispose();
 			}
 		});
-		backbutton.setBounds(113, 287, 200, 40);
+		backbutton.setBounds(77, 287, 200, 40);
 		contentPane.add(backbutton);
 
 
