@@ -8,7 +8,10 @@ import java.net.UnknownHostException;
 public class entering {
     final static String IP_SERVER="127.0.0.1";
     final static int port=10000;
+    final static int port1=10001;
     private BufferedWriter bw;
+    private FileInputStream fis;
+    private DataOutputStream dos;
     public static void main(String[] args) {
     }
     public void subteam(String Tname,String TID, String TPassword ,String TDoc){
@@ -23,12 +26,12 @@ public class entering {
             ioe.printStackTrace();
         }
     }
-    public void substuff(String Sname,String ID,String Tel, int Stype, int state){
+    public void substuff(String SID,String Sname,String ID,String Tel, int Stype, int state){
         try {
             Socket conn = new Socket(IP_SERVER,port);
             bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             bw.write("tosubstuff"+"\n");
-            bw.write(Sname+"\n"+ID+"\n"+Tel+"\n"+Integer.toString(Stype)+"\n"+Integer.toString(state)+"\n");
+            bw.write(SID+"\n"+Sname+"\n"+ID+"\n"+Tel+"\n"+Integer.toString(Stype)+"\n"+Integer.toString(state)+"\n");
             bw.write("end"+"\n");
             bw.flush();
         }catch (IOException ioe){
@@ -59,6 +62,34 @@ public class entering {
         }
         catch(IOException ioe){
             return;
+        }
+    }
+    public void subDoc(String TDoc) throws IOException{
+        String url =TDoc;
+        File file=new File(url);
+        try {
+            Socket conn = new Socket(IP_SERVER, port1);
+            fis = new FileInputStream(file);
+            dos = new DataOutputStream(conn.getOutputStream());
+            dos.writeUTF(file.getName());
+            // dos.flush();
+            dos.writeLong(file.length());
+            dos.flush();
+            System.out.println("======== 开始传输文件 ========");
+            byte[] bytes = new byte[1024];
+            int length = 0;
+
+            while ((length = fis.read(bytes, 0, bytes.length)) != -1) {
+                dos.write(bytes, 0, length);
+                dos.flush();
+            }
+            System.out.println("======== 文件传输成功 ========");
+        }catch(IOException e){
+            e.printStackTrace();
+            System.out.println("客户端文件传输异常");
+        }finally{
+            fis.close();
+            dos.close();
         }
     }
 

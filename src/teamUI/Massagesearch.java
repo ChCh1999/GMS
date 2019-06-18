@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -101,7 +103,7 @@ public class Massagesearch extends JFrame {
 		playersearch.add(gameText);*/
 
 		JComboBox pbisaixiangmu = new JComboBox();
-		pbisaixiangmu.setModel(new DefaultComboBoxModel(new String[] {"单杠", "双杠","吊环","鞍马","蹦床","跳马","高低杠","平衡木","自由体操"}));
+		pbisaixiangmu.setModel(new DefaultComboBoxModel(new String[] {"全部","单杠", "双杠","吊环","鞍马","蹦床","跳马","高低杠","平衡木","自由体操"}));
 		pbisaixiangmu.setFont(new Font("宋体", Font.PLAIN, 18));
 		pbisaixiangmu.setBounds(439, 25, 104, 25);
 		playersearch.add(pbisaixiangmu);
@@ -152,15 +154,12 @@ public class Massagesearch extends JFrame {
 		tNumLabel.setBounds(10, 23, 90, 20);
 		teamsearch.add(tNumLabel);
 
-		/*JTextField teamNumText = new JTextField();
-		teamNumText.setBounds(110, 21, 215, 30);
-		teamNumText.setColumns(10);
-		teamsearch.add(teamNumText);*/
-
 		//团队号
 		JComboBox teamNumBox = new JComboBox();
 		teamNumBox.setBounds(88, 25, 185, 25);
-		//TODO：拉取数据库信息置入
+		//TODO：拉取数据库信息置入string
+		String [] string = null;
+		teamNumBox.setModel(new DefaultComboBoxModel(string));
 		teamsearch.add(teamNumBox);
 
 		JLabel tlblBisaixiangmu = new JLabel("比赛项目");
@@ -172,14 +171,18 @@ public class Massagesearch extends JFrame {
 		tqueryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-
+				//TODO:
+				//更新队伍数据
+				String[] str = {"武汉队"};//eg:更新队伍下拉框内容
+				teamNumBox.setModel(new DefaultComboBoxModel(str));
+				teamNumBox.updateUI();
 			}
 		});
 		tqueryButton.setBounds(291, 61, 93, 30);
 		teamsearch.add(tqueryButton);
 
 		JComboBox txiangmuBox = new JComboBox();
-		txiangmuBox.setModel(new DefaultComboBoxModel(new String[] {"单杠", "双杠","吊环","鞍马","蹦床","跳马","高低杠","平衡木","自由体操"}));
+		txiangmuBox.setModel(new DefaultComboBoxModel(new String[] {"全部","单杠", "双杠","吊环","鞍马","蹦床","跳马","高低杠","平衡木","自由体操"}));
 		txiangmuBox.setFont(new Font("宋体", Font.PLAIN, 18));
 		txiangmuBox.setToolTipText("");
 		txiangmuBox.setBounds(395, 25, 104, 25);
@@ -192,7 +195,7 @@ public class Massagesearch extends JFrame {
 
 		JComboBox ageBox = new JComboBox();
 		ageBox.setFont(new Font("宋体", Font.PLAIN, 18));
-		ageBox.setModel(new DefaultComboBoxModel(new String[] {"7-8", "9-10", "11-12"}));
+		ageBox.setModel(new DefaultComboBoxModel(new String[] {"全部","7-8", "9-10", "11-12"}));
 		ageBox.setBounds(573, 25, 77, 25);
 		teamsearch.add(ageBox);
 

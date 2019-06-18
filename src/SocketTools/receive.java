@@ -13,7 +13,6 @@ public class receive implements Runnable  {
             while(true){
                 Socket socket = subserver.accept();
                 Thread sub= new Thread(new TsubHandle(socket));
-                sub.run();
                 sub.start();
             }
         }
@@ -26,14 +25,11 @@ class TsubHandle implements  Runnable{
     data aaa=new data();
     int AIDmen=aaa.AIDmen;
     int AIDwomen=aaa.AIDwomen;
-    int SID=aaa.SID;
     String AID =Integer.toString(aaa.AID);
     TsubHandle(Socket sub) {
-
         this.Sub = sub;
         System.out.println("处理登陆信息");
     }
-
     @Override
     public void run() {
         try {
@@ -82,17 +78,18 @@ class TsubHandle implements  Runnable{
 
             }
             else if(func.equals("tosubstuff")){
-                String Sname, ID, TEL;
+                String Sname, ID, TEL,SID;
                 int Stype;
                 int SLogin;
+                SID = br.readLine();
                 Sname = br.readLine();
                 ID = br.readLine();
                 TEL = br.readLine();
                 Stype = Integer.parseInt(br.readLine());
                 SLogin= Integer.parseInt(br.readLine());
                 DataOperation con1 = new DataOperation();
-                con1.InsertData(Integer.toString(SID), Sname, ID, TEL, Stype,SLogin);
-                aaa.SID++;
+                con1.InsertData(SID, Sname, ID, TEL, Stype,SLogin);
+
                 while (br.readLine().equals("end")) {
                     br.close();
                 }
@@ -112,7 +109,6 @@ class TsubHandle implements  Runnable{
                 System.out.println("error...");
                 return;
             }
-
         } catch (IOException ioe) {
             System.out.println(ioe);
         }

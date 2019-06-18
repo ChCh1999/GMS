@@ -3,6 +3,7 @@ package teamUI;
 import Data.DataOperation;
 import SocketTools.data;
 import SocketTools.entering;
+import SocketTools.getword;
 import SocketTools.receive;
 
 import java.awt.BorderLayout;
@@ -26,6 +27,8 @@ public class Apply extends JFrame {
     String leadname,doctorname,trainname,judgename;
     String leadid,doctorid,trainid,judgeid;
     String leadtel,doctortel,traintel,judgetel;
+    String leadsid,doctorsid,trainsid,judgesid;
+    String [] error = new String[6];
 	private JPanel contentPane;
 	private JTextField tnameText;
 	private JTextField leadername;
@@ -55,6 +58,8 @@ public class Apply extends JFrame {
 
                     Thread rec= new Thread(new receive());
                     rec.start();
+                    Thread hhh=new Thread(new getword());
+                    hhh.start();
                     Apply frame = new Apply();
                     frame.setVisible(true);
                 } catch (Exception e) {
@@ -205,12 +210,32 @@ public class Apply extends JFrame {
         teamnumber.setBounds(433, 13, 182, 27);
         contentPane.add(teamnumber);
         teamnumber.setColumns(10);
-        TID= teamnumber.getText();
+
 
         JLabel lblNewLabel = new JLabel("代表队账号");
         lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
         lblNewLabel.setBounds(331, 10, 97, 29);
         contentPane.add(lblNewLabel);
+
+        JTextField leaderSID = new JTextField();
+        leaderSID.setBounds(87, 83, 75, 23);
+        contentPane.add(leaderSID);
+        leaderSID.setColumns(10);
+
+        JTextField DrSID = new JTextField();
+        DrSID.setColumns(10);
+        DrSID.setBounds(87, 123, 75, 23);
+        contentPane.add(DrSID);
+
+        JTextField trainerSID = new JTextField();
+        trainerSID.setColumns(10);
+        trainerSID.setBounds(87, 162, 75, 23);
+        contentPane.add(trainerSID);
+
+        JTextField refeSID = new JTextField();
+        refeSID.setColumns(10);
+        refeSID.setBounds(87, 201, 75, 23);
+        contentPane.add(refeSID);
 		
 		JButton btnNewButton = new JButton("录入队员信息");
 		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -221,28 +246,78 @@ public class Apply extends JFrame {
                 leadname=leadername.getText();
                 leadid=leaderID.getText();
                 leadtel=leaderPhNum.getText();
+                leadsid=leaderSID.getText();
                 doctorname = Dname.getText();
                 doctorid=DID.getText();
                 doctortel=DPhNum.getText();
+                doctorsid=DrSID.getText();
                 trainname=trainername.getText();
                 trainid=trainerID.getText();
                 traintel=trainerPhNum.getText();
+                trainsid=trainerSID.getText();
                 judgename=refename.getText();
                 judgeid=refeID.getText();
                 judgetel = refePhNum.getText();
+                judgesid= refeSID.getText();
                 TID= teamnumber.getText();
                 data aaa=new data();
-                aaa.SID=Integer.parseInt(TID)*50;
                 aaa.AIDmen=Integer.parseInt(TID)*50;
 				aaa.AIDwomen=Integer.parseInt(TID)*50;
-                entering enter = new entering();
-                enter.subteam(Tname,TID,TPassword,TDoc);
-                enter.substuff(leadname,leadid,leadtel,4,0);
-                enter.substuff(doctorname,doctorid,doctortel,5,0);
-                enter.substuff(trainname,trainid,traintel,6,0);
-                enter.substuff(judgename,judgeid,judgetel,1,0);
-                INathlete inathlete =new INathlete(TID);
-				dispose();
+
+				DataOperation conn = new DataOperation();
+				for(int i=0;i<6;i++){error[i]=" ";}
+				if(conn.JudgeTID(TID)){error[0]="代表队账号";};
+                if(conn.JudgeSID(leadsid)){error[1]="领队职工号";};
+                if(conn.JudgeSID(doctorsid)){error[2]="队医职工号";};
+                if(conn.JudgeSID(trainsid)){error[3]="教练职工号";};
+                if(conn.JudgeSID(judgesid)){error[4]="裁判职工号";};
+                int flag=0;
+                for(int j=0;j<5;j++){
+                    if(error[j]!=" "){
+                        flag=1;
+                        break;
+                    }
+                }
+                if(leadsid.equals(doctorsid)||leadsid.equals(trainsid)||leadsid.equals(judgesid)
+                ||doctorsid.equals(trainsid)||doctorsid.equals(judgesid)||trainsid.equals(judgesid)){
+                    error[5]="职工号命名重复";
+                    flag=1;
+                }
+                if(flag==1) {
+                    JFrame jf=new JFrame();
+                    jf.setTitle("录入数据已经存在！！！");
+                    jf.setBounds(400, 250, 450, 300);
+                    jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    jf.getContentPane().setLayout(null);
+
+                    JLabel jl = new JLabel(error[0]+error[1]+error[2]
+                            +error[3]+error[4]+error[5]);
+                    jl.setFont(new Font("宋体", Font.PLAIN, 18));
+                    jl.setBounds(170, 100, 200, 30);
+                    jf.getContentPane().add(jl);
+                    jf.setVisible(true);
+
+                    JButton jb = new JButton("返回");
+                    jb.setFont(new Font("宋体", Font.PLAIN, 18));
+                    jb.setBounds(170, 150, 100, 30);
+                    jb.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent arg0) {
+                            jf.dispose();
+                        }
+                    });
+                    jf.getContentPane().add(jb);
+                }
+                else{
+                   entering enter = new entering();
+                    enter.subteam(Tname,TID,TPassword,TDoc);
+                    enter.substuff(leadsid,leadname,leadid,leadtel,4,0);
+                    enter.substuff(doctorsid,doctorname,doctorid,doctortel,5,0);
+                    enter.substuff(trainsid,trainname,trainid,traintel,6,0);
+                    enter.substuff(judgesid,judgename,judgeid,judgetel,1,0);
+                    INathlete inathlete =new INathlete(TID);
+
+                }
 			}
 		});
 		btnNewButton.addActionListener(new ActionListener() {
@@ -274,6 +349,12 @@ public class Apply extends JFrame {
                     File selectedFile = fileChooser.getSelectedFile();// 获得选中的文件对象
                     TDoc=selectedFile.getAbsolutePath();
                 }
+                try {
+					entering enter =new entering();
+					enter.subDoc(TDoc); // 传输文件
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		messageup.setBounds(446, 246, 111, 28);
@@ -289,27 +370,6 @@ public class Apply extends JFrame {
 		});
 		backbutton.setBounds(77, 287, 200, 40);
 		contentPane.add(backbutton);
-
-        JTextField leaderSID = new JTextField();
-        leaderSID.setBounds(87, 83, 75, 23);
-        contentPane.add(leaderSID);
-        leaderSID.setColumns(10);
-
-        JTextField DrSID = new JTextField();
-        DrSID.setColumns(10);
-        DrSID.setBounds(87, 123, 75, 23);
-        contentPane.add(DrSID);
-
-        JTextField trainerSID = new JTextField();
-        trainerSID.setColumns(10);
-        trainerSID.setBounds(87, 162, 75, 23);
-        contentPane.add(trainerSID);
-
-        JTextField refeSID = new JTextField();
-        refeSID.setColumns(10);
-        refeSID.setBounds(87, 201, 75, 23);
-        contentPane.add(refeSID);
-		
 		this.setVisible(true);
 	}
 }
