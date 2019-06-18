@@ -684,6 +684,48 @@ public class DataOperation {
             return false;
         }
     }
+    //查询所有还有空位的项目。 返回  可以添加裁判的Pname
+    public ArrayList<String> SearchProjectList(){
+        String sql="select PID from stuff";
+        String PID=null;
+        //String 是不同的PID  Integer是表示裁判数量
+        ArrayList<Pair<String,Integer>> arrayList=new ArrayList<>();
+        //最后要返回的东西
+        ArrayList<String> arrayList1=new ArrayList<>();
+        try{
+            rst=state.executeQuery(sql);
+            //不同的PID加入数组   然后相同数量加1 不同数量为0
+            while(rst.next()){
+                boolean judge=false;
+                int address=0;
+                PID=rst.getString("PID");
+                for(int i=0;i<arrayList.size();i++){
+                    if(PID.equals(arrayList.get(i).getValue0())){
+                        judge=true;
+                        address=i;
+                        break;
+                    }
+                }
+                if (!judge){
+                    arrayList.add(new Pair<>(PID,0));
+                }else {
+                    arrayList.add(new Pair<>(PID,arrayList.get(address).getValue1()+1));
+                    arrayList.remove(address);
+                }
+            }
+            for (int i=0;i<arrayList.size();i++){
+                if(arrayList.get(i).getValue1()<5){
+                    String Pname=SearchPName(arrayList.get(i).getValue0());
+                    arrayList1.add(Pname);
+                }
+            }
+            return arrayList1;
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 //查询之中所有的基础操作。
