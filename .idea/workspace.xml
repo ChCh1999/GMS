@@ -10,16 +10,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/teamUI/Apply.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="310" column="16" selection-start-line="310" selection-start-column="16" selection-end-line="312" selection-end-column="36" />
-              <folding>
-                <element signature="e#8850#10245#0" expanded="true" />
-                <element signature="e#10244#10245#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="209">
+              <caret line="29" column="47" lean-forward="true" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -43,7 +39,6 @@
         <option value="$PROJECT_DIR$/src/SocketTools/ClientTool.java" />
         <option value="$PROJECT_DIR$/src/SocketTools/GroupJudge.java" />
         <option value="$PROJECT_DIR$/src/SocketTools/ChiefJudge.java" />
-        <option value="$PROJECT_DIR$/src/Data/DataOperation.java" />
         <option value="$PROJECT_DIR$/src/SocketTools/Judge.java" />
         <option value="$PROJECT_DIR$/src/SocketTools/ProServer.java" />
         <option value="$PROJECT_DIR$/src/teamUI/MainRefe.java" />
@@ -54,6 +49,7 @@
         <option value="$PROJECT_DIR$/src/teamUI/Referee.java" />
         <option value="$PROJECT_DIR$/src/teamUI/Massagesearch.java" />
         <option value="$PROJECT_DIR$/src/teamUI/Apply.java" />
+        <option value="$PROJECT_DIR$/src/Data/DataOperation.java" />
       </list>
     </option>
   </component>
@@ -64,7 +60,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="30" />
+    <option name="x" value="59" />
+    <option name="y" value="295" />
     <option name="width" value="1286" />
     <option name="height" value="788" />
   </component>
@@ -74,6 +71,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -90,34 +88,7 @@
               <item name="GMS" type="b2602c69:ProjectViewProjectNode" />
               <item name="GMS" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="SocketTools" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="GMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="SocketTools" type="462c0819:PsiDirectoryNode" />
-              <item name="ChiefJudge.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
-            <path>
-              <item name="GMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="SocketTools" type="462c0819:PsiDirectoryNode" />
-              <item name="ProServer.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
-            <path>
-              <item name="GMS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="GMS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="SocketTools" type="462c0819:PsiDirectoryNode" />
-              <item name="receive.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </path>
             <path>
               <item name="GMS" type="b2602c69:ProjectViewProjectNode" />
@@ -129,7 +100,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -285,17 +255,18 @@
       <workItem from="1560785517915" duration="94000" />
       <workItem from="1560785695010" duration="75000" />
       <workItem from="1560868070284" duration="2933000" />
+      <workItem from="1560872069111" duration="364000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32462000" />
+    <option name="totallyTimeSpent" value="32844000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27382752" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25340393" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -415,13 +386,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Data/DataOperation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SocketTools/receive.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
@@ -525,14 +489,38 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bin/teamUI/ChiefRE.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2052">
+          <folding>
+            <element signature="e#0#35726#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/teamUI/Apply.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2878">
+          <folding>
+            <element signature="e#0#7975#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data/DataOperation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="959" column="1" selection-start-line="959" selection-start-column="1" selection-end-line="959" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/teamUI/Apply.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="310" column="16" selection-start-line="310" selection-start-column="16" selection-end-line="312" selection-end-column="36" />
-          <folding>
-            <element signature="e#8850#10245#0" expanded="true" />
-            <element signature="e#10244#10245#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="209">
+          <caret line="29" column="47" lean-forward="true" selection-start-line="29" selection-start-column="47" selection-end-line="29" selection-end-column="47" />
         </state>
       </provider>
     </entry>
