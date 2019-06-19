@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class Massagesearch extends JFrame {
 
@@ -68,7 +69,8 @@ public class Massagesearch extends JFrame {
 
 		Object[][] rowData = {};
 
-		JTable ptable = new JTable(rowData,columnNames);
+		DefaultTableModel pmodel = new DefaultTableModel(rowData,columnNames);
+		JTable ptable = new JTable(pmodel);
 
 		// 设置表格内容颜色
 		ptable.setForeground(Color.BLACK);                   // 字体颜色
@@ -130,7 +132,8 @@ public class Massagesearch extends JFrame {
 
 		Object[][] trowData = {};
 
-		JTable ttable = new JTable(trowData,tcolumnNames);
+		DefaultTableModel tmodel = new DefaultTableModel(trowData,tcolumnNames);
+		JTable ttable = new JTable(tmodel);
 
 		// 设置表格内容颜色
 		ttable.setForeground(Color.BLACK);                   // 字体颜色
@@ -224,7 +227,8 @@ public class Massagesearch extends JFrame {
 
 		Object[][] irowData = {};
 
-		JTable itable = new JTable(irowData,icolumnNames);
+		DefaultTableModel imodel = new DefaultTableModel(irowData,icolumnNames);
+		JTable itable = new JTable(imodel);
 
 		// 设置表格内容颜色
 		itable.setForeground(Color.BLACK);                   // 字体颜色
@@ -303,5 +307,10 @@ public class Massagesearch extends JFrame {
 		itemsearch.add(iqueryButton);
 
 	}
-
+	//向表格Table输入数据的函数
+	public void add(JTable table,Object[] obj) {
+		DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
+		tableModel.addRow(obj);
+		table.invalidate();
+	}
 }
