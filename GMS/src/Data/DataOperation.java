@@ -59,7 +59,7 @@ public class DataOperation {
         }
     }
     //增加工作人员 初始化（没有IP PID SPassword,SLogin）
-    public boolean InsertData(String SID,String SName,String ID,String Tel,int SType,int SLogin){
+    public boolean InsertData(String SID,String SName,String ID,String Tel,int SType){
         String sql="insert into stuff(SID,SName,ID,Tel,SType,IP,PID,SPassword,SLogin) values " +
                 "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,null,null,0)";
         try {
@@ -720,6 +720,25 @@ public class DataOperation {
                 }
             }
             return arrayList1;
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+            return null;
+        }
+    }
+    //查询所有的tid，tname
+    public ArrayList<Pair<String,String>> SearchAllteam(){
+        String sql="select TID,TName from team";
+        String TID=null,TName=null;
+        ArrayList<Pair<String,String>> arrayList=new ArrayList<>();
+        try{
+            rst=state.executeQuery(sql);
+            while (rst.next()){
+                TID=rst.getString("TID");
+                TName=rst.getString("TName");
+                arrayList.add(new Pair<>(TID,TName));
+            }
+            return arrayList;
         }catch (SQLException e){
             System.out.println("视图队伍查询成绩错误");
             e.printStackTrace();
