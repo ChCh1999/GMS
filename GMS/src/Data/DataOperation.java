@@ -612,11 +612,12 @@ public class DataOperation {
             }
         }
     }
-    //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0为比赛未开始，1为比赛开始了，2为比赛结束)
+    //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0初赛比赛未开始，1初赛比赛开始了，2为初赛比赛结束，
+    // 3决赛比赛未开始，4决赛比赛开始了，5决赛比赛结束)
     public  int SearchMatch(String PName,int GroupID){
         int J=0;
         //sql语句
-        String sql="select * from match where PName='"+PName+"' AND GroupID="+GroupID+"'";
+        String sql="select * from match where PName='"+PName+"' AND GroupID="+GroupID;
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
