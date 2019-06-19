@@ -61,7 +61,7 @@ public class DataOperation {
     //增加工作人员 初始化（没有IP PID SPassword,SLogin）
     public boolean InsertData(String SID,String SName,String ID,String Tel,int SType){
         String sql="insert into stuff(SID,SName,ID,Tel,SType,IP,PID,SPassword,SLogin) values " +
-                "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,null,null,0)";
+                "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,'10',null,0)";
         try {
             state.executeUpdate(sql);
             return true;
@@ -612,7 +612,8 @@ public class DataOperation {
             }
         }
     }
-    //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0为比赛未开始，1为比赛开始了，2为比赛结束)
+    //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0初赛比赛未开始，1初赛比赛开始了，2为初赛比赛结束，
+    // 3决赛比赛未开始，4决赛比赛开始了，5决赛比赛结束)
     public  int SearchMatch(String PName,int GroupID){
         int J=0;
         //sql语句
@@ -785,7 +786,7 @@ public class DataOperation {
             ArrayList<String> arrayList2=SearchAllPID();
             //将已经有五个裁判的项目剔除
             for (int i=0;i<arrayList.size();i++){
-                if(arrayList.get(i).getValue1() == 5){
+                if(arrayList.get(i).getValue1() >= 5){
                     arrayList2.remove(arrayList.get(i).getValue0());
                 }
             }

@@ -19,10 +19,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 public class Apply extends JFrame {
     int count=0;
-    String Tname,TID,TDoc;
+    String Tname,TID,TDoc,PID;
     String TPassword="123456";
     String leadname,doctorname,trainname,judgename;
     String leadid,doctorid,trainid,judgeid;
@@ -281,9 +282,15 @@ public class Apply extends JFrame {
 		backbutton.setBounds(77, 287, 200, 40);
 		contentPane.add(backbutton);
 
+        DataOperation conn = new DataOperation();
+        ArrayList<String> a= conn.SearchProjectList();
+        int len =a.size();
+        String str[] = new String[len];
+        a.toArray(str);
+
         JComboBox comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[] {"单杠","双杠","吊环","跳马","自由体操","鞍马","蹦床","高低杠","平衡木"}));
-        comboBox.setBounds(623, 162, 79, 23);
+        comboBox.setModel(new DefaultComboBoxModel(str));
+        comboBox.setBounds(623, 200, 79, 23);
         contentPane.add(comboBox);
 
         JButton btnNewButton = new JButton("录入队员信息");
@@ -313,7 +320,7 @@ public class Apply extends JFrame {
                 aaa.AIDmen=Integer.parseInt(TID)*50;
                 aaa.AIDwomen=Integer.parseInt(TID)*50;
 
-                DataOperation conn = new DataOperation();
+
                 for(int i=0;i<6;i++){error[i]=" ";}
                 if(conn.JudgeTID(TID)){error[0]="代表队账号";};
                 if(conn.JudgeSID(leadsid)){error[1]="领队职工号";};
@@ -332,6 +339,18 @@ public class Apply extends JFrame {
                     error[5]="职工号命名重复";
                     flag=1;
                 }
+
+                String it =comboBox.getSelectedItem().toString();
+                if(it.equals("单杠")){PID="1";}
+                if(it.equals("双杠")){PID="2";}
+                if(it.equals("吊环")){PID="3";}
+                if(it.equals("跳马")){PID="4";}
+                if(it.equals("自由体操")){PID="5";}
+                if(it.equals("鞍马")){PID="6";}
+                if(it.equals("蹦床")){PID="7";}
+                if(it.equals("高低杠")){PID="8";}
+                if(it.equals("平衡木")){PID="9";}
+
                 if(flag==1) {
                     JFrame jf=new JFrame();
                     jf.setTitle("录入数据已经存在！！！");
@@ -360,15 +379,21 @@ public class Apply extends JFrame {
                 else{
                     entering enter = new entering();
                     enter.subteam(Tname,TID,TPassword,TDoc);
-                    enter.substuff(leadsid,leadname,leadid,leadtel,4,0);
-                    enter.substuff(doctorsid,doctorname,doctorid,doctortel,5,0);
-                    enter.substuff(trainsid,trainname,trainid,traintel,6,0);
-                    enter.substuff(judgesid,judgename,judgeid,judgetel,1,0);
+                    enter.substuff(leadsid,leadname,leadid,leadtel,4);
+                    enter.substuff(doctorsid,doctorname,doctorid,doctortel,5);
+                    enter.substuff(trainsid,trainname,trainid,traintel,6);
+                    enter.substuff(judgesid,judgename,judgeid,judgetel,1);
+                    System.out.println();
+
                     INathlete inathlete =new INathlete(TID);
-                    String str[] = null;
-                    comboBox.setModel(new DefaultComboBoxModel(str));
-                    comboBox.updateUI();
                 }
+                conn.ModifyPID(judgesid,PID);
+                ArrayList<String> a= conn.SearchProjectList();
+                int len =a.size();
+                String str[] = new String[len];
+                a.toArray(str);
+                comboBox.setModel(new DefaultComboBoxModel(str));
+                comboBox.updateUI();
             }
         });
         btnNewButton.addActionListener(new ActionListener() {

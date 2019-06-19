@@ -80,15 +80,13 @@ class TsubHandle implements  Runnable{
             else if(func.equals("tosubstuff")){
                 String Sname, ID, TEL,SID;
                 int Stype;
-                int SLogin;
                 SID = br.readLine();
                 Sname = br.readLine();
                 ID = br.readLine();
                 TEL = br.readLine();
                 Stype = Integer.parseInt(br.readLine());
-                SLogin= Integer.parseInt(br.readLine());
                 DataOperation con1 = new DataOperation();
-                con1.InsertData(SID, Sname, ID, TEL, Stype,SLogin);
+                con1.InsertData(SID, Sname, ID, TEL, Stype);
 
                 while (br.readLine().equals("end")) {
                     br.close();

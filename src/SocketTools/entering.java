@@ -26,12 +26,12 @@ public class entering {
             ioe.printStackTrace();
         }
     }
-    public void substuff(String SID,String Sname,String ID,String Tel, int Stype, int state){
+    public void substuff(String SID,String Sname,String ID,String Tel, int Stype){
         try {
             Socket conn = new Socket(IP_SERVER,port);
             bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             bw.write("tosubstuff"+"\n");
-            bw.write(SID+"\n"+Sname+"\n"+ID+"\n"+Tel+"\n"+Integer.toString(Stype)+"\n"+Integer.toString(state)+"\n");
+            bw.write(SID+"\n"+Sname+"\n"+ID+"\n"+Tel+"\n"+Integer.toString(Stype)+"\n");
             bw.write("end"+"\n");
             bw.flush();
         }catch (IOException ioe){
