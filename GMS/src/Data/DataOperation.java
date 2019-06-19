@@ -684,6 +684,36 @@ public class DataOperation {
             return false;
         }
     }
+    //查询所有的PID
+    public ArrayList<String> SearchAllPID(){
+        String sql="select PID from project";
+        String PID=null;
+        boolean judge=false;
+        //最后要返回的东西
+        ArrayList<String> arrayList=new ArrayList<>();
+        try{
+            rst=state.executeQuery(sql);
+            //不同的PID加入数组   然后相同数量加1 不同数量为0
+            while(rst.next()){
+                PID=rst.getString("PID");
+                for(int i=0;i<arrayList.size();i++){
+                    if(PID.equals(arrayList.get(i))){
+                        judge=true;
+                        break;
+                    }
+                }
+                if (!judge){
+                    arrayList.add(PID);
+                }
+                return arrayList;
+            }
+            return arrayList;
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+            return null;
+        }
+    }
     //查询所有还有空位的项目。 返回  可以添加裁判的Pname
     public ArrayList<String> SearchProjectList(){
         String sql="select PID from stuff";
@@ -713,11 +743,18 @@ public class DataOperation {
                     arrayList.remove(address);
                 }
             }
+            rst=state.executeQuery(sql);
+            ArrayList<String> arrayList2=SearchAllPID();
+            //将已经有五个裁判的项目剔除
             for (int i=0;i<arrayList.size();i++){
-                if(arrayList.get(i).getValue1()<5){
-                    String Pname=SearchPName(arrayList.get(i).getValue0());
-                    arrayList1.add(Pname);
+                if(arrayList.get(i).getValue1() == 5){
+                    arrayList2.remove(arrayList.get(i).getValue0());
                 }
+            }
+            //将PID转化为PName
+            for (int i=0;i<arrayList2.size();i++){
+                String Pname=SearchPName(arrayList2.get(i));
+                arrayList1.add(Pname);
             }
             return arrayList1;
         }catch (SQLException e){
