@@ -190,25 +190,96 @@ public class INathlete extends JFrame {
 				entering enter = new entering();
 				if(((JRadioButton)panel_1.getComponent(0)).isSelected()){
 					sex="men";
+					enter.subath(Aname,ID,Age,GroupID,Grade,sex,TID);
+					int sum=0;
+					for(int i=0;i<100;i++){
+						for(int j=0;j<100;j++){
+							sum +=j;
+						}
+					}
 				}
 				else if(((JRadioButton)panel_1.getComponent(1)).isSelected()){
 					sex="women";
 				}
-				enter.subath(Aname,ID,Age,GroupID,Grade,sex,TID);
 				int numpid = panel.getComponentCount();
 				int [] check = new int[numpid];
-				for(int i = 0;i <numpid;i++){
-					if(((JCheckBox)panel.getComponent(i)).isSelected()){
-						check[i]=i+1;
-						System.out.println(check[i]);
-						enter.subgrade(Integer.toString(check[i]),GroupID);
+				if(sex.equals("men")) {
+					for (int i = 0; i < numpid; i++) {
+						if (((JCheckBox) panel.getComponent(i)).isSelected()) {
+							check[i] = i + 1;
+							System.out.println(check[i]);
+							enter.subgrade(Integer.toString(check[i]),GroupID);
+						}
+					}
+					name.setText("");
+					IDnumber.setText("");
+					age.setText("");
+					subGradetext.setText("");
+				}
+				else if(sex.equals("women")){
+					if(((JCheckBox) panel.getComponent(0)).isSelected()||
+							((JCheckBox) panel.getComponent(1)).isSelected()||
+							((JCheckBox) panel.getComponent(2)).isSelected()||
+							((JCheckBox) panel.getComponent(5)).isSelected()){
+						JFrame jf=new JFrame();
+						jf.setTitle("异常提醒");
+						jf.setBounds(400, 250, 450, 300);
+						jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						jf.getContentPane().setLayout(null);
+
+						JLabel jl = new JLabel("女子项目选择错误");
+						jl.setFont(new Font("宋体", Font.PLAIN, 18));
+						jl.setBounds(170, 100, 200, 30);
+						jf.getContentPane().add(jl);
+						jf.setVisible(true);
+
+						JButton jb = new JButton("返回");
+						jb.setFont(new Font("宋体", Font.PLAIN, 18));
+						jb.setBounds(170, 150, 100, 30);
+						jb.addMouseListener(new MouseAdapter() {
+							@Override
+							public void mouseClicked(MouseEvent arg0) {
+								jf.dispose();
+							}
+						});
+						jf.getContentPane().add(jb);
+					}
+					else{
+						enter.subath(Aname,ID,Age,GroupID,Grade,sex,TID);
+						int sum=0;
+						for(int i=0;i<100;i++){
+							for(int j=0;j<100;j++){
+								sum +=j;
+							}
+						}
+						String sportid;
+						if(((JCheckBox) panel.getComponent(3)).isSelected()){
+							sportid="14";
+							enter.subgrade(sportid,GroupID);
+						}
+						if(((JCheckBox) panel.getComponent(4)).isSelected()){
+							sportid="15";
+							enter.subgrade(sportid,GroupID);
+						}
+						if(((JCheckBox) panel.getComponent(7)).isSelected()){
+							sportid="18";
+							enter.subgrade(sportid,GroupID);
+						}
+						if(((JCheckBox) panel.getComponent(6)).isSelected()){
+							sportid="17";
+							enter.subgrade(sportid,GroupID);
+						}
+						if(((JCheckBox) panel.getComponent(8)).isSelected()){
+							sportid="19";
+							enter.subgrade(sportid,GroupID);
+						}
+						name.setText("");
+						IDnumber.setText("");
+						age.setText("");
+						subGradetext.setText("");
 					}
 				}
 
-				name.setText("");
-				IDnumber.setText("");
-				age.setText("");
-				subGradetext.setText("");
 				checkBox_1.setSelected(false);
 				checkBox_2.setSelected(false);
 				checkBox_3.setSelected(false);

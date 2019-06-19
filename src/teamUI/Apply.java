@@ -290,7 +290,7 @@ public class Apply extends JFrame {
 
         JComboBox comboBox = new JComboBox();
         comboBox.setModel(new DefaultComboBoxModel(str));
-        comboBox.setBounds(623, 200, 79, 23);
+        comboBox.setBounds(623, 162, 79, 23);
         contentPane.add(comboBox);
 
         JButton btnNewButton = new JButton("录入队员信息");
@@ -319,8 +319,6 @@ public class Apply extends JFrame {
                 data aaa=new data();
                 aaa.AIDmen=Integer.parseInt(TID)*50;
                 aaa.AIDwomen=Integer.parseInt(TID)*50;
-
-
                 for(int i=0;i<6;i++){error[i]=" ";}
                 if(conn.JudgeTID(TID)){error[0]="代表队账号";};
                 if(conn.JudgeSID(leadsid)){error[1]="领队职工号";};
@@ -341,15 +339,21 @@ public class Apply extends JFrame {
                 }
 
                 String it =comboBox.getSelectedItem().toString();
-                if(it.equals("单杠")){PID="1";}
-                if(it.equals("双杠")){PID="2";}
-                if(it.equals("吊环")){PID="3";}
-                if(it.equals("跳马")){PID="4";}
-                if(it.equals("自由体操")){PID="5";}
-                if(it.equals("鞍马")){PID="6";}
-                if(it.equals("蹦床")){PID="7";}
-                if(it.equals("高低杠")){PID="8";}
-                if(it.equals("平衡木")){PID="9";}
+                if(it.equals("男子单杠")){PID="1";}
+                if(it.equals("男子双杠")){PID="2";}
+                if(it.equals("男子吊环")){PID="3";}
+                if(it.equals("男子跳马")){PID="4";}
+                if(it.equals("男子自由体操")){PID="5";}
+                if(it.equals("男子鞍马")){PID="6";}
+                if(it.equals("男子蹦床")){PID="7";}
+                if(it.equals("男子高低杠")){PID="8";}
+                if(it.equals("男子平衡木")){PID="9";}
+                if(it.equals("无")){PID="10";}
+                if(it.equals("女子跳马")){PID="14";}
+                if(it.equals("女子高低杠")){PID="18";}
+                if(it.equals("女子平衡木")){PID="19";}
+                if(it.equals("女子自由体操")){PID="15";}
+                if(it.equals("女子蹦床")){PID="17";}
 
                 if(flag==1) {
                     JFrame jf=new JFrame();
@@ -384,16 +388,17 @@ public class Apply extends JFrame {
                     enter.substuff(trainsid,trainname,trainid,traintel,6);
                     enter.substuff(judgesid,judgename,judgeid,judgetel,1);
                     System.out.println();
-
                     INathlete inathlete =new INathlete(TID);
                 }
                 conn.ModifyPID(judgesid,PID);
+
                 ArrayList<String> a= conn.SearchProjectList();
                 int len =a.size();
                 String str[] = new String[len];
                 a.toArray(str);
                 comboBox.setModel(new DefaultComboBoxModel(str));
                 comboBox.updateUI();
+
             }
         });
         btnNewButton.addActionListener(new ActionListener() {
