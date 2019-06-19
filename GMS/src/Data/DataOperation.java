@@ -340,21 +340,29 @@ public class DataOperation {
         }
     }
     //用PID，GroupID查询 返回 运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
-//    public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchProjectGrade(String projectID,int GroupID){
-//        //PID AID rank score
-//        ArrayList<Quartet<String,String,Integer,Float>> arrayList1=SearchTheAtheleteRank("Search_Team_Initial_Core",projectID,GroupID);
-//        ArrayList<Quartet<String,String,Integer,Float>> arrayList2=SearchTheAtheleteRank("Search_Team_Final_Core",projectID,GroupID);
-//        //最后的返回结果
-//        ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> arrayList=new ArrayList<>();
-//        for(int i=0;i<arrayList1.size();i++){
-//            String AName=SearchAname(arrayList1.get(i).getValue1());
-//            String PName=SearchPName(arrayList1.get(i).getValue0());
-//            if (i<arrayList2.size()){
-//                arrayList.add(new Septet<>(a));
-//            }
-//            j++;
-//        }
-//    }
+    public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchProjectGrade(String projectID,int GroupID){
+        //PID AID rank score
+        ArrayList<Quartet<String,String,Integer,Float>> arrayList1=SearchTheAtheleteRank("Search_Team_Initial_Core",projectID,GroupID);
+        ArrayList<Quartet<String,String,Integer,Float>> arrayList2=SearchTheAtheleteRank("Search_Team_Final_Core",projectID,GroupID);
+        //最后的返回结果
+        ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> arrayList=new ArrayList<>();
+        for(int i=0;i<arrayList1.size();i++){
+            String AName=SearchAname(arrayList1.get(i).getValue1());
+            String PName=SearchPName(arrayList1.get(i).getValue0());
+            arrayList.add(new Septet<>(arrayList1.get(i).getValue1(),AName,PName,arrayList1.get(i).getValue3(),arrayList1.get(i).getValue2(),0f,0));
+        }
+        for(int i=0;i<arrayList2.size();i++){
+            //遍历arrayList1找到是否有决赛的AID
+            for(int j=0;j<arrayList1.size();j++){
+                if(arrayList2.get(i).getValue1().equals(arrayList1.get(j).getValue1())){
+                    arrayList.add(j,new Septet<>(arrayList.get(j).getValue0(),arrayList.get(j).getValue1(),arrayList.get(j).getValue2(),
+                            arrayList.get(j).getValue3(),arrayList.get(j).getValue4(),arrayList2.get(i).getValue3(),arrayList2.get(i).getValue2()));
+                    arrayList.remove(j+1);
+                }
+            }
+        }
+        return arrayList;
+    }
     //用teamID查询整个成绩 返回 团队名 比赛项目 团队成绩 团队排名
     public ArrayList<Quartet<String,String,Float,Integer>> SearchTeamAll(String teamID){
         String sql="select PID,GroupID from gradegroup";
