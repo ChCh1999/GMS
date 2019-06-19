@@ -299,8 +299,6 @@ public class DataOperation {
     //用AID查询个人成绩 返回 运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
     public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchAthleteGrade(String athleteID){
         String sql1="select * from Search_Team_Initial_Core where AID='"+athleteID+"'";
-        //String sql2="select * from Search_Team_Final_Core where AID='"+athleteID+"'";
-       // ArrayList<Triplet<String,String,Integer>> alInitial=SearchTheAtheleteRank("Search_Team_Initial_Core",);
         String AID=athleteID,AName=null,PName=null,PID=null;
         int GroupID=0;
         float CSCore=0f,JSCore=0f;
@@ -328,7 +326,8 @@ public class DataOperation {
             int i=0;
             while(rst.next()){
                 PID=rst.getString("PID");
-                Quartet<Float,Integer,Float,Integer> AT = SearchTheRank(PID,athleteID);
+                GroupID=rst.getInt("GroupID");
+                Quartet<Float,Integer,Float,Integer> AT = SearchTheRank(PID,GroupID,athleteID);
                 Septet<String,String,String,Float,Integer,Float,Integer> AT2 =new Septet<>(al1.get(i).getValue0(),al1.get(i).getValue1(),
                         al1.get(i).getValue2(),AT.getValue0(),AT.getValue1(),AT.getValue2(),AT.getValue3());
                 al.add(AT2);
@@ -340,6 +339,22 @@ public class DataOperation {
             return null;
         }
     }
+    //用PID，GroupID查询 返回 运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
+//    public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchProjectGrade(String projectID,int GroupID){
+//        //PID AID rank score
+//        ArrayList<Quartet<String,String,Integer,Float>> arrayList1=SearchTheAtheleteRank("Search_Team_Initial_Core",projectID,GroupID);
+//        ArrayList<Quartet<String,String,Integer,Float>> arrayList2=SearchTheAtheleteRank("Search_Team_Final_Core",projectID,GroupID);
+//        //最后的返回结果
+//        ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> arrayList=new ArrayList<>();
+//        for(int i=0;i<arrayList1.size();i++){
+//            String AName=SearchAname(arrayList1.get(i).getValue1());
+//            String PName=SearchPName(arrayList1.get(i).getValue0());
+//            if (i<arrayList2.size()){
+//                arrayList.add(new Septet<>(a));
+//            }
+//            j++;
+//        }
+//    }
     //用teamID查询整个成绩 返回 团队名 比赛项目 团队成绩 团队排名
     public ArrayList<Quartet<String,String,Float,Integer>> SearchTeamAll(String teamID){
         String sql="select PID,GroupID from gradegroup";
@@ -396,11 +411,11 @@ public class DataOperation {
         return team;
     }
     //用PID AID 确定初赛排名，决赛排名
-    public Quartet<Float,Integer,Float,Integer> SearchTheRank(String projectID,String AthleteID){
+    public Quartet<Float,Integer,Float,Integer> SearchTheRank(String projectID,int GroupID,String AthleteID){
         int initialRank=0,finalRank=0;
         float CScore=0f,JScore=0f;
-        ArrayList<Quartet<String,String,Integer,Float>> alInitial=SearchTheAtheleteRank("Search_Team_Initial_Core",projectID);
-        ArrayList<Quartet<String,String,Integer,Float>> alFinal=SearchTheAtheleteRank("Search_Team_Final_Core",projectID);
+        ArrayList<Quartet<String,String,Integer,Float>> alInitial=SearchTheAtheleteRank("Search_Team_Initial_Core",projectID,GroupID);
+        ArrayList<Quartet<String,String,Integer,Float>> alFinal=SearchTheAtheleteRank("Search_Team_Final_Core",projectID,GroupID);
         for (int i=0;i<alInitial.size();i++){
             if (AthleteID.equals(alInitial.get(i).getValue1())){
                 initialRank=alInitial.get(i).getValue2();
@@ -503,6 +518,22 @@ public class DataOperation {
             System.out.println("裁判密码判断错误");
             e.printStackTrace();
             return false;
+        }
+    }
+    //用AID查名字
+    public String SearchAname(String AID){
+        String sql="select * from athlete where AID='"+AID+"'";
+        String AName=null;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                AName=rst.getString("AName");
+            }
+            return AName;
+        }catch (SQLException e){
+            System.out.println("PID查询错误");
+            e.printStackTrace();
+            return null;
         }
     }
     //用项目的名字查ID
@@ -736,7 +767,7 @@ public class DataOperation {
                     }
                 }
                 if (!judge){
-                    arrayList.add(new Pair<>(PID,0));
+                    arrayList.add(new Pair<>(PID,1));
                 }else {
                     arrayList.add(new Pair<>(PID,arrayList.get(address).getValue1()+1));
                     arrayList.remove(address);
@@ -919,11 +950,12 @@ public class DataOperation {
         }
     }
     //用PID，查询选手的排名情况
-    public ArrayList<Quartet<String,String,Integer,Float>> SearchTheAtheleteRank(String tablename,String PID){
-        String sql="select * from "+tablename+" where PID='"+PID+"'";
+    public ArrayList<Quartet<String,String,Integer,Float>> SearchTheAtheleteRank(String tablename,String PID,int GroupID){
+        String sql="select * from "+tablename+" where PID='"+PID+"' GroupID="+GroupID+"";
         String AID=null;
         Float Score=0f;
         int rank=0;
+        //PID AID rank Score
         ArrayList<Quartet<String,String,Integer,Float>> al=new ArrayList();
         try{
             rst=state.executeQuery(sql);
