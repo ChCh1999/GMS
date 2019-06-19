@@ -705,7 +705,6 @@ public class DataOperation {
                 if (!judge){
                     arrayList.add(PID);
                 }
-                return arrayList;
             }
             return arrayList;
         }catch (SQLException e){
