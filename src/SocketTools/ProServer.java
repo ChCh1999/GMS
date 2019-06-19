@@ -6,6 +6,7 @@ import org.javatuples.Quartet;
 import org.javatuples.Septet;
 import org.javatuples.Triplet;
 import sun.security.util.Password;
+import teamUI.INathlete;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -177,7 +178,9 @@ class TProHandle implements Runnable {
 
                 Socket Stemp = new Socket(ip, ServerData.PORT_Judge);
                 Judges.add(Stemp);
-                new BufferedWriter(new OutputStreamWriter(Stemp.getOutputStream())).write(ProName+'\n');
+                BufferedWriter bwtemp=new BufferedWriter(new OutputStreamWriter(Stemp.getOutputStream()));
+                bwtemp.write(ProName+'\n');
+                bwtemp.flush();
             }
             new BufferedWriter(new OutputStreamWriter(Group.getOutputStream())).write(String.valueOf(Judges.size())+"\n");
         } catch (UnknownHostException uhe) {
@@ -257,7 +260,7 @@ class TProHandle implements Runnable {
                 SendMarkTable(Group, mark);
             }
             bw.write("FinishSendMarks\n");
-
+            bw.flush();
 
             String feedback = br.readLine();//小组裁判的确认
 //            br.close();
@@ -314,9 +317,9 @@ class TProHandle implements Runnable {
                             +bpmark.getValue1()-bpmark.getValue2();
                     int indexOfj=ProName.indexOf("决赛");
                     if(indexOfj!=-1){
-                        myConn.ModifyJScore(ProID,bpmark.getValue0(),mark_sum);
+                        myConn.ModifyJScore(ProID,group,bpmark.getValue0(),mark_sum);
                     }else {
-                        myConn.ModifyCScore(ProID,bpmark.getValue0(),mark_sum);
+                        myConn.ModifyCScore(ProID,group,bpmark.getValue0(),mark_sum);
                     }
                 }else {
                     System.out.println("运动员评分少于两个,为"+marks.size());
@@ -451,10 +454,6 @@ class TSendAthletesMessage implements Runnable {
             dbo.ModifySLogin(Sid);
         }
 
-//
-//        bw.flush();
-//        br.close();
-//        bw.close();
     }
 
 }
@@ -507,6 +506,7 @@ class THandle implements Runnable {
     public void run() {
 
         try {
+            DataOperation dbo=new DataOperation();
             br = new BufferedReader(new InputStreamReader(User.getInputStream()));
             bw = new BufferedWriter(new OutputStreamWriter(User.getOutputStream()));
             String command=br.readLine();//"login request"
@@ -516,9 +516,7 @@ class THandle implements Runnable {
                     String Password=br.readLine();
                     if (checkIDOfJudge(SID,Password)){
                         bw.write(Boolean.TRUE.toString() + '\n');
-
-                        DataOperation dbo=new DataOperation();
-                        //TODO:状态检索以及相应的修改
+                        //状态检索以及相应的修改
                         if(dbo.Search_SLogin(SID)){
 
                             bw.write(String.valueOf(-1)+ "\n");
@@ -526,6 +524,7 @@ class THandle implements Runnable {
                             String IP_target = User.getInetAddress().getHostAddress();
                             dbo.ModifyIP(SID, IP_target);
                             dbo.ModifySLogin(SID);//切换状态
+                            System.out.println(dbo.Search_SLogin(SID));
                             bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
                         }
                     }
@@ -538,7 +537,12 @@ class THandle implements Runnable {
 
                     bw.flush();
                     break;
-
+                case "exit request":
+                    SID = br.readLine();
+                    if (dbo.Search_SLogin(SID)) {
+                        dbo.ModifySLogin(SID);
+                    }
+                    break;
                 case "change password":
                     String TID = br.readLine();
                     String TPassword=br.readLine();
@@ -553,7 +557,75 @@ class THandle implements Runnable {
 
                 case "Search by name":
                     String athName=br.readLine();
+                    break;
 
+                case "get team name":
+                    ArrayList<Pair<String,String>> message=dbo.SearchAllteam();
+
+                    bw.write(message.size()+"\n");
+                    for (Pair m:message
+                         ) {
+                        bw.write(m.getValue1()+"\n");
+                        bw.write(m.getValue0()+"\n");
+                    }
+                    bw.write("Finished\n");
+                    bw.flush();
+                    break;
+                case "Search ath by athnum":
+                    String athnum=br.readLine();
+                    ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> aRes = dbo.SearchAthleteGrade(athnum);
+                    for (Septet m: aRes ) {
+                        bw.write(m.getValue0()+"\n");
+                        bw.write(m.getValue1()+"\n");
+                        bw.write(m.getValue2()+"\n");
+                        bw.write(m.getValue3()+"\n");
+                        bw.write(m.getValue4()+"\n");
+                        bw.write(m.getValue5()+"\n");
+                        bw.write(m.getValue6()+"\n");
+                    }
+                    bw.write("Finished\n");
+                    bw.flush();
+                    break;
+                case "Search ath by proname":
+                    String proname=br.readLine();
+                    //TODO:按照项目查找成绩
+//                    for (Septet m: res ) {
+//                        bw.write(m.getValue0()+"\n");
+//                        bw.write(m.getValue1()+"\n");
+//                        bw.write(m.getValue2()+"\n");
+//                        bw.write(m.getValue3()+"\n");
+//                        bw.write(m.getValue4()+"\n");
+//                        bw.write(m.getValue5()+"\n");
+//                        bw.write(m.getValue6()+"\n");
+//                    }
+                    bw.write("Finished\n");
+                    bw.flush();
+                    break;
+                case "Search team by tid":
+                    String tid=br.readLine();
+                    ArrayList<Quartet<String,String,Float,Integer>> tRes=dbo.SearchTeamAll(tid);
+                    for (Quartet m:tRes){
+                        bw.write(m.getValue0()+"\n");
+                        bw.write(m.getValue1()+"\n");
+                        bw.write(m.getValue2()+"\n");
+                        bw.write(m.getValue3()+"\n");
+                    }
+                    bw.write("Finished\n");
+                    bw.flush();
+                    break;
+                case "Search team by pro info":
+//                    String pName=br.readLine();
+//                    int group=Integer.parseInt(br.readLine());
+//                    tRes=dbo.SearchTeamAll(pName);
+//                    for (Quartet m:tRes){
+//                        bw.write(m.getValue0()+"\n");
+//                        bw.write(m.getValue1()+"\n");
+//                        bw.write(m.getValue2()+"\n");
+//                        bw.write(m.getValue3()+"\n");
+//                    }
+//                    bw.write("Finished\n");
+//                    bw.flush();
+//                    break;
 
                 default:
                     System.out.println("wrong command");
@@ -563,7 +635,7 @@ class THandle implements Runnable {
         } catch (IOException ioe) {
             System.out.println(ioe);
         }
-        System.out.println("登录结束");
+        System.out.println("交互结束");
     }
 
     public boolean checkIDOfJudge(String sid,String passward) {

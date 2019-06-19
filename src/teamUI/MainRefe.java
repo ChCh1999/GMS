@@ -14,6 +14,7 @@ import java.util.Enumeration;
 public class MainRefe extends JFrame {
 
 	private JPanel contentPane;
+	private JTextArea messageArea;
 	ChiefJudge chiefJudge=new ChiefJudge(this);
 	/**
 	 * Launch the application.
@@ -48,8 +49,8 @@ public class MainRefe extends JFrame {
 		label.setFont(new Font("宋体", Font.PLAIN, 18));
 		label.setBounds(10, 10, 64, 32);
 		contentPane.add(label);
-		
-		JTextArea messageArea = new JTextArea();
+
+		messageArea= new JTextArea();
 		messageArea.setBounds(84, 10, 609, 140);
 		messageArea.setLineWrap(true);
 		JScrollPane messagePane=new JScrollPane(messageArea,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -211,7 +212,7 @@ public class MainRefe extends JFrame {
 
 				//最后传递给ChiefJudge的值
 				int groupID=JudgeTheAge(age);
-				String finalString=sex+"子"+age+"组"+game+befinal;
+				String finalString=sex+"子"+game+befinal;
 
 
 				chiefJudge.startpro(finalString,groupID);
@@ -220,6 +221,7 @@ public class MainRefe extends JFrame {
 		button.setFont(new Font("宋体", Font.PLAIN, 18));
 		button.setBounds(278, 415, 145, 30);
 		contentPane.add(button);
+		this.setVisible(true);
 	}
 
 	//判断是哪个年龄组的
@@ -249,10 +251,12 @@ public class MainRefe extends JFrame {
 		return Text;
 	}
 
+	public JTextArea getMessageArea() {
+		return messageArea;
+	}
+
 	//添加信息到通知栏
-	void addmessageArea(JTextArea a,String str) {
+	public void addmessageArea(JTextArea a,String str) {
 		a.append(str);
 	}
 }
-
-

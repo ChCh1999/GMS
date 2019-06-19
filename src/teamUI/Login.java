@@ -92,8 +92,8 @@ public class Login {
 				String password=String.valueOf(passwordField.getPassword());
 				if (!password.isEmpty()&&
 						!userID.isEmpty()){
-					int state=-1;
-					//state=ClientTool.login(userID,password);
+					int state=0;
+					state=ClientTool.login(userID,password);
 					switch (state){
 						case-1:
 							JFrame jf=new JFrame();
@@ -148,10 +148,11 @@ public class Login {
 							jf2.setVisible(true);
 							break;
 						case 1:
-							Referee referee = new Referee();
+							frame.dispose();
+							Referee referee = new Referee(userID);
 							break;
 						case 2:
-							ChiefRE chiefre = new ChiefRE();
+							ChiefRE chiefre = new ChiefRE(userID);
 							break;
 						case 3:
 							MainRefe mainrefe = new MainRefe();
@@ -164,7 +165,31 @@ public class Login {
 							break;
 						//TODO:-1账号已经在线  0登录失败 1裁判 2小组裁判  3总裁判  4领队  5队医 6教练员 9(serverData.NumOfGroup)代表队账号
 						default:
-							//TODO：登陆失败
+							jf2=new JFrame();
+							jf2.setTitle("登录失败");
+							jf2.setBounds(250, 250, 300, 200);
+							jf2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							jf2.setResizable(false);
+							jf2.getContentPane().setLayout(null);
+
+							jl2 = new JLabel("登录失败");
+							jl2.setFont(new Font("宋体", Font.PLAIN, 18));
+							jl2.setBounds(110, 40, 250, 30);
+							jf2.getContentPane().add(jl2);
+
+							canceljb2 = new JButton("返回");
+							canceljb2.setFont(new Font("宋体",Font.PLAIN,18));
+							canceljb2.setBounds(110,100, 70, 30);
+							jf2.getContentPane().add(canceljb2);
+							canceljb2.addMouseListener(new MouseAdapter() {
+								@Override
+								public void mouseClicked(MouseEvent arg0) {
+									jf2.dispose();
+								}
+							});
+
+							jf2.setVisible(true);
+							break;
 					}
 				}
 

@@ -1,5 +1,6 @@
 package teamUI;
 
+import SocketTools.ClientTool;
 import SocketTools.Judge;
 import javafx.util.Pair;
 
@@ -56,8 +57,7 @@ public class Referee extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Referee frame = new Referee();
-					frame.SID="S1";
+					Referee frame = new Referee("S1");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -69,7 +69,7 @@ public class Referee extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Referee() {
+	public Referee(String SID) {
 		setTitle("裁判员您好！");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 561, 489);
@@ -362,6 +362,7 @@ public class Referee extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//TODO：取消登录状态
+				ClientTool.exit(SID);
 				dispose();
 			}
 		});

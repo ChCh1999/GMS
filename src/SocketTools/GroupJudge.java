@@ -13,8 +13,6 @@ public class GroupJudge{
     private boolean signed=false;
 
     //登录用
-    final String IP_SERVER="127.0.0.1";
-    final int PORT_LOGIN=10087;
     final int PORT_LISTEN=10088;
 
 
@@ -37,11 +35,13 @@ public class GroupJudge{
     private String ID;
 
     public static void main(String[] args) {
-        GroupJudge test=new GroupJudge();
+        GroupJudge test=new GroupJudge("Sn");
 
 
     }
-
+    public GroupJudge(String id){
+        ID=id;
+    }
 
 //    public boolean login(String id){
 //        try{

@@ -1,5 +1,7 @@
 package teamUI;
 
+import SocketTools.ClientTool;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 public class Massagesearch extends JFrame {
 
 	private JPanel p_contentPane;
-
+	private HashMap<String,String>Teams;
 	/**
 	 * Launch the application.
 	 */
@@ -37,6 +40,12 @@ public class Massagesearch extends JFrame {
 	 * Create the frame.
 	 */
 	public Massagesearch() {
+		//获取队伍信息
+		Teams=ClientTool.getAllTeamName();
+
+
+
+
 		setTitle("查询界面");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 777, 505);
@@ -158,7 +167,9 @@ public class Massagesearch extends JFrame {
 		JComboBox teamNumBox = new JComboBox();
 		teamNumBox.setBounds(88, 25, 185, 25);
 		//TODO：拉取数据库信息置入string
-		String [] string = null;
+		String [] string = new String[Teams.keySet().size()] ;
+		Teams.keySet().toArray(string);
+
 		teamNumBox.setModel(new DefaultComboBoxModel(string));
 		teamsearch.add(teamNumBox);
 

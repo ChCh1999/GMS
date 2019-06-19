@@ -87,22 +87,26 @@ class TStartPro implements Runnable{
             if(send(Server,ProName,group)){
                 System.out.println(ProName+"请求成功");
                 //TODO:前端提示相应的请求成功消息
+                mReferee.addmessageArea(mReferee.getMessageArea(),ProName+"请求成功\n");
                 success=true;
                 String feedback=br.readLine();
                 if(feedback.equals("End")){
                     System.out.println("结束");
                     //TODO:前端提示相应的比赛结束消息
+                    mReferee.addmessageArea(mReferee.getMessageArea(),ProName+"结束\n");
                 }
 
                 else{
                     //TODO:前端提示相应的比赛没有成功结束消息
                     System.out.println("项目未正常结束");
+                    mReferee.addmessageArea(mReferee.getMessageArea(),ProName+"项目未正常结束\n");
                 }
 
             }
             else{
                 System.out.println("请求失败");
                 //TODO:前端提示相应的请求失败消息
+                mReferee.addmessageArea(mReferee.getMessageArea(),ProName+"请求失败\n");
                 success=false;
                 return;
             }

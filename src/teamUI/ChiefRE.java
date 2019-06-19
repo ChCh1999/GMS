@@ -129,7 +129,7 @@ public class ChiefRE extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ChiefRE frame = new ChiefRE();
+					ChiefRE frame = new ChiefRE("ch1");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -141,7 +141,7 @@ public class ChiefRE extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ChiefRE() {
+	public ChiefRE(String sid) {
 		setTitle("小组裁判页");//总裁判
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1098, 565);
@@ -1060,8 +1060,9 @@ public class ChiefRE extends JFrame {
 		logoutjb.setFont(new Font("宋体", Font.PLAIN, 18));
 		logoutjb.setBounds(260, 475, 100, 30);
 		contentPane.add(logoutjb);
+		this.setVisible(true);
+		mChiefRE=new GroupJudge(sid);
 
-		mChiefRE=new GroupJudge();
 		mChiefRE.start();
 
 	}
