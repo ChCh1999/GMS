@@ -190,7 +190,7 @@ public class DataOperation {
     public boolean ModifySLogin(String SID){
         boolean judge=Search_SLogin(SID);
         int SLogin=0;
-        if(judge){
+        if(!judge){
             SLogin=1;
         }else {
             SLogin=0;
@@ -566,7 +566,7 @@ public class DataOperation {
             System.out.println("裁判SID错误");
             e.printStackTrace();
         }finally {
-            if(SLogin==1){
+            if(SLogin == 1){
                 return true;
             }else {
                 return false;
