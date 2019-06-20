@@ -1,6 +1,7 @@
 package teamUI;
 
 import SocketTools.ClientTool;
+import org.javatuples.Septet;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -11,6 +12,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.*;
@@ -119,6 +121,21 @@ public class Massagesearch extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//pbisaixiangmu.getSelectedItem()//获得所选
+				//TODO:清空现有记录，进行运动员编号查询，刷新界面
+				String athNum=playerNumText.getText();
+				if(!athNum.isEmpty()){
+					//执行查询
+					ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> res =
+							ClientTool.SearchAthByNum(athNum);
+					if(!res.isEmpty()) {
+						//TODO:清空当前查询结果界面，输出结果到前端
+						//res为七元组  运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
+						return;
+					}
+				}
+
+				//TODO:提示输入无效
+
 			}
 		});
 		queryButton.setBounds(291, 61, 93, 30);
@@ -165,9 +182,9 @@ public class Massagesearch extends JFrame {
 		JComboBox teamNumBox = new JComboBox();
 		teamNumBox.setBounds(57, 25, 206, 25);
 		//TODO：拉取数据库信息置入string
-		String [] string = new String[Teams.keySet().size()] ;
+		String [] string = new String[Teams.keySet().size()+1] ;
 		Teams.keySet().toArray(string);
-
+		string[Teams.keySet().size()]="全部";
 		teamNumBox.setModel(new DefaultComboBoxModel(string));
 		teamsearch.add(teamNumBox);
 
@@ -176,20 +193,7 @@ public class Massagesearch extends JFrame {
 		tlblBisaixiangmu.setBounds(273, 25, 90, 20);
 		teamsearch.add(tlblBisaixiangmu);
 
-		JButton tqueryButton = new JButton("查询");
-		tqueryButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				//TODO:更新队伍下拉框内容
-				//更新队伍数据
-				String[] str = new String[Teams.keySet().size()] ;
-				Teams.keySet().toArray(str);
-				teamNumBox.setModel(new DefaultComboBoxModel(str));
-				teamNumBox.updateUI();
-			}
-		});
-		tqueryButton.setBounds(291, 61, 93, 30);
-		teamsearch.add(tqueryButton);
+
 
 		JComboBox txiangmuBox = new JComboBox();
 		txiangmuBox.setModel(new DefaultComboBoxModel(new String[] {"男子单杠", "男子双杠","男子吊环","男子跳马","男子自由体操","男子鞍马","男子蹦床","男子高低杠","男子平衡木"
@@ -303,7 +307,7 @@ public class Massagesearch extends JFrame {
 		iqueryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-
+				//TODO:清空现有记录，进行项目查询，刷新界面
 			}
 		});
 		iqueryButton.setBounds(283, 61, 93, 30);
