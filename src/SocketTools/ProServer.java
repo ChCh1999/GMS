@@ -83,17 +83,18 @@ class TProMaster implements Runnable {
         System.out.println("Form Client：" + proName + "开始");
 //                创建项目信息处理线程是否进行
 
-        int index=proName.indexOf("决赛");
+        int indexj=proName.indexOf("决赛");
+        int indexc=proName.indexOf("预赛");
         //未进行的初赛、已完成相应初赛且尚未进行的决赛则进入后流程
-        if ((index==-1&&dbo.SearchMatch(proName,group)==0) ||
-                (index!=-1&&dbo.SearchMatch(proName.substring(0,index),group)==2)&&
-                        dbo.SearchMatch(proName,group)==0) {
+        if ((indexj==-1&&dbo.SearchMatch(proName.substring(0,indexc),group)==0) ||
+                (indexj!=-1&&dbo.SearchMatch(proName.substring(0,indexj),group)==3)) {
             Thread prohandle = new Thread(new TProHandle(proName, group, socket));
 
             //开始处理比赛信息
             prohandle.start();
             //输出流回应一下客户端
             MessageToClient.write("Start" + '\n');
+            MessageToClient.flush();
             System.out.println(proName+"Start");
 
             //刷新流
@@ -104,6 +105,7 @@ class TProMaster implements Runnable {
 
             MessageToClient.write("End" + '\n');
             MessageToClient.flush();
+            //TODO:修改比赛状态
             System.out.println("End");
 //            System.out.println(br.readLine());
         } else {
@@ -122,6 +124,8 @@ class TProMaster implements Runnable {
 class TProHandle implements Runnable {
     //项目信息
     private String ProName;
+    private String ProNameRaw;
+    private Boolean isFinal;
     private String ProID;
     private int group;
     //private int MOrF;
@@ -142,8 +146,15 @@ class TProHandle implements Runnable {
     //        构造函数
     public TProHandle(String Project, int group, Socket c) {
         myConn = new DataOperation();
-        ProName = Project;
+        ProNameRaw = Project;
         this.group = group;
+        if(ProNameRaw.indexOf("决赛")!=-1){
+            isFinal=true;
+            ProName=ProNameRaw.substring(0,ProNameRaw.indexOf("决赛"));
+        }else {
+            isFinal=false;
+            ProName=ProNameRaw.substring(0,ProNameRaw.indexOf("预赛"));
+        }
         ProID=myConn.SearchPID(ProName);
         Chief = c;
     }
@@ -160,9 +171,8 @@ class TProHandle implements Runnable {
 
     private void handlerSocket() {
         ArrayList<Pair<String, String>> Aths=new ArrayList<>();
-        int index=ProName.indexOf("决赛");
 
-        if(index==-1)
+        if(!isFinal)
             Aths= myConn.SearchPeopleList(ProID,group);
         else
             Aths=myConn.SearchFinalPeopleList(ProID,group);
@@ -266,7 +276,7 @@ class TProHandle implements Runnable {
 //            br.close();
 //            bw.close();
             if (Boolean.valueOf(feedback)) {
-                //若确认通过则返回
+                //若确认通过则继续
 
 
             } else {
@@ -315,8 +325,7 @@ class TProHandle implements Runnable {
                     }
                     mark_sum=(mark_sum-mark_min-mark_max)*marks.size()/(marks.size()-2)
                             +bpmark.getValue1()-bpmark.getValue2();
-                    int indexOfj=ProName.indexOf("决赛");
-                    if(indexOfj!=-1){
+                    if(isFinal){
                         myConn.ModifyJScore(ProID,group,bpmark.getValue0(),mark_sum);
                     }else {
                         myConn.ModifyCScore(ProID,group,bpmark.getValue0(),mark_sum);

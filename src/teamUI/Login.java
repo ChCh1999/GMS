@@ -97,7 +97,7 @@ public class Login {
 					switch (state){
 						case-1:
 							JFrame jf=new JFrame();
-							jf.setTitle("请勿重复登录");
+							jf.setTitle("重复登录!");
 							jf.setBounds(250, 250, 300, 200);
 							jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 							jf.setResizable(false);
@@ -155,7 +155,7 @@ public class Login {
 							ChiefRE chiefre = new ChiefRE(userID);
 							break;
 						case 3:
-							MainRefe mainrefe = new MainRefe();
+							MainRefe mainrefe = new MainRefe(userID);
 							break;
 						case 4:
 						case 5:

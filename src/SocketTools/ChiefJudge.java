@@ -8,14 +8,15 @@ import java.net.Socket;
 public class ChiefJudge {
     final int PORT=ServerData.PORT_Chief;
     final String ServerIP=ServerData.ipOfServer;
-
+    private String cID;
     private MainRefe mReferee;
 //    public static void main(String[] args) {
 //        ChiefJudge m=new ChiefJudge();
 //        m.startpro("体操",0);
 //    }
-    public ChiefJudge(MainRefe mRe){
+    public ChiefJudge(MainRefe mRe,String cID){
         mReferee=mRe;
+        this.cID=cID;
     }
     public void startpro(String pro,int group){
         try {
@@ -51,7 +52,9 @@ public class ChiefJudge {
 //        return  false;
     }
 
-
+    public String getcID() {
+        return cID;
+    }
 }
 class TStartPro implements Runnable{
     private MainRefe mReferee;

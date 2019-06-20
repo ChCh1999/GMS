@@ -38,10 +38,10 @@ public class ClientTool {
             }
         }catch (UnknownHostException une){
             System.out.println(une);
-            return -1;
+            return 0;
         }catch (IOException ioe){
             System.out.println(ioe);
-            return -1;
+            return 0;
         }
     }
     public static void exit(String SID){

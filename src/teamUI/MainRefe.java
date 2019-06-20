@@ -15,7 +15,8 @@ public class MainRefe extends JFrame {
 
 	private JPanel contentPane;
 	private JTextArea messageArea;
-	ChiefJudge chiefJudge=new ChiefJudge(this);
+
+	ChiefJudge chiefJudge;
 	/**
 	 * Launch the application.
 	 */
@@ -23,7 +24,7 @@ public class MainRefe extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainRefe frame = new MainRefe();
+					MainRefe frame = new MainRefe("root");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +36,8 @@ public class MainRefe extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MainRefe() {
+	public MainRefe(String id) {
+		chiefJudge=new ChiefJudge(this,id);
 		setTitle("总裁判您好");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 718, 494);
