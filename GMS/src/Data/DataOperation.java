@@ -727,6 +727,46 @@ public class DataOperation {
             return false;
         }
     }
+    //判断AID,是否存在
+    public boolean JudgeAID(String AthleteID){
+        String sql="select AID from athlete ";
+        String AID=null;
+        boolean judge=false;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                AID=rst.getString("AID");
+                if(AID.equals(AthleteID)){
+                    judge=true;
+                }
+            }
+            return judge;
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //判断GroupID,是否存在
+    public boolean JudgeGroupID(String groupID){
+        String sql="select GroupID from athlete ";
+        String GroupID=null;
+        boolean judge=false;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                GroupID=rst.getString("AID");
+                if(GroupID.equals(groupID)){
+                    judge=true;
+                }
+            }
+            return judge;
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+            return false;
+        }
+    }
     //查询所有的PID
     public ArrayList<String> SearchAllPID(){
         String sql="select PID from project";
