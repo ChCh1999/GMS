@@ -100,7 +100,7 @@ public class DataOperation {
     //增加成绩 初始化（没有预赛成绩和决赛成绩）
     public boolean InsertData(String PID,String AID,int GroupID){
         String sql="insert into gradegroup(PID,AID,GroupID,CScore,JScore) values " +
-                "('"+PID+"','"+AID+"','"+GroupID+"',0f,0f)";
+                "('"+PID+"','"+AID+"','"+GroupID+"',0,0)";
         try {
             state.executeUpdate(sql);
             return true;
