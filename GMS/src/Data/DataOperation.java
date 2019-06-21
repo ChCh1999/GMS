@@ -653,7 +653,7 @@ public class DataOperation {
             System.out.println("检索失败");
             e.printStackTrace();
         }
-        for (int i=0;ListAthleteID.get(i)!=null;i++){
+        for (int i=0;i<ListAthleteID.size();i++){
             //第一个参数是用AID查询选手的名字
             Pair<String,String> Ath=new Pair<>(SearchAthlete(ListAthleteID.get(i)).get(0).getValue0(),
                     ListAthleteID.get(i));
@@ -679,7 +679,7 @@ public class DataOperation {
             System.out.println("检索失败");
             e.printStackTrace();
         }
-        for (int i=0;ListAthleteID.get(i)!=null;i++){
+        for (int i=0;i<ListAthleteID.size();i++){
             //第一个参数是用AID查询选手的名字
             Pair<String,String> Ath=new Pair<>(SearchAthlete(ListAthleteID.get(i)).get(0).getValue0(),
                     ListAthleteID.get(i));
