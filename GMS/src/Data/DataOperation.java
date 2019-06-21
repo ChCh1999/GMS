@@ -463,7 +463,7 @@ public class DataOperation {
     }
     //用PID和SType(不同种类的裁判)去查询负责该项目的裁判IP
     public ArrayList<String> SearchProject_IP(String PID,int SType){
-        String sql="select * from stuff where PID='"+PID+"' SType="+SType+"";
+        String sql="select * from stuff where PID='"+PID+"' AND SType="+SType+"";
         ArrayList<String> arrayList=new ArrayList<>();
         String IP=null;
         try{
@@ -636,7 +636,7 @@ public class DataOperation {
     //项目ID groupid 检索决赛选手 姓名+编号
     public ArrayList<Pair<String,String>> SearchFinalPeopleList(String ProjectID,int GroupID){
         //sql语句
-        String sql="select * from gradegroup where PID='"+ProjectID+"' GroupID="+GroupID+"  ORDER BY CScore DESC";
+        String sql="select * from gradegroup where PID='"+ProjectID+"'AND GroupID="+GroupID+"  ORDER BY CScore DESC";
         ArrayList<String> ListAthleteID=new ArrayList();
         ArrayList<Pair<String,String>> al= new ArrayList();
         String AID=null;
@@ -963,7 +963,7 @@ public class DataOperation {
     }
     //用PID，查询选手的排名情况
     public ArrayList<Quartet<String,String,Integer,Float>> SearchTheAtheleteRank(String tablename,String PID,int GroupID){
-        String sql="select * from "+tablename+" where PID='"+PID+"' GroupID="+GroupID+"";
+        String sql="select * from "+tablename+" where PID='"+PID+"' AND GroupID="+GroupID+"";
         String AID=null;
         Float Score=0f;
         int rank=0;
