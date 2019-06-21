@@ -1,6 +1,7 @@
 package SocketTools;
 
 import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.javatuples.Septet;
 
 import java.io.*;
@@ -143,7 +144,7 @@ public class ClientTool {
         return null;
     }
     //使用项目信息  查找成绩 运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
-    public static ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchAthByPro(String proname){
+    public static ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchAthByPro(String proname,int group){
         ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>>res=new ArrayList<>();
         try {
             Socket search = new Socket(IP_SERVER,PORT_LOGIN);
@@ -151,6 +152,7 @@ public class ClientTool {
             BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(search.getOutputStream()));
             bw.write("Search ath by proname\n");
             bw.write(proname+"\n");
+            bw.write(group+"\n");
             bw.flush();
             String num;
             while (!(num=br.readLine()).equals("Finished")){
@@ -169,9 +171,9 @@ public class ClientTool {
         return null;
     }
 
-    //使用teamID查找 Quartet<团队名，比赛项目，团队成绩，团队排名>
-    public static ArrayList<Quartet<String,String,Float,Integer>> SearchTeamGradeByTID(String TID){
-        ArrayList<Quartet<String,String,Float,Integer>> res=new ArrayList<>();
+    //使用teamID查找 团队名 比赛项目 年龄组 团队成绩 团队排名
+    public static ArrayList <Quintet<String,String,Integer,Float,Integer>> SearchTeamGradeByTID(String TID){
+        ArrayList<Quintet<String,String,Integer,Float,Integer>> res=new ArrayList<>();
         try {
             Socket search = new Socket(IP_SERVER,PORT_LOGIN);
             BufferedReader br=new BufferedReader(new InputStreamReader(search.getInputStream()));
@@ -182,9 +184,10 @@ public class ClientTool {
             String tName;
             while (!(tName=br.readLine()).equals("Finished")){
                 String pro=br.readLine();
+                Integer group=Integer.parseInt(br.readLine());
                 Float Mark=Float.parseFloat(br.readLine());
                 Integer Rank=Integer.parseInt(br.readLine());
-                res.add(new Quartet<>(tName,pro,Mark,Rank));
+                res.add(new Quintet<>(tName,pro,group,Mark,Rank));
             }
             return res;
         } catch (IOException e) {
@@ -192,24 +195,27 @@ public class ClientTool {
         }
         return null;
     }
-    //使用项目信息查找 Quartet<团队名，比赛项目，团队成绩，团队排名>
-    public static ArrayList<Quartet<String,String,Float,Integer>> SearchTeamGradeByPro(String PName,int group){
-        ArrayList<Quartet<String,String,Float,Integer>> res=new ArrayList<>();
+
+    //使用项目信息查找 Quartet<团队名，比赛项目，年龄组，团队成绩，团队排名>
+    public static ArrayList <Quintet<String,String,Integer,Float,Integer>>  SearchTeamGradeByPro(String PName,int group){
+        ArrayList <Quintet<String,String,Integer,Float,Integer>>  res=new ArrayList<>();
         try {
             Socket search = new Socket(IP_SERVER,PORT_LOGIN);
             BufferedReader br=new BufferedReader(new InputStreamReader(search.getInputStream()));
             BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(search.getOutputStream()));
             bw.write("Search team by pro info\n");
-            //TODO：确定性别
             bw.write(PName+"\n");
             bw.write(group+"\n");
             bw.flush();
             String tName;
             while (!(tName=br.readLine()).equals("Finished")){
                 String pro=br.readLine();
+                if(group!=Integer.parseInt(br.readLine())){
+                    System.out.println("检索错误");
+                }
                 Float Mark=Float.parseFloat(br.readLine());
                 Integer Rank=Integer.parseInt(br.readLine());
-                res.add(new Quartet<>(tName,pro,Mark,Rank));
+                res.add(new Quintet<>(tName,pro,group,Mark,Rank));
             }
             return res;
         } catch (IOException e) {

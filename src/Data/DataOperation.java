@@ -61,7 +61,7 @@ public class DataOperation {
     //增加工作人员 初始化（没有IP PID SPassword,SLogin）
     public boolean InsertData(String SID,String SName,String ID,String Tel,int SType){
         String sql="insert into stuff(SID,SName,ID,Tel,SType,IP,PID,SPassword,SLogin) values " +
-                "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,null,null,0)";
+                "('"+SID+"','"+SName+"','"+ID+"','"+Tel+"',"+SType+",null,'10',null,0)";
         try {
             state.executeUpdate(sql);
             return true;
@@ -363,21 +363,24 @@ public class DataOperation {
         }
         return arrayList;
     }
-    //用teamID查询整个成绩 返回 团队名 比赛项目 团队成绩 团队排名
-    public ArrayList<Quartet<String,String,Float,Integer>> SearchTeamAll(String teamID){
+    //用teamID查询整个成绩 返回 团队名 比赛项目 年龄组 团队成绩 团队排名
+    public ArrayList<Quintet<String,String,Integer,Float,Integer>> SearchTeamAll(String teamID){
         String sql="select PID,GroupID from gradegroup";
         String PID=null;
         int GroupID=0;
         //找到所有的不同的项目
         ArrayList<Pair<String,Integer>> al=new ArrayList<>();
         //最后的返回
-        ArrayList<Quartet<String,String,Float,Integer>> a=new ArrayList<>();
+        ArrayList<Quintet<String,String,Integer,Float,Integer>> a=new ArrayList<>();
         try{
             rst=state.executeQuery(sql);
             //先找到不同的PID的分组
             while(rst.next()){
                 boolean judge=false;
                 PID=rst.getString("PID");
+                if(PID.equals("10")){
+                    continue;
+                }
                 for(int i=0;i<al.size();i++){
                     if(PID.equals(al.get(i).getValue0())){
                         judge=true;
@@ -394,7 +397,7 @@ public class DataOperation {
                 Pair<Integer,Float> team=SearchTeamRank(teamID,al.get(i).getValue0(),al.get(i).getValue1());
                 String Tname=SearchTName(teamID);
                 String Pname=SearchPName(al.get(i).getValue0());
-                a.add(new Quartet<>(Tname,Pname,team.getValue1(),team.getValue0()));
+                a.add(new Quintet<>(Tname,Pname,al.get(i).getValue1(),team.getValue1(),team.getValue0()));
             }
             return a;
         }catch (SQLException e){
@@ -612,7 +615,8 @@ public class DataOperation {
             }
         }
     }
-    //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0为比赛未开始，1为比赛开始了，2为比赛结束)
+    //用PName,GroupID查询比赛是否完成(返回-1则为数据库错误，0初赛比赛未开始，1初赛比赛开始了，2为初赛比赛结束，
+    // 3决赛比赛未开始，4决赛比赛开始了，5决赛比赛结束)
     public  int SearchMatch(String PName,int GroupID){
         int J=0;
         //sql语句
@@ -660,7 +664,7 @@ public class DataOperation {
     //项目ID 检索初赛选手 姓名+编号  (所有的该项目的姓名+编号)
     public ArrayList<Pair<String,String>> SearchPeopleList(String ProjectID,int GroupID){
         //sql语句
-        String sql="select * from gradegroup where PID='"+ProjectID+"'AND GroupID="+GroupID;
+        String sql="select * from gradegroup where PID='"+ProjectID+"' AND GroupID="+GroupID;
         ArrayList<String> ListAthleteID=new ArrayList();
         ArrayList<Pair<String,String>> al= new ArrayList();
         String AID=null;
@@ -681,7 +685,6 @@ public class DataOperation {
                     ListAthleteID.get(i));
             al.add(Ath);
         }
-
         return al;
     }
     //判断TID,是否存在
@@ -786,7 +789,7 @@ public class DataOperation {
             ArrayList<String> arrayList2=SearchAllPID();
             //将已经有五个裁判的项目剔除
             for (int i=0;i<arrayList.size();i++){
-                if(arrayList.get(i).getValue1() == 5){
+                if(arrayList.get(i).getValue1() >= 5){
                     arrayList2.remove(arrayList.get(i).getValue0());
                 }
             }

@@ -1,6 +1,8 @@
 package teamUI;
 
 import SocketTools.ClientTool;
+import org.javatuples.Quartet;
+import org.javatuples.Quintet;
 import org.javatuples.Septet;
 
 import java.awt.BorderLayout;
@@ -45,9 +47,6 @@ public class Massagesearch extends JFrame {
 	public Massagesearch() {
 		//获取队伍信息
 		Teams=ClientTool.getAllTeamName();
-
-
-
 
 		setTitle("查询界面");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,7 +120,6 @@ public class Massagesearch extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				//pbisaixiangmu.getSelectedItem()//获得所选
-				//TODO:清空现有记录，进行运动员编号查询，刷新界面
 				String athNum=playerNumText.getText();
 				if(!athNum.isEmpty()){
 					//执行查询
@@ -197,7 +195,7 @@ public class Massagesearch extends JFrame {
 
 		JComboBox txiangmuBox = new JComboBox();
 		txiangmuBox.setModel(new DefaultComboBoxModel(new String[] {"男子单杠", "男子双杠","男子吊环","男子跳马","男子自由体操","男子鞍马","男子蹦床","男子高低杠","男子平衡木"
-				,"女子跳马","女子高低杠","女子平衡木","女子自由体操","女子蹦床"}));
+				,"女子跳马","女子高低杠","女子平衡木","女子自由体操","女子蹦床","全部"}));
 		txiangmuBox.setFont(new Font("宋体", Font.PLAIN, 18));
 		txiangmuBox.setToolTipText("");
 		txiangmuBox.setBounds(353, 25, 176, 25);
@@ -213,6 +211,60 @@ public class Massagesearch extends JFrame {
 		ageBox.setModel(new DefaultComboBoxModel(new String[] {"全部","7-8", "9-10", "11-12"}));
 		ageBox.setBounds(603, 25, 77, 25);
 		teamsearch.add(ageBox);
+
+
+		JButton tqueryButton = new JButton("查询");
+		tqueryButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				//TODO:更新队伍下拉框内容
+				//更新队伍数据
+				String[] str = new String[Teams.keySet().size()] ;
+				Teams.keySet().toArray(str);
+				teamNumBox.setModel(new DefaultComboBoxModel(str));
+				teamNumBox.updateUI();
+				//结果 Quartet<团队名，比赛项目，年龄组，团队成绩，团队排名>
+				ArrayList <Quintet<String,String,Integer,Float,Integer>> res=new ArrayList<>();
+				String teamKey = (String)teamNumBox.getSelectedItem();
+				String proName=(String)txiangmuBox.getSelectedItem();
+				int group=ageBox.getSelectedIndex();
+				if(teamKey.equals("全部")){
+					if(proName.equals("全部")){
+						for(String pName:new String[] {"男子单杠", "男子双杠","男子吊环","男子跳马","男子自由体操","男子鞍马","男子蹦床","男子高低杠","男子平衡木"
+								,"女子跳马","女子高低杠","女子平衡木","女子自由体操","女子蹦床","全部"}){
+							res.addAll(SearchAllTeamGradeOfPro(pName,group));
+						}
+					}else {
+						res=SearchAllTeamGradeOfPro(proName,group);
+					}
+				}else {
+					res.addAll(ClientTool.SearchTeamGradeByTID(Teams.get(teamKey)));
+					if(!proName.equals("全部")){
+						for (Quintet m:res) {
+							if(!m.getValue1().equals(proName))
+								res.remove(m);
+						}
+					}
+					if(group!=0){
+						for (Quintet m:res) {
+							if(!m.getValue2().equals(group))
+								res.remove(m);
+						}
+					}
+				}
+				if(res.isEmpty()){
+					//TODO:提示结果为空
+				}else {
+					//TODO:清空现有记录.将res输出到前端
+					//res Quartet<团队名，比赛项目，年龄组，团队成绩，团队排名>
+				}
+
+
+			}
+		});
+		tqueryButton.setBounds(291, 61, 93, 30);
+		teamsearch.add(tqueryButton);
+
 
 //		JLabel sexLabel = new JLabel("性别");
 //		sexLabel.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -307,7 +359,26 @@ public class Massagesearch extends JFrame {
 		iqueryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//TODO:清空现有记录，进行项目查询，刷新界面
+				String proName=(String) itemBox.getSelectedItem();
+				int group=iageBox.getSelectedIndex();
+				ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> res=new ArrayList<>();
+				if(group==0){
+					if(ClientTool.SearchAthByPro(proName,1)!=null)
+						res.addAll(ClientTool.SearchAthByPro(proName,1));
+					if(ClientTool.SearchAthByPro(proName,2)!=null)
+						res.addAll(ClientTool.SearchAthByPro(proName,2));
+					if(ClientTool.SearchAthByPro(proName,3)!=null)
+						res.addAll(ClientTool.SearchAthByPro(proName,3));
+				}else {
+					res=ClientTool.SearchAthByPro(proName,group);
+				}
+				if(res.isEmpty()){
+					//TODO:提示结果为空
+				}else {
+					//TODO:清空现有记录.将res输出到前端
+					//res:运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名 Septet<String,String,String,Float,Integer,Float,Integer>
+				}
+
 			}
 		});
 		iqueryButton.setBounds(283, 61, 93, 30);
@@ -319,5 +390,16 @@ public class Massagesearch extends JFrame {
 		DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 		tableModel.addRow(obj);
 		table.invalidate();
+	}
+	private ArrayList <Quintet<String,String,Integer,Float,Integer>> SearchAllTeamGradeOfPro(String proName,int group){
+		ArrayList <Quintet<String,String,Integer,Float,Integer>> res=new ArrayList<>();
+		if(group==0){
+			for(int i=1;i<4;i++){
+				res.addAll(ClientTool.SearchTeamGradeByPro(proName,i));
+			}
+		}else {
+			res=ClientTool.SearchTeamGradeByPro(proName,group);
+		}
+		return res;
 	}
 }

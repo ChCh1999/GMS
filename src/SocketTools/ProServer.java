@@ -1,10 +1,7 @@
 package SocketTools;
 
 import Data.DataOperation;
-import org.javatuples.Pair;
-import org.javatuples.Quartet;
-import org.javatuples.Septet;
-import org.javatuples.Triplet;
+import org.javatuples.*;
 import sun.security.util.Password;
 import teamUI.INathlete;
 
@@ -564,11 +561,10 @@ class THandle implements Runnable {
                     bw.flush();
                     break;
 
-                case "Search by name":
-                    String athName=br.readLine();
-                    break;
+
 
                 case "get team name":
+                    //获取队名 TID对
                     ArrayList<Pair<String,String>> message=dbo.SearchAllteam();
 
                     bw.write(message.size()+"\n");
@@ -580,6 +576,12 @@ class THandle implements Runnable {
                     bw.write("Finished\n");
                     bw.flush();
                     break;
+
+                case "Search by name":
+                    //TODO:使用运动员姓名查找成绩（待定）
+                    String athName=br.readLine();
+                    break;
+
                 case "Search ath by athnum":
                     String athnum=br.readLine();
                     ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> aRes = dbo.SearchAthleteGrade(athnum);
@@ -597,44 +599,50 @@ class THandle implements Runnable {
                     break;
                 case "Search ath by proname":
                     String proname=br.readLine();
-                    //TODO:按照项目查找成绩
-//                    for (Septet m: res ) {
-//                        bw.write(m.getValue0()+"\n");
-//                        bw.write(m.getValue1()+"\n");
-//                        bw.write(m.getValue2()+"\n");
-//                        bw.write(m.getValue3()+"\n");
-//                        bw.write(m.getValue4()+"\n");
-//                        bw.write(m.getValue5()+"\n");
-//                        bw.write(m.getValue6()+"\n");
-//                    }
-                    bw.write("Finished\n");
-                    bw.flush();
-                    break;
-                case "Search team by tid":
-                    String tid=br.readLine();
-                    ArrayList<Quartet<String,String,Float,Integer>> tRes=dbo.SearchTeamAll(tid);
-                    for (Quartet m:tRes){
+                    int group=Integer.parseInt(br.readLine());
+                    aRes = dbo.SearchProjectGrade(proname,group);
+                    for (Septet m: aRes ) {
                         bw.write(m.getValue0()+"\n");
                         bw.write(m.getValue1()+"\n");
                         bw.write(m.getValue2()+"\n");
                         bw.write(m.getValue3()+"\n");
+                        bw.write(m.getValue4()+"\n");
+                        bw.write(m.getValue5()+"\n");
+                        bw.write(m.getValue6()+"\n");
                     }
                     bw.write("Finished\n");
                     bw.flush();
                     break;
+                case "Search team by tid":
+                    //按照队伍ID查找团队成绩
+                    //TODO:结果中group分组
+                    String tid=br.readLine();
+                    ArrayList<Quintet<String,String,Integer,Float,Integer>> tRes=dbo.SearchTeamAll(tid);
+                    for (Quintet m:tRes){
+                        bw.write(m.getValue0()+"\n");
+                        bw.write(m.getValue1()+"\n");
+                        bw.write(m.getValue2()+"\n");
+                        bw.write(m.getValue3()+"\n");
+                        bw.write(m.getValue4()+"\n");
+                    }
+                    bw.write("Finished\n");
+                    bw.flush();
+                    break;
+
                 case "Search team by pro info":
-//                    String pName=br.readLine();
-//                    int group=Integer.parseInt(br.readLine());
-//                    tRes=dbo.SearchTeamAll(pName);
-//                    for (Quartet m:tRes){
-//                        bw.write(m.getValue0()+"\n");
-//                        bw.write(m.getValue1()+"\n");
-//                        bw.write(m.getValue2()+"\n");
-//                        bw.write(m.getValue3()+"\n");
-//                    }
-//                    bw.write("Finished\n");
-//                    bw.flush();
-//                    break;
+                    String pName=br.readLine();
+                    group=Integer.parseInt(br.readLine());
+                    tRes=dbo.SearchTeamAll(pName);
+                    for (Quintet m:tRes){
+                        bw.write(m.getValue0()+"\n");
+                        bw.write(m.getValue1()+"\n");
+                        bw.write(m.getValue2()+"\n");
+                        bw.write(m.getValue3()+"\n");
+                        bw.write(m.getValue4()+"\n");
+                    }
+                    bw.write("Finished\n");
+                    bw.flush();
+                    break;
 
                 default:
                     System.out.println("wrong command");
