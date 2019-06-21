@@ -86,7 +86,7 @@ public class DataOperation {
     }
     //增加match，初始化Judge 0
     public boolean InsertData(String PName,int GroupID,int Sex){
-        String sql="insert into match(PName,GroupID,Sex,Judge) values " +
+        String sql="insert into game(PName,GroupID,Sex,Judge) values " +
                 "('"+PName+"',"+GroupID+","+Sex+",0)";
         try {
             state.executeUpdate(sql);
@@ -275,7 +275,7 @@ public class DataOperation {
     }
     //修改match表的比赛状态
     public boolean ModifyMatch_Judge(String PName,int Judge){
-        String formName="match";
+        String formName="game";
         String condition="PName=\'"+PName+"\'" ;
         String modified="Judge="+Judge+"";
         boolean b=ModifyData(formName,condition,modified);
@@ -620,7 +620,7 @@ public class DataOperation {
     public  int SearchMatch(String PName,int GroupID){
         int J=0;
         //sql语句
-        String sql="select * from match where PName='"+PName+"' AND GroupID="+GroupID;
+        String sql="select * from game where PName='"+PName+"' AND GroupID="+GroupID;
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
@@ -630,7 +630,7 @@ public class DataOperation {
         }catch (SQLException e){
             System.out.println("数据库match查询出现错误");
             e.printStackTrace();
-            return 0;
+            return -1;
         }
     }
     //项目ID groupid 检索决赛选手 姓名+编号
