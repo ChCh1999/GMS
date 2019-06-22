@@ -1,7 +1,10 @@
 package teamUI;
 
 import SocketTools.ChiefJudge;
+import SocketTools.ClientTool;
 import SocketTools.GroupJudge;
+import javafx.util.Pair;
+import org.javatuples.Triplet;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -23,6 +26,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 //裁判员页面
@@ -324,8 +329,31 @@ public class ChiefRE extends JFrame {
 					});
 					jf.getContentPane().add(jb);
 				}
+				
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						ArrayList<Triplet<String,Float,Float>> BPMarks=new ArrayList<>();
+						//TODO ；传入数据 每个成员<运动员编号 B分 P分>
 
-				//TODO：计算总分,上传数据,导入下一位运动员
+						HashMap<String,ArrayList<Float>> marks=new HashMap<>();
+						//TODO:传入数据  key值为运动员编号  值为哥哥裁判对该运动员的打分
+						mChiefRE.sendConform(BPMarks,marks);
+
+						//TODO:清空界面
+
+						//以下部分与末尾的初始化部分相同
+						ArrayList<Pair<String,String>>aths = mChiefRE.wait_Aths();//aths  运动员编号  姓名
+						//TODO:将运动员编号写入到前端
+						mChiefRE.getMarkTablesFromServer();
+						//TODO:将打分写入到前端
+						ArrayList<ArrayList<Pair<String,Float>>> newmarks=mChiefRE.getMarkTables();
+						//数组成员： 数据对（运动员编号，分数）
+						ArrayList<String> judges=mChiefRE.getIDOfJudges();
+						//Judge的ID  序号与marks中的成绩单对应
+
+					}
+				}).start();
 			}
 		});
 		button.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -1040,7 +1068,22 @@ public class ChiefRE extends JFrame {
 				rejb.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-
+						int index=Integer.parseInt(retext.getText());
+						if(index>=0&&index<mChiefRE.getIDOfJudges().size()){
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									mChiefRE.sendConform(index);
+									//TODO:将打分写入到前端（与后面接受打分表相同，刷新整个打分表）
+									ArrayList<ArrayList<Pair<String,Float>>> marks=mChiefRE.getMarkTables();
+									//数组成员： 数据对（运动员编号，分数）
+									ArrayList<String> judges=mChiefRE.getIDOfJudges();
+									//Judge的ID  序号与marks中的成绩单对应
+								}
+							}).start();
+						}else {
+							//TODO:提示输入有误
+						}
 					}
 				});
 
@@ -1055,6 +1098,7 @@ public class ChiefRE extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//注销登录状态
+				ClientTool.exit(sid);
 				dispose();
 			}
 		});
@@ -1062,9 +1106,27 @@ public class ChiefRE extends JFrame {
 		logoutjb.setBounds(260, 475, 100, 30);
 		contentPane.add(logoutjb);
 		this.setVisible(true);
-		mChiefRE=new GroupJudge(sid);
 
-		mChiefRE.start(conn);
+		mChiefRE=new GroupJudge(sid);
+		mChiefRE.logined=true;
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mChiefRE.start(conn);
+				ArrayList<Pair<String,String>>aths = mChiefRE.wait_Aths();//aths  运动员编号  姓名
+				//TODO:将运动员编号写入到前端
+				mChiefRE.getMarkTablesFromServer();
+				//TODO:将打分写入到前端
+				ArrayList<ArrayList<Pair<String,Float>>> marks=mChiefRE.getMarkTables();
+				//数组成员： 数据对（运动员编号，分数）
+				ArrayList<String> judges=mChiefRE.getIDOfJudges();
+				//Judge的ID  序号与marks中的成绩单对应
+
+			}
+		}).start();
+
+
 
 	}
 }

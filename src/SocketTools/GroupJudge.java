@@ -23,6 +23,7 @@ public class GroupJudge{
 
     //数据
     private ArrayList<ArrayList<Pair<String,Float>>> MarkTables;
+    private ArrayList<Pair<String,String>> currentAths;
     private ArrayList<String> IDOfJudges;
     private int judgeAmount=0;
     //监控用
@@ -43,37 +44,9 @@ public class GroupJudge{
         ID=id;
     }
 
-//    public boolean login(String id){
-//        try{
-//            Socket login=new Socket(IP_SERVER,PORT_LOGIN);
-//            BufferedReader br_login=new BufferedReader(new InputStreamReader(login.getInputStream()));
-//            BufferedWriter bw_login=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
-//
-//            bw_login.write(id+'\n'+'\n');
-//            bw_login.flush();
-//            //System.out.println(id);
-//            if(Boolean.parseBoolean(br_login.readLine())){
-//                logined=true;
-//                ID=id;
-//                System.out.println("登录成功");
-//                return true;
-//            }else {
-//                return false;
-//            }
-//        }catch (UnknownHostException une){
-//            System.out.println(une);
-//            return false;
-//        }catch (IOException ioe){
-//            System.out.println(ioe);
-//            return false;
-//        }
-//
-//    }
 
     public void start(Socket conn){
         try {
-//            ServerSocket judge=new ServerSocket(PORT_LISTEN);
-//            Socket conn = judge.accept();
             connection=conn;
             br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
             bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
@@ -87,39 +60,42 @@ public class GroupJudge{
     //获取服务器传输的运动员名单ArrayList<Pair<String,String>>（运动员编号，姓名）
     public ArrayList<Pair<String,String>> wait_Aths(){
        if(sendAth){
-           ArrayList<Pair<String,String>>Aths=new ArrayList<>();
+           currentAths=new ArrayList<>();
            if(logined){
                try {
                    String Name;
                    String Num;
                    int amount=Integer.parseInt(br.readLine());
                    bw.write("ready");
+                   bw.flush();
                    for(int i=0;i<amount;i++){
                        if ((Num=br.readLine())!="Finished") {
 
                            Name = br.readLine();
-                           Aths.add(new Pair<String, String>(Num, Name));
+                           currentAths.add(new Pair<String, String>(Num, Name));
                        }
                    }
                    //获取完成
                    bw.write("GroupJudge\n");
+                   bw.flush();
                    sendAth=false;
                    sendmark=true;
-                   return Aths;
+                   return currentAths;
                }catch (IOException a){
                    return null;
                }
 
            }
-           return Aths;
+           return currentAths;
        }else {
            return null;
        }
     }
 
     //接收成绩表
-    public void getMarkTables(){
+    public void getMarkTablesFromServer(){
         if(sendmark){
+            sendmark=false;
             //ArrayList<ArrayList<Pair<String,Float>>> res=new ArrayList<>();
             IDOfJudges=new ArrayList<>();
             MarkTables=new ArrayList<>();
@@ -129,6 +105,7 @@ public class GroupJudge{
                     br.readLine();//SendMarkTable
                     IDOfJudges.add(br.readLine());//IDOfJudge
                     bw.write("ready\n");
+                    bw.flush();
                     ArrayList<Pair<String,Float>>MarkTable=new ArrayList<>();
                     String Num;
                     while (!(Num=br.readLine()).equals("Done")){
@@ -138,7 +115,7 @@ public class GroupJudge{
                     MarkTables.add(MarkTable);
                 }
                 sendConfirm=true;
-                sendmark=false;
+
             }catch (IOException ioe){
 
             }
@@ -162,9 +139,8 @@ public class GroupJudge{
                         bw.write(mark+"\n");
                     }
                 }
-
-
                 bw.write("Finished\n");
+                bw.flush();
                 sendAth=true;
                 sendConfirm=false;
             }catch (IOException ioe){
@@ -173,18 +149,20 @@ public class GroupJudge{
         }
 
     }
-    public void sendConform(String IDOfJudge){//调用否定函数需要刷新成绩表
+    public void sendConform(int indexOfJudge){//调用否定函数需要刷新成绩表
         if(sendConfirm){
             try {
+            	String IDOfJudge=IDOfJudges.get(indexOfJudge);
                 bw.write(Boolean.FALSE.toString()+"\n");
                 bw.write(IDOfJudge+"\n");
                 sendConfirm=false;
-
+                bw.flush();
                 br.readLine();//Send Start
                 if (!br.readLine().equals("FinishSendMarks")){
                     br.readLine();//SendMarkTable
                     IDOfJudges.add(br.readLine());//IDOfJudge
                     bw.write("ready\n");
+                    bw.flush();
                     ArrayList<Pair<String,Float>>MarkTable=new ArrayList<>();
                     String Num;
                     while (!(Num=br.readLine()).equals("Done")){
@@ -206,4 +184,12 @@ public class GroupJudge{
     public void getRemark(){
 
     }
+
+	public ArrayList<ArrayList<Pair<String,Float>>> getMarkTables(){
+    	return  MarkTables;
+	}
+
+	public ArrayList<String> getIDOfJudges() {
+		return IDOfJudges;
+	}
 }

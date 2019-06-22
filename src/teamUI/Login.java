@@ -155,15 +155,18 @@ public class Login {
 							Referee referee = new Referee(userID,res.getValue1());
 							break;
 						case 2:
+							frame.dispose();
 							ChiefRE chiefre = new ChiefRE(userID,res.getValue1());
 							break;
 						case 3:
+							frame.dispose();
 							MainRefe mainrefe = new MainRefe(userID);
 							break;
 						case 4:
 						case 5:
 						case 6:
 						case 9:
+							frame.dispose();
 							Massagesearch messagesearch = new Massagesearch();
 							break;
 						//TODO:-1账号已经在线  0登录失败 1裁判 2小组裁判  3总裁判  4领队  5队医 6教练员 9(serverData.NumOfGroup)代表队账号

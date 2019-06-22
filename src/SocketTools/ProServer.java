@@ -222,7 +222,9 @@ class TProHandle implements Runnable {
                 bwtemp.write(ProName+'\n');
                 bwtemp.flush();
             }
-            new BufferedWriter(new OutputStreamWriter(Group.getOutputStream())).write(String.valueOf(Judges.size())+"\n");
+            BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(Group.getOutputStream()));
+            bw.write(String.valueOf(Judges.size())+"\n");
+            bw.flush();
         } catch (UnknownHostException uhe) {
 
         } catch (IOException ioe) {
@@ -318,7 +320,7 @@ class TProHandle implements Runnable {
 
             } else {
 //                SendMessageOfAthletes(Aths);
-                //TODO:某个裁判重新打分
+                //某个裁判重新打分
                 ReMark(Group,ListOfJudges,Aths);
 
             }
@@ -368,7 +370,22 @@ class TProHandle implements Runnable {
                         myConn.ModifyCScore(ProID,group,bpmark.getValue0(),mark_sum);
                     }
                 }else {
-                    System.out.println("运动员评分少于两个,为"+marks.size());
+                    //System.out.println("运动员评分少于两个,为"+marks.size());
+                    //评分少于或等于两组
+                    if(marks.isEmpty()){
+                        System.out.println("运动员评分为空");
+                    }else {
+                        float sum=0f;
+                        for(float mark:marks){
+                            sum+=mark;
+                        }
+                        sum=sum/marks.size() +bpmark.getValue1()-bpmark.getValue2();
+                        if(isFinal){
+                            myConn.ModifyJScore(ProID,group,bpmark.getValue0(),sum);
+                        }else {
+                            myConn.ModifyCScore(ProID,group,bpmark.getValue0(),sum);
+                        }
+                    }
                 }
             }
 
@@ -399,7 +416,7 @@ class TProHandle implements Runnable {
                 bw.write("Send Start\n");
                 SendMarkTable(groupJudge,target);
                 bw.write("FinishSendMarks\n");
-
+                bw.flush();
                 String feedback = br.readLine();//小组裁判的确认
                 if (Boolean.valueOf(feedback)) {
                     //若确认通过则返回
@@ -431,6 +448,7 @@ class TProHandle implements Runnable {
         //输出成绩表中所有姓名+成绩
         bw.write("SendMarkTable\n");
         bw.write(message.IDOfJudge+"\n");
+        bw.flush();
         while (!br.readLine().equals("ready")) ;//等待直到ready
         for (Pair<String, Float> mark : message.MarkTable     //Pair<AthNum,Mark>
                 ) {
@@ -438,6 +456,7 @@ class TProHandle implements Runnable {
             bw.write(mark.getValue1().toString() + '\n');
         }
         bw.write("Done+\n");
+        bw.flush();
 //        bw.close();
 //        br.close();
     }
@@ -473,6 +492,7 @@ class TSendAthletesMessage implements Runnable {
             return;
         }
         bw.write(Aths.size() + '\n');
+        bw.flush();
         IDOfJudge = br.readLine();
         if (br.readLine().equals("ready")) {//裁判准备好
             for (Pair<String, String> Ath : Aths) {
@@ -480,6 +500,7 @@ class TSendAthletesMessage implements Runnable {
                 bw.write(Ath.getValue1() + '\n');
             }
             bw.write("Finished");
+            bw.flush();
             if (br.readLine().equals("GroupJudge")) {
                 return;//目标是小组裁判时结束
             } else {
@@ -573,26 +594,17 @@ class THandle implements Runnable {
                     if (checkIDOfJudge(SID,Password)){
                         bw.write(Boolean.TRUE.toString() + '\n');
                         //状态检索以及相应的修改
-//                        if(dbo.Search_SLogin(SID)){
-//
-//                            bw.write(String.valueOf(-1)+ "\n");
-//                        }else {
-//                            String IP_target = User.getInetAddress().getHostAddress();
-//                            dbo.ModifyIP(SID, IP_target);
-//                            dbo.ModifySLogin(SID);//切换状态
-//                            System.out.println(dbo.Search_SLogin(SID));
-//                            server.AddJudge(SID,User);
-//                            bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
-//                        }
-                        //TODO：调试允许覆盖登陆
-                        String IP_target = User.getInetAddress().getHostAddress();
-                        dbo.ModifyIP(SID, IP_target);
-                        if(!dbo.Search_SLogin(SID)){
+                        if(dbo.Search_SLogin(SID)){
+                            bw.write(String.valueOf(-1)+ "\n");
+                        }else {
+                            String IP_target = User.getInetAddress().getHostAddress();
+                            dbo.ModifyIP(SID, IP_target);
                             dbo.ModifySLogin(SID);//切换状态
+                            System.out.println(dbo.Search_SLogin(SID));
+                            server.AddJudge(SID,User);
+                            bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
                         }
-                        System.out.println(dbo.Search_SLogin(SID));
-                        server.AddJudge(SID,User);
-                        bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
+
                     }
                     else
                         if(checkIDofGroup(SID,Password)){

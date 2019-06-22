@@ -51,6 +51,7 @@ public class Referee extends JFrame {
 	//Socket tool
 	private String SID="";
 	private Judge mReferee=new Judge();
+	private Socket conn;
 	/**
 	 * Launch the application.
 	 */
@@ -71,6 +72,8 @@ public class Referee extends JFrame {
 	 * Create the frame.
 	 */
 	public Referee(String SID, Socket conn) {
+		this.conn=conn;
+		this.SID=SID;
 		setTitle("裁判员您好！");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 561, 489);
@@ -337,7 +340,12 @@ public class Referee extends JFrame {
 						P_score6.setText("");
 						P_score7.setText("");
 						P_score8.setText("");
-						getAths();	//获取下一组运动员名单
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								getAths();//第一组运动员名单
+							}
+						}).start();
 					}
 				}
 
@@ -374,11 +382,17 @@ public class Referee extends JFrame {
 		this.setVisible(true);
 
 		mReferee.logined=true;
-		mReferee.start(SID,conn);
-		P_item.setText(mReferee.getProname());
-		getAths();//第一组运动员名单
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mReferee.start(SID,conn);
+				P_item.setText(mReferee.getProname());
+				getAths();//第一组运动员名单
+			}
+		}).start();
 	}
 	private void getAths(){
+		while (!mReferee.isWorking&&!mReferee.sendmark);//等待裁判就绪
 		ArrayList<Pair<String,String>> aths = mReferee.wait_Aths();
 		//TODO:将aths的信息保存到界面√
 		P_name1.setText(aths.get(0).getKey());

@@ -30,7 +30,7 @@ public class Judge {
     public  boolean logined=false;//是否成功登陆
     public  boolean sendmark=false;//是否接受了队员表
     public boolean prodone=false;//项目结束
-    public boolean isWorking;
+    public boolean isWorking=false;
     public void start(String SID,Socket conn){
         try {
             ID=SID;
@@ -61,6 +61,7 @@ public class Judge {
                 }
                 int amount=Integer.parseInt(message);
                 bw.write("ready");
+                bw.flush();
                 for(int i=0;i<amount;i++){
                     if ((Num=br.readLine())!="Finished"){
                         Name=br.readLine();
@@ -88,6 +89,7 @@ public class Judge {
                     bw.write(a.getValue().toString()+'\n');
                 }
                 bw.write("Finished");
+                bw.flush();
                 sendmark=false;
                 return true;
             }catch (IOException ioe){
@@ -110,6 +112,7 @@ public class Judge {
             try {
                 bw.write("Exit\n");
                 bw.write(ID);
+                bw.flush();
                 return true;
             }catch (IOException ioe){
                 return false;
