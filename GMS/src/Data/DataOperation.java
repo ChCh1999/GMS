@@ -274,9 +274,9 @@ public class DataOperation {
         return b;
     }
     //修改match表的比赛状态
-    public boolean ModifyMatch_Judge(String PName,int Judge){
+    public boolean ModifyMatch_Judge(String PName,String GroupID,int Judge){
         String formName="game";
-        String condition="PName=\'"+PName+"\'" ;
+        String condition="PName=\'"+PName+"\' AND GroupID="+GroupID ;
         String modified="Judge="+Judge+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
@@ -463,13 +463,13 @@ public class DataOperation {
     }
     //用PID和SType(不同种类的裁判)去查询负责该项目的裁判IP
     public ArrayList<String> SearchProject_IP(String PID,int SType){
-        String sql="select * from stuff where PID='"+PID+"' AND SType="+SType+"";
+        String sql="select * from stuff where PID='"+PID+"' AND SType="+SType+" AND SLogin = 1";
         ArrayList<String> arrayList=new ArrayList<>();
         String IP=null;
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
-                IP=rst.getString("IP");
+                IP=rst.getString("SID");
                 arrayList.add(IP);
             }
             return arrayList;
