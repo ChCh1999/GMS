@@ -1,5 +1,6 @@
 package SocketTools;
 
+import org.javatuples.Pair;
 import org.javatuples.Quartet;
 import org.javatuples.Quintet;
 import org.javatuples.Septet;
@@ -18,9 +19,11 @@ public class ClientTool {
 
     final static String IP_SERVER=ServerData.ipOfServer;
     final static int PORT_LOGIN=ServerData.PORT_Login;
-    public static int login(String SID,String Password){
+    static Socket currentSocket;
+    public static Pair<Integer,Socket> login(String SID, String Password){
         try{
             Socket login=new Socket(IP_SERVER,PORT_LOGIN);
+
             BufferedReader br_login=new BufferedReader(new InputStreamReader(login.getInputStream()));
             BufferedWriter bw_login=new BufferedWriter(new OutputStreamWriter(login.getOutputStream()));
 
@@ -32,17 +35,18 @@ public class ClientTool {
             if(Boolean.parseBoolean(br_login.readLine())){
                 int state=Integer.parseInt(br_login.readLine());
                 System.out.println("登录成功");
-                return state;
+                currentSocket=login;
+                return new Pair<>(state,login);
             }else {
                 System.out.println("登录失败");
-                return 0;
+                return new Pair<>(0,null);
             }
         }catch (UnknownHostException une){
             System.out.println(une);
-            return 0;
+            return new Pair<>(0,null);
         }catch (IOException ioe){
             System.out.println(ioe);
-            return 0;
+            return new Pair<>(0,null);
         }
     }
     public static void exit(String SID){

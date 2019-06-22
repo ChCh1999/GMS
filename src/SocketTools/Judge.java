@@ -30,16 +30,17 @@ public class Judge {
     public  boolean logined=false;//是否成功登陆
     public  boolean sendmark=false;//是否接受了队员表
     public boolean prodone=false;//项目结束
-
-    public void start(String SID){
+    public boolean isWorking;
+    public void start(String SID,Socket conn){
         try {
             ID=SID;
-            ServerSocket judge=new ServerSocket(PORT_LISTEN);
-            Socket conn = judge.accept();
+//            ServerSocket judge=new ServerSocket(PORT_LISTEN);
+//            Socket conn = judge.accept();
             br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
             bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             connection=conn;
             proname=br.readLine();
+            isWorking=true;
             return;
         }catch (IOException ioe){
             return;
@@ -54,14 +55,17 @@ public class Judge {
                 String Num;
                 String Name;
 //                while (connection==null);//等待连接成功
-                int amount=Integer.parseInt(br.readLine());
+                String message=br.readLine();
+                if(message.equals("over")){
+                    return Aths;
+                }
+                int amount=Integer.parseInt(message);
                 bw.write("ready");
                 for(int i=0;i<amount;i++){
                     if ((Num=br.readLine())!="Finished"){
                         Name=br.readLine();
                         Pair<String,String> pa=new Pair<>(Num,Name);
                         Aths.add(new Pair<String,String>(Num,Name));
-
                     }
                 }
                 bw.write("Judge\n");
@@ -71,7 +75,6 @@ public class Judge {
             }catch (IOException ioe){
                 return null;
             }
-
         }
         return Aths;
     }

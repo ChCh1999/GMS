@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Referee extends JFrame {
@@ -57,8 +58,8 @@ public class Referee extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Referee frame = new Referee("S1");
-					frame.setVisible(true);
+//					Referee frame = new Referee("S1");
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -69,7 +70,7 @@ public class Referee extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Referee(String SID) {
+	public Referee(String SID, Socket conn) {
 		setTitle("裁判员您好！");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 561, 489);
@@ -373,7 +374,7 @@ public class Referee extends JFrame {
 		this.setVisible(true);
 
 		mReferee.logined=true;
-		mReferee.start(SID);
+		mReferee.start(SID,conn);
 		P_item.setText(mReferee.getProname());
 		getAths();//第一组运动员名单
 	}

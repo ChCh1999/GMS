@@ -5,5 +5,6 @@ public class ServerData {
 	final static int PORT_Chief = 10086;//总裁判连接监听端口
 	final static int PORT_Login = 10087;//登录监听端口
 	final static int PORT_Judge = 10088;//连接裁判用端口
+	final static int PORT_GROUP = 10089;//小组裁判监听端口
 	final static int NumOfGroup=9;//队伍所用的编号
 }

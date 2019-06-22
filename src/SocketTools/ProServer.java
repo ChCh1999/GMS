@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class ProServer {
 
     ArrayList<Thread> proline = new ArrayList<>();
+    HashMap<String,Socket>Judges=new HashMap<>();
 
     public static void main(String[] args) {
         ProServer test = new ProServer();
@@ -48,7 +49,6 @@ public class ProServer {
 //    处理Socket请求的线程类
 class TProMaster implements Runnable {
     private Socket socket;
-
     public TProMaster(Socket socket) {
         this.socket = socket;
     }/*构造函数*/
@@ -79,36 +79,59 @@ class TProMaster implements Runnable {
         //boolean MOrF=Boolean.parseBoolean(br.readLine());//男生组String='true'
         System.out.println("Form Client：" + proName + "开始");
 //                创建项目信息处理线程是否进行
-
+        String proName_part;
         int indexj=proName.indexOf("决赛");
         int indexc=proName.indexOf("预赛");
-        //未进行的初赛、已完成相应初赛且尚未进行的决赛则进入后流程
-        if ((indexj==-1&&dbo.SearchMatch(proName.substring(0,indexc),group)==0) ||
-                (indexj!=-1&&dbo.SearchMatch(proName.substring(0,indexj),group)==3)) {
-            Thread prohandle = new Thread(new TProHandle(proName, group, socket));
-
-            //开始处理比赛信息
-            prohandle.start();
-            //输出流回应一下客户端
-            MessageToClient.write("Start" + '\n');
-            MessageToClient.flush();
-            System.out.println(proName+"Start");
-
-            //刷新流
-            MessageToClient.flush();
-            //等待比赛结束
-            prohandle.join();
-
-
-            MessageToClient.write("End" + '\n');
-            MessageToClient.flush();
-            //TODO:修改比赛状态
-            System.out.println("End");
-//            System.out.println(br.readLine());
-        } else {
-            System.out.println("Wrong");
-            MessageToClient.write("WrongRequest");
+        if(indexc!=-1){
+            proName_part=proName.substring(0,indexc);
+        }else {
+            proName_part=proName.substring(0,indexj);
         }
+        //未进行的初赛、已完成相应初赛且尚未进行的决赛则进入后流程
+        boolean isPlaying=false;
+        for(int i:new int[]{1,2,3}){
+            if(i!=group){
+                int state=dbo.SearchMatch(proName_part,group);
+                if(state==1||state==4){
+                    isPlaying=true;
+                    break;
+                }
+            }
+        }
+        if(isPlaying){
+
+        }else
+        {
+            if ((indexj==-1&&dbo.SearchMatch(proName_part,group)==0) ||
+                    (indexj!=-1&&dbo.SearchMatch(proName_part,group)==3)) {
+                TProHandle handle=new TProHandle(proName, group, socket);
+                Thread prohandle = new Thread(handle);
+
+                //开始处理比赛信息
+                prohandle.start();
+                //输出流回应一下客户端
+                MessageToClient.write("Start" + '\n');
+                MessageToClient.flush();
+                System.out.println(proName+"Start");
+
+                //刷新流
+                MessageToClient.flush();
+                //等待比赛结束
+                prohandle.join();
+
+
+                MessageToClient.write(handle.getMessage() + '\n');
+                MessageToClient.flush();
+                //TODO:修改比赛状态
+
+                System.out.println("End");
+//            System.out.println(br.readLine());
+            } else {
+                System.out.println("Wrong");
+                MessageToClient.write("WrongRequest");
+            }
+        }
+
         //System.out.println("To Client:" + "copy:" + proName + "开始");
 //        br.close();
 //        MessageToClient.close();
@@ -130,15 +153,14 @@ class TProHandle implements Runnable {
     //Socket连接
     public Socket Chief;
     private Socket Group;
-    private ArrayList<Socket> Judges;
+    private ArrayList<Socket> Judges=new ArrayList<>();
     String IPOfGroup;
     ArrayList<String> IPOfJudges = new ArrayList<String>();
-
     //数据库工具
     Data.DataOperation myConn;
 
-
-
+    //消息
+    private String Message="项目意外中止";
 
     //        构造函数
     public TProHandle(String Project, int group, Socket c) {
@@ -176,15 +198,26 @@ class TProHandle implements Runnable {
 
         int count=Aths.size();
         //        TODO:init读取各个裁判的ip
-        IPOfGroup = myConn.SearchProject_IP(ProID,2).get(0);
+        if( myConn.SearchProject_IP(ProID,2).isEmpty()){
+            Message="无法连接到小组裁判";
+            return;
+        }else {
+            IPOfGroup = myConn.SearchProject_IP(ProID,2).get(0);
+        }
+
         IPOfJudges=myConn.SearchProject_IP(ProID,1);
+        if(IPOfJudges.isEmpty()){
+            Message="无法连接到任何裁判";
+            return;
+        }
         try {
 
-            Group = new Socket(IPOfGroup, ServerData.PORT_Judge);
-            for (String ip : IPOfJudges) {
+            Group = TServer.getJudges().get(IPOfGroup);
+            for (String SID : IPOfJudges) {
 
-                Socket Stemp = new Socket(ip, ServerData.PORT_Judge);
+                Socket Stemp =TServer.getJudges().get(SID);
                 Judges.add(Stemp);
+                System.out.println("hh");
                 BufferedWriter bwtemp=new BufferedWriter(new OutputStreamWriter(Stemp.getOutputStream()));
                 bwtemp.write(ProName+'\n');
                 bwtemp.flush();
@@ -213,10 +246,17 @@ class TProHandle implements Runnable {
             } else {
 
                 //TODO:结束进程
-
+                Message="End";
+                return;
             }
         }
         //TODO:结束进程
+        Message="End";
+        return;
+    }
+
+    public String getMessage() {
+        return Message;
     }
 
     private void SendMessageOfAthletes(ArrayList<Pair<String, String>> Aths) {
@@ -430,6 +470,7 @@ class TSendAthletesMessage implements Runnable {
         int size = Aths.size();
         if (size == 0) {
             bw.write("Over");
+            return;
         }
         bw.write(Aths.size() + '\n');
         IDOfJudge = br.readLine();
@@ -467,7 +508,7 @@ class TSendAthletesMessage implements Runnable {
 //处理登陆连接的线程
 class TServer implements Runnable {
     ServerSocket loginserver;
-
+    static HashMap<String,Socket> Judges=new HashMap<>();
     @Override
     public void run() {
         try {
@@ -478,13 +519,20 @@ class TServer implements Runnable {
                 // server尝试接收其他Socket的连接请求，server的accept方法是阻塞式的
                 Socket socket = loginserver.accept();
                 // 每接收到一个Socket就建立一个新的线程来处理它
-                Thread login = new Thread(new THandle(socket));
+                Thread login = new Thread( new THandle(socket,this));
                 login.start();
             }
 
         } catch (IOException e) {
 
         }
+    }
+    public void AddJudge(String sid,Socket add){
+        Judges.put(sid,add);
+    }
+
+    public static HashMap<String, Socket> getJudges() {
+        return Judges;
     }
 
     public void stopLoginServer() {
@@ -496,7 +544,9 @@ class THandle implements Runnable {
     Socket User;
     private BufferedReader br;
     private BufferedWriter bw;
-    THandle(Socket user) {
+    TServer server;
+    THandle(Socket user,TServer server) {
+        this.server=server;
         this.User = user;
         System.out.println("处理信息");
 //        try{
@@ -523,16 +573,26 @@ class THandle implements Runnable {
                     if (checkIDOfJudge(SID,Password)){
                         bw.write(Boolean.TRUE.toString() + '\n');
                         //状态检索以及相应的修改
-                        if(dbo.Search_SLogin(SID)){
-
-                            bw.write(String.valueOf(-1)+ "\n");
-                        }else {
-                            String IP_target = User.getInetAddress().getHostAddress();
-                            dbo.ModifyIP(SID, IP_target);
+//                        if(dbo.Search_SLogin(SID)){
+//
+//                            bw.write(String.valueOf(-1)+ "\n");
+//                        }else {
+//                            String IP_target = User.getInetAddress().getHostAddress();
+//                            dbo.ModifyIP(SID, IP_target);
+//                            dbo.ModifySLogin(SID);//切换状态
+//                            System.out.println(dbo.Search_SLogin(SID));
+//                            server.AddJudge(SID,User);
+//                            bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
+//                        }
+                        //TODO：调试允许覆盖登陆
+                        String IP_target = User.getInetAddress().getHostAddress();
+                        dbo.ModifyIP(SID, IP_target);
+                        if(!dbo.Search_SLogin(SID)){
                             dbo.ModifySLogin(SID);//切换状态
-                            System.out.println(dbo.Search_SLogin(SID));
-                            bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
                         }
+                        System.out.println(dbo.Search_SLogin(SID));
+                        server.AddJudge(SID,User);
+                        bw.write(dbo.SearchStype(SID)+ "\n");//裁判状态（总裁判/小组裁判/裁判）
                     }
                     else
                         if(checkIDofGroup(SID,Password)){

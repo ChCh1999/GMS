@@ -13,7 +13,7 @@ public class GroupJudge{
     private boolean signed=false;
 
     //登录用
-    final int PORT_LISTEN=10088;
+    final int PORT_LISTEN=ServerData.PORT_GROUP;
 
 
     //连接用
@@ -70,10 +70,10 @@ public class GroupJudge{
 //
 //    }
 
-    public void start(){
+    public void start(Socket conn){
         try {
-            ServerSocket judge=new ServerSocket(PORT_LISTEN);
-            Socket conn = judge.accept();
+//            ServerSocket judge=new ServerSocket(PORT_LISTEN);
+//            Socket conn = judge.accept();
             connection=conn;
             br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
             bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));

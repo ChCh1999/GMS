@@ -86,7 +86,7 @@ public class DataOperation {
     }
     //增加match，初始化Judge 0
     public boolean InsertData(String PName,int GroupID,int Sex){
-        String sql="insert into match(PName,GroupID,Sex,Judge) values " +
+        String sql="insert into game(PName,GroupID,Sex,Judge) values " +
                 "('"+PName+"',"+GroupID+","+Sex+",0)";
         try {
             state.executeUpdate(sql);
@@ -275,7 +275,7 @@ public class DataOperation {
     }
     //修改match表的比赛状态
     public boolean ModifyMatch_Judge(String PName,int Judge){
-        String formName="match";
+        String formName="game";
         String condition="PName=\'"+PName+"\'" ;
         String modified="Judge="+Judge+"";
         boolean b=ModifyData(formName,condition,modified);
@@ -463,13 +463,13 @@ public class DataOperation {
     }
     //用PID和SType(不同种类的裁判)去查询负责该项目的裁判IP
     public ArrayList<String> SearchProject_IP(String PID,int SType){
-        String sql="select * from stuff where PID='"+PID+"' SType="+SType+"";
+        String sql="select * from stuff where PID='"+PID+"' AND SType="+SType +" AND SLogin = 1";
         ArrayList<String> arrayList=new ArrayList<>();
         String IP=null;
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
-                IP=rst.getString("IP");
+                IP=rst.getString("SID");
                 arrayList.add(IP);
             }
             return arrayList;
@@ -620,7 +620,7 @@ public class DataOperation {
     public  int SearchMatch(String PName,int GroupID){
         int J=0;
         //sql语句
-        String sql="select * from match where PName='"+PName+"' AND GroupID="+GroupID;
+        String sql="select * from game where PName='"+PName+"' AND GroupID="+GroupID;
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
@@ -630,7 +630,7 @@ public class DataOperation {
         }catch (SQLException e){
             System.out.println("数据库match查询出现错误");
             e.printStackTrace();
-            return 0;
+            return -1;
         }
     }
     //项目ID groupid 检索决赛选手 姓名+编号
@@ -653,7 +653,7 @@ public class DataOperation {
             System.out.println("检索失败");
             e.printStackTrace();
         }
-        for (int i=0;ListAthleteID.get(i)!=null;i++){
+        for (int i=0;i<ListAthleteID.size();i++){
             //第一个参数是用AID查询选手的名字
             Pair<String,String> Ath=new Pair<>(SearchAthlete(ListAthleteID.get(i)).get(0).getValue0(),
                     ListAthleteID.get(i));
@@ -679,7 +679,7 @@ public class DataOperation {
             System.out.println("检索失败");
             e.printStackTrace();
         }
-        for (int i=0;ListAthleteID.get(i)!=null;i++){
+        for (int i=0;i<ListAthleteID.size();i++){
             //第一个参数是用AID查询选手的名字
             Pair<String,String> Ath=new Pair<>(SearchAthlete(ListAthleteID.get(i)).get(0).getValue0(),
                     ListAthleteID.get(i));

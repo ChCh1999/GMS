@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
+import org.javatuples.Pair;
 import java.awt.Image;
 
 import javax.swing.SwingConstants;
@@ -22,6 +23,7 @@ import SocketTools.ClientTool;
 import net.miginfocom.swing.MigLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.Socket;
 
 
 public class Login {
@@ -93,7 +95,8 @@ public class Login {
 				if (!password.isEmpty()&&
 						!userID.isEmpty()){
 					int state=0;
-					state=ClientTool.login(userID,password);
+					Pair<Integer,Socket>res=ClientTool.login(userID,password);
+					state=res.getValue0();
 					switch (state){
 						case-1:
 							JFrame jf=new JFrame();
@@ -149,10 +152,10 @@ public class Login {
 							break;
 						case 1:
 							frame.dispose();
-							Referee referee = new Referee(userID);
+							Referee referee = new Referee(userID,res.getValue1());
 							break;
 						case 2:
-							ChiefRE chiefre = new ChiefRE(userID);
+							ChiefRE chiefre = new ChiefRE(userID,res.getValue1());
 							break;
 						case 3:
 							MainRefe mainrefe = new MainRefe(userID);

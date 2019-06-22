@@ -102,7 +102,7 @@ class TStartPro implements Runnable{
                 else{
                     //TODO:前端提示相应的比赛没有成功结束消息
                     System.out.println("项目未正常结束");
-                    mReferee.addmessageArea(mReferee.getMessageArea(),ProName+"项目未正常结束\n");
+                    mReferee.addmessageArea(mReferee.getMessageArea(),ProName+"项目未正常结束,"+feedback+"\n");
                 }
 
             }

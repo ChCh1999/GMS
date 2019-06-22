@@ -22,6 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.net.Socket;
 
 
 //裁判员页面
@@ -129,8 +130,8 @@ public class ChiefRE extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ChiefRE frame = new ChiefRE("ch1");
-					frame.setVisible(true);
+//					ChiefRE frame = new ChiefRE("ch1");
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -141,7 +142,7 @@ public class ChiefRE extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ChiefRE(String sid) {
+	public ChiefRE(String sid, Socket conn) {
 		setTitle("小组裁判页");//总裁判
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1098, 565);
@@ -1063,7 +1064,7 @@ public class ChiefRE extends JFrame {
 		this.setVisible(true);
 		mChiefRE=new GroupJudge(sid);
 
-		mChiefRE.start();
+		mChiefRE.start(conn);
 
 	}
 }
