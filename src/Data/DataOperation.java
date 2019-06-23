@@ -301,19 +301,59 @@ public class DataOperation {
 //查询
     //用AID查询个人成绩 返回 运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
     public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchAthleteGrade(String athleteID){
-        String sql1="select * from Search_Team_Initial_Core where AID='"+athleteID+"'";
+        //String sql1="select * from Search_Team_Initial_Core where AID='"+athleteID+"'";
+        String sql1="select * from gradegroup where AID='"+athleteID+"'";
         String AID=athleteID,AName=null,PName=null,PID=null;
         int GroupID=0;
         float CSCore=0f,JSCore=0f;
         //部分返回
-        ArrayList<Triplet<String,String,String>> al1=new ArrayList();
+        ArrayList<String> arrayList=new ArrayList<>();
         try{
             rst=state.executeQuery(sql1);
+            //先找到不同的PID的分组
             while(rst.next()){
-                AName=rst.getString("AName");
-                PName=rst.getString("PName");
-                Triplet<String,String,String> T=new Triplet<>(athleteID,AName,PName);
-                al1.add(T);
+                boolean judge=false;
+                PID=rst.getString("PID");
+                if(PID.equals("10")){
+                    continue;
+                }
+                for(int i=0;i<arrayList.size();i++){
+                    if(PID.equals(arrayList.get(i))){
+                        judge=true;
+                        break;
+                    }
+                }
+                if (!judge){
+                    arrayList.add(PID);
+                }
+            }
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+        }
+//        ArrayList<Triplet<String,String,String>> al1=new ArrayList();
+//        try{
+//            rst=state.executeQuery(sql1);
+//            while(rst.next()){
+//                AName=rst.getString("AName");
+//                PName=rst.getString("PName");
+//                Triplet<String,String,String> T=new Triplet<>(athleteID,AName,PName);
+//                al1.add(T);
+//            }
+//        }catch (SQLException e){
+//            System.out.println("视图队伍查询成绩错误");
+//            e.printStackTrace();
+//        }
+        String sql2="select * from gradegroup where AID='"+athleteID+"'";
+        //返回数组PID GroupID
+        ArrayList<Pair<String,Integer>> arrayList2=new ArrayList<>();
+        try{
+            rst=state.executeQuery(sql2);
+            int i=0;
+            while(rst.next()){
+                PID=rst.getString("PID");
+                GroupID=rst.getInt("GroupID");
+                arrayList2.add(new Pair<>(PID,GroupID));
             }
         }catch (SQLException e){
             System.out.println("视图队伍查询成绩错误");
@@ -322,29 +362,18 @@ public class DataOperation {
 
         //总返回
         ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> al=new ArrayList<>();
-        try{
-            String sql2="select * from gradegroup where AID='"+athleteID+"'";
-           // ArrayList<String> al_pid=new ArrayList<>();
-            rst=state.executeQuery(sql2);
-            int i=0;
-            while(rst.next()){
-                PID=rst.getString("PID");
-                GroupID=rst.getInt("GroupID");
-                Quartet<Float,Integer,Float,Integer> AT = SearchTheRank(PID,GroupID,athleteID);
-                Septet<String,String,String,Float,Integer,Float,Integer> AT2 =new Septet<>(al1.get(i).getValue0(),al1.get(i).getValue1(),
-                        al1.get(i).getValue2(),AT.getValue0(),AT.getValue1(),AT.getValue2(),AT.getValue3());
-                al.add(AT2);
-                i++;
-            }
-            return al;
-        }catch (SQLException e){
-            System.out.println("视图队伍查询成绩错误");
-            e.printStackTrace();
-            return null;
+        for(int i=0;i<arrayList2.size();i++){
+            PID=arrayList2.get(i).getValue0();
+            GroupID=arrayList2.get(i).getValue1();
+            Quartet<Float,Integer,Float,Integer> AT = SearchTheRank(PID,GroupID,athleteID);
+            AName=SearchAname(athleteID);
+            PName=SearchPName(PID);
+            Septet<String,String,String,Float,Integer,Float,Integer> AT2 =new Septet<>(athleteID,AName,
+                    PName,AT.getValue0(),AT.getValue1(),AT.getValue2(),AT.getValue3());
+            al.add(AT2);
         }
+        return al;
     }
-    //第二个
-    //public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchAthleteGrade_
     //用PID，GroupID查询 返回 运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
     public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchProjectGrade(String projectID,int GroupID){
         //PID AID rank score
@@ -398,19 +427,19 @@ public class DataOperation {
                     al.add(new Pair<>(PID,GroupID));
                 }
             }
-            //找到之后分别进行操作
-            for(int i=0;i<al.size();i++){
-                Pair<Integer,Float> team=SearchTeamRank(teamID,al.get(i).getValue0(),al.get(i).getValue1());
-                String Tname=SearchTName(teamID);
-                String Pname=SearchPName(al.get(i).getValue0());
-                a.add(new Quintet<>(Tname,Pname,al.get(i).getValue1(),team.getValue1(),team.getValue0()));
-            }
-            return a;
         }catch (SQLException e){
             System.out.println("视图队伍查询成绩错误");
             e.printStackTrace();
-            return null;
+
         }
+        //找到之后分别进行操作
+        for(int i=0;i<al.size();i++){
+            Pair<Integer,Float> team=SearchTeamRank(teamID,al.get(i).getValue0(),al.get(i).getValue1());
+            String Tname=SearchTName(teamID);
+            String Pname=SearchPName(al.get(i).getValue0());
+            a.add(new Quintet<>(Tname,Pname,al.get(i).getValue1(),team.getValue1(),team.getValue0()));
+        }
+        return a;
     }
     //用teamID,projectid,goupID查团体赛成绩及排名   排名  分数
     public Pair<Integer,Float> SearchTeamRank(String teamID,String projectID,int goupID){
@@ -521,7 +550,7 @@ public class DataOperation {
     //SID password 返回bool
     public boolean Stuff_Verify_password(String SID,String password){
         String sql="select * from stuff where SID='"+SID+"'";
-        String SPassword=null;
+        String SPassword="";
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
