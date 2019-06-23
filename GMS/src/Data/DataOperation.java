@@ -331,6 +331,7 @@ public class DataOperation {
                 Septet<String,String,String,Float,Integer,Float,Integer> AT2 =new Septet<>(al1.get(i).getValue0(),al1.get(i).getValue1(),
                         al1.get(i).getValue2(),AT.getValue0(),AT.getValue1(),AT.getValue2(),AT.getValue3());
                 al.add(AT2);
+                i++;
             }
             return al;
         }catch (SQLException e){
@@ -339,6 +340,8 @@ public class DataOperation {
             return null;
         }
     }
+    //第二个
+    //public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchAthleteGrade_
     //用PID，GroupID查询 返回 运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
     public ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchProjectGrade(String projectID,int GroupID){
         //PID AID rank score
@@ -410,7 +413,7 @@ public class DataOperation {
     public Pair<Integer,Float> SearchTeamRank(String teamID,String projectID,int goupID){
         ArrayList<Triplet<String,Float,Integer>> arrayList=SearchTheTeamRank(projectID,goupID);
         boolean judge=false;
-        Pair<Integer,Float> team=null;
+        Pair<Integer,Float> team=new Pair<>(0,0f);
         for(int i=0;i<arrayList.size();i++){
             if(teamID.equals(arrayList.get(i).getValue0())){
                 judge=true;
@@ -748,15 +751,15 @@ public class DataOperation {
         }
     }
     //判断GroupID,是否存在
-    public boolean JudgeGroupID(String groupID){
+    public boolean JudgeGroupID(int groupID){
         String sql="select GroupID from athlete ";
-        String GroupID=null;
+        int GroupID=0;
         boolean judge=false;
         try{
             rst=state.executeQuery(sql);
             while(rst.next()){
-                GroupID=rst.getString("AID");
-                if(GroupID.equals(groupID)){
+                GroupID=rst.getInt("GroupID");
+                if(GroupID == groupID){
                     judge=true;
                 }
             }
@@ -1034,7 +1037,7 @@ public class DataOperation {
     }
     //PID，groupID 查询团队的排名情况,分数的获得情况
     public ArrayList<Triplet<String,Float,Integer>> SearchTheTeamRank(String ProjectID,int groupid){
-        String sql="select * from athlete,gradegroup where PID='"+ProjectID+"' and GroupID="+groupid+"";
+        String sql="select * from athlete,gradegroup where athlete.AID=gradegroup.AID  AND athlete.GroupID=gradegroup.GroupID AND PID='"+ProjectID+"' and gradegroup.GroupID="+groupid+"";
         String TID=null;
         float cscore=0f,jscore=0f,grade=0f;
         //String为TID,Float为分数,int 为排名
