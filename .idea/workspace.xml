@@ -14,8 +14,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/teamUI/ChiefRE.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="1072" column="60" selection-start-line="1072" selection-start-column="60" selection-end-line="1072" selection-end-column="60" />
+            <state relative-caret-position="1501">
+              <caret line="377" column="24" selection-start-line="377" selection-start-column="24" selection-end-line="377" selection-end-column="24" />
+              <folding>
+                <element signature="e#9230#9250#0" expanded="true" />
+                <element signature="e#9403#9423#0" expanded="true" />
+                <element signature="e#9576#9596#0" expanded="true" />
+                <element signature="e#9749#9769#0" expanded="true" />
+                <element signature="e#9922#9942#0" expanded="true" />
+                <element signature="e#10095#10115#0" expanded="true" />
+                <element signature="e#10268#10288#0" expanded="true" />
+                <element signature="e#10441#10461#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -59,7 +69,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-221" />
     <option name="width" value="1286" />
     <option name="height" value="788" />
@@ -110,7 +120,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561265184361" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1561306562785" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -271,18 +281,18 @@
       <workItem from="1561275215162" duration="10635000" />
       <workItem from="1561287388925" duration="329000" />
       <workItem from="1561297328680" duration="103000" />
-      <workItem from="1561297469204" duration="4720000" />
+      <workItem from="1561297469204" duration="6683000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67250000" />
+    <option name="totallyTimeSpent" value="69213000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2987897" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.2987897" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -291,7 +301,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info id="设计器" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32903227" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.22096774" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -586,8 +596,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/teamUI/ChiefRE.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="1072" column="60" selection-start-line="1072" selection-start-column="60" selection-end-line="1072" selection-end-column="60" />
+        <state relative-caret-position="1501">
+          <caret line="377" column="24" selection-start-line="377" selection-start-column="24" selection-end-line="377" selection-end-column="24" />
+          <folding>
+            <element signature="e#9230#9250#0" expanded="true" />
+            <element signature="e#9403#9423#0" expanded="true" />
+            <element signature="e#9576#9596#0" expanded="true" />
+            <element signature="e#9749#9769#0" expanded="true" />
+            <element signature="e#9922#9942#0" expanded="true" />
+            <element signature="e#10095#10115#0" expanded="true" />
+            <element signature="e#10268#10288#0" expanded="true" />
+            <element signature="e#10441#10461#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -42,7 +42,6 @@ public class ChiefRE extends JFrame {
 	private JTextField avgNum1;
 	private JTextField B_Num1;
 	private JTextField P_Num1;
-	private JTextField final_Num1;
 	private JTextField playername1;
 	private JTextField player_Num1;
 	private JTextField playername2;
@@ -55,7 +54,6 @@ public class ChiefRE extends JFrame {
 	private JTextField avgNum2;
 	private JTextField B_Num2;
 	private JTextField P_Num2;
-	private JTextField final_Num2;
 	private JTextField playername3;
 	private JTextField player_Num3;
 	private JTextField score3_1;
@@ -66,7 +64,6 @@ public class ChiefRE extends JFrame {
 	private JTextField avgNum3;
 	private JTextField B_Num3;
 	private JTextField P_Num3;
-	private JTextField final_Num3;
 	private JTextField playername4;
 	private JTextField player_Num4;
 	private JTextField score4_1;
@@ -77,7 +74,6 @@ public class ChiefRE extends JFrame {
 	private JTextField avgNum4;
 	private JTextField B_Num4;
 	private JTextField P_Num4;
-	private JTextField final_Num4;
 	private JTextField playername5;
 	private JTextField player_Num5;
 	private JTextField score5_1;
@@ -88,7 +84,6 @@ public class ChiefRE extends JFrame {
 	private JTextField avgNum5;
 	private JTextField B_Num5;
 	private JTextField P_Num5;
-	private JTextField final_Num5;
 	private JTextField playername6;
 	private JTextField player_Num6;
 	private JTextField score6_1;
@@ -99,7 +94,6 @@ public class ChiefRE extends JFrame {
 	private JTextField avgNum6;
 	private JTextField B_Num6;
 	private JTextField P_Num6;
-	private JTextField final_Num6;
 	private JTextField playername7;
 	private JTextField player_Num7;
 	private JTextField score7_1;
@@ -110,7 +104,6 @@ public class ChiefRE extends JFrame {
 	private JTextField avgNum7;
 	private JTextField B_Num7;
 	private JTextField P_Num7;
-	private JTextField final_Num7;
 	private JTextField playername8;
 	private JTextField player_Num8;
 	private JTextField score8_1;
@@ -121,7 +114,8 @@ public class ChiefRE extends JFrame {
 	private JTextField avgNum8;
 	private JTextField B_Num8;
 	private JTextField P_Num8;
-	private JTextField final_Num8;
+	int refereeNum = 0;
+	int athleteNum = 0;
 
 //socket Tool
 	private GroupJudge mChiefRE;
@@ -309,54 +303,79 @@ public class ChiefRE extends JFrame {
 					public void run() {
 						ArrayList<Triplet<String,Float,Float>> BPMarks=new ArrayList<>();
 						//TODO ；传入数据 每个成员<运动员编号 B分 P分>
-						Triplet<String,Float,Float> triplet1 = new Triplet<String,Float,Float>(player_Num1.getText(),Float.valueOf(B_Num1.getText()),Float.valueOf(P_Num1.getText()));
-						Triplet<String,Float,Float> triplet2 = new Triplet<String,Float,Float>(player_Num2.getText(),Float.valueOf(B_Num2.getText()),Float.valueOf(P_Num2.getText()));
-						Triplet<String,Float,Float> triplet3 = new Triplet<String,Float,Float>(player_Num3.getText(),Float.valueOf(B_Num3.getText()),Float.valueOf(P_Num3.getText()));
-						Triplet<String,Float,Float> triplet4 = new Triplet<String,Float,Float>(player_Num4.getText(),Float.valueOf(B_Num4.getText()),Float.valueOf(P_Num4.getText()));
-						Triplet<String,Float,Float> triplet5 = new Triplet<String,Float,Float>(player_Num5.getText(),Float.valueOf(B_Num5.getText()),Float.valueOf(P_Num5.getText()));
-						Triplet<String,Float,Float> triplet6 = new Triplet<String,Float,Float>(player_Num6.getText(),Float.valueOf(B_Num6.getText()),Float.valueOf(P_Num6.getText()));
-						Triplet<String,Float,Float> triplet7 = new Triplet<String,Float,Float>(player_Num7.getText(),Float.valueOf(B_Num7.getText()),Float.valueOf(P_Num7.getText()));
-						Triplet<String,Float,Float> triplet8 = new Triplet<String,Float,Float>(player_Num8.getText(),Float.valueOf(B_Num8.getText()),Float.valueOf(P_Num8.getText()));
-
-						BPMarks.add(triplet1);BPMarks.add(triplet2);BPMarks.add(triplet3);
-						BPMarks.add(triplet4);BPMarks.add(triplet5);BPMarks.add(triplet6);
-						BPMarks.add(triplet7);BPMarks.add(triplet8);
+						switch(athleteNum){
+							case 8:Triplet<String,Float,Float> triplet8 = new Triplet<String,Float,Float>(player_Num8.getText(),Float.valueOf(B_Num8.getText()),Float.valueOf(P_Num8.getText()));
+								BPMarks.add(8,triplet8);
+							case 7:Triplet<String,Float,Float> triplet7 = new Triplet<String,Float,Float>(player_Num7.getText(),Float.valueOf(B_Num7.getText()),Float.valueOf(P_Num7.getText()));
+								BPMarks.add(7,triplet7);
+							case 6:Triplet<String,Float,Float> triplet6 = new Triplet<String,Float,Float>(player_Num6.getText(),Float.valueOf(B_Num6.getText()),Float.valueOf(P_Num6.getText()));
+								BPMarks.add(6,triplet6);
+							case 5:Triplet<String,Float,Float> triplet5 = new Triplet<String,Float,Float>(player_Num5.getText(),Float.valueOf(B_Num5.getText()),Float.valueOf(P_Num5.getText()));
+								BPMarks.add(5,triplet5);
+							case 4:Triplet<String,Float,Float> triplet4 = new Triplet<String,Float,Float>(player_Num4.getText(),Float.valueOf(B_Num4.getText()),Float.valueOf(P_Num4.getText()));
+								BPMarks.add(4,triplet4);
+							case 3:Triplet<String,Float,Float> triplet3 = new Triplet<String,Float,Float>(player_Num3.getText(),Float.valueOf(B_Num3.getText()),Float.valueOf(P_Num3.getText()));
+								BPMarks.add(3,triplet3);
+							case 2:Triplet<String,Float,Float> triplet2 = new Triplet<String,Float,Float>(player_Num2.getText(),Float.valueOf(B_Num2.getText()),Float.valueOf(P_Num2.getText()));
+								BPMarks.add(2,triplet2);
+							case 1:Triplet<String,Float,Float> triplet1 = new Triplet<String,Float,Float>(player_Num1.getText(),Float.valueOf(B_Num1.getText()),Float.valueOf(P_Num1.getText()));
+								BPMarks.add(1,triplet1);
+								break;
+								default:System.out.println("default");break;
+						}
 
 						HashMap<String,ArrayList<Float>> marks=new HashMap<>();
 						//TODO:传入数据  key值为运动员编号  值为哥哥裁判对该运动员的打分
-						ArrayList<Float> all1 = new ArrayList<>();
-						all1.add(Float.valueOf(score1_1.getText()));all1.add(Float.valueOf(score1_2.getText()));all1.add(Float.valueOf(score1_3.getText()));
-						all1.add(Float.valueOf(score1_4.getText()));all1.add(Float.valueOf(score1_5.getText()));
-						marks.put(player_Num1.getText(),all1);
-						ArrayList<Float> all2 = new ArrayList<>();
-						all2.add(Float.valueOf(score2_1.getText()));all2.add(Float.valueOf(score2_2.getText()));all2.add(Float.valueOf(score2_3.getText()));
-						all2.add(Float.valueOf(score2_4.getText()));all2.add(Float.valueOf(score2_5.getText()));
-						marks.put(player_Num2.getText(),all2);
-						ArrayList<Float> all3 = new ArrayList<>();
-						all3.add(Float.valueOf(score3_1.getText()));all3.add(Float.valueOf(score3_2.getText()));all3.add(Float.valueOf(score3_3.getText()));
-						all3.add(Float.valueOf(score3_4.getText()));all3.add(Float.valueOf(score3_5.getText()));
-						marks.put(player_Num3.getText(),all3);
-						ArrayList<Float> all4 = new ArrayList<>();
-						all4.add(Float.valueOf(score4_1.getText()));all4.add(Float.valueOf(score4_2.getText()));all4.add(Float.valueOf(score4_3.getText()));
-						all4.add(Float.valueOf(score4_4.getText()));all4.add(Float.valueOf(score4_5.getText()));
-						marks.put(player_Num4.getText(),all4);
-						ArrayList<Float> all5 = new ArrayList<>();
-						all5.add(Float.valueOf(score5_1.getText()));all5.add(Float.valueOf(score5_2.getText()));all5.add(Float.valueOf(score5_3.getText()));
-						all5.add(Float.valueOf(score5_4.getText()));all5.add(Float.valueOf(score5_5.getText()));
-						marks.put(player_Num5.getText(),all5);
-						ArrayList<Float> all6 = new ArrayList<>();
-						all6.add(Float.valueOf(score6_1.getText()));all6.add(Float.valueOf(score6_2.getText()));all6.add(Float.valueOf(score6_3.getText()));
-						all6.add(Float.valueOf(score6_4.getText()));all6.add(Float.valueOf(score6_5.getText()));
-						marks.put(player_Num6.getText(),all6);
-						ArrayList<Float> all7 = new ArrayList<>();
-						all7.add(Float.valueOf(score7_1.getText()));all7.add(Float.valueOf(score7_2.getText()));all7.add(Float.valueOf(score7_3.getText()));
-						all7.add(Float.valueOf(score7_4.getText()));all7.add(Float.valueOf(score7_5.getText()));
-						marks.put(player_Num7.getText(),all7);
-						ArrayList<Float> all8 = new ArrayList<>();
-						all8.add(Float.valueOf(score8_1.getText()));all8.add(Float.valueOf(score8_2.getText()));all8.add(Float.valueOf(score8_3.getText()));
-						all8.add(Float.valueOf(score8_4.getText()));all8.add(Float.valueOf(score8_5.getText()));
-						marks.put(player_Num8.getText(),all8);
-
+						int count = 0;
+						if(count<refereeNum){
+							ArrayList<Float> all1 = new ArrayList<>();
+							all1.add(Float.valueOf(score1_1.getText()));all1.add(Float.valueOf(score1_2.getText()));all1.add(Float.valueOf(score1_3.getText()));
+							all1.add(Float.valueOf(score1_4.getText()));all1.add(Float.valueOf(score1_5.getText()));
+							marks.put(player_Num1.getText(),all1);
+						}count++;
+						if(count<refereeNum){
+							ArrayList<Float> all2 = new ArrayList<>();
+							all2.add(Float.valueOf(score2_1.getText()));all2.add(Float.valueOf(score2_2.getText()));all2.add(Float.valueOf(score2_3.getText()));
+							all2.add(Float.valueOf(score2_4.getText()));all2.add(Float.valueOf(score2_5.getText()));
+							marks.put(player_Num2.getText(),all2);
+						}count++;
+						if(count<refereeNum){
+							ArrayList<Float> all3 = new ArrayList<>();
+							all3.add(Float.valueOf(score3_1.getText()));all3.add(Float.valueOf(score3_2.getText()));all3.add(Float.valueOf(score3_3.getText()));
+							all3.add(Float.valueOf(score3_4.getText()));all3.add(Float.valueOf(score3_5.getText()));
+							marks.put(player_Num3.getText(),all3);
+						}count++;
+						if(count<refereeNum){
+							ArrayList<Float> all4 = new ArrayList<>();
+							all4.add(Float.valueOf(score4_1.getText()));all4.add(Float.valueOf(score4_2.getText()));all4.add(Float.valueOf(score4_3.getText()));
+							all4.add(Float.valueOf(score4_4.getText()));all4.add(Float.valueOf(score4_5.getText()));
+							marks.put(player_Num4.getText(),all4);
+						}count++;
+						if(count<refereeNum){
+							ArrayList<Float> all5 = new ArrayList<>();
+							all5.add(Float.valueOf(score5_1.getText()));all5.add(Float.valueOf(score5_2.getText()));all5.add(Float.valueOf(score5_3.getText()));
+							all5.add(Float.valueOf(score5_4.getText()));all5.add(Float.valueOf(score5_5.getText()));
+							marks.put(player_Num5.getText(),all5);
+						}count++;
+						if(count<refereeNum){
+							ArrayList<Float> all6 = new ArrayList<>();
+							all6.add(Float.valueOf(score6_1.getText()));all6.add(Float.valueOf(score6_2.getText()));all6.add(Float.valueOf(score6_3.getText()));
+							all6.add(Float.valueOf(score6_4.getText()));all6.add(Float.valueOf(score6_5.getText()));
+							marks.put(player_Num6.getText(),all6);
+						}count++;
+						if(count<refereeNum){
+							ArrayList<Float> all7 = new ArrayList<>();
+							all7.add(Float.valueOf(score7_1.getText()));all7.add(Float.valueOf(score7_2.getText()));all7.add(Float.valueOf(score7_3.getText()));
+							all7.add(Float.valueOf(score7_4.getText()));all7.add(Float.valueOf(score7_5.getText()));
+							marks.put(player_Num7.getText(),all7);
+						}count++;
+						if(count<refereeNum){
+							ArrayList<Float> all8 = new ArrayList<>();
+							all8.add(Float.valueOf(score8_1.getText()));all8.add(Float.valueOf(score8_2.getText()));all8.add(Float.valueOf(score8_3.getText()));
+							all8.add(Float.valueOf(score8_4.getText()));all8.add(Float.valueOf(score8_5.getText()));
+							marks.put(player_Num8.getText(),all8);
+						}
+						
 						mChiefRE.sendConform(BPMarks,marks);
 
 						//TODO:清空界面
@@ -430,6 +449,8 @@ public class ChiefRE extends JFrame {
 						//TODO:将打分写入到前端
 						ArrayList<ArrayList<Pair<String,Float>>> newmarks=mChiefRE.getMarkTables();
 						//数组成员： 数据对（运动员编号，分数）
+						refereeNum = newmarks.size();//裁判人数
+						athleteNum = newmarks.get(0).size();//运动员人数
 						write(newmarks);
 						ArrayList<String> judges=mChiefRE.getIDOfJudges();
 						//Judge的ID  序号与marks中的成绩单对应
@@ -932,6 +953,8 @@ public class ChiefRE extends JFrame {
 									//TODO:将打分写入到前端（与后面接受打分表相同，刷新整个打分表）
 									ArrayList<ArrayList<Pair<String,Float>>> marks=mChiefRE.getMarkTables();
 									//数组成员： 数据对（运动员编号，分数）
+									refereeNum = marks.size();//裁判人数
+									athleteNum = marks.get(0).size();//运动员人数
 									write(marks);
 									ArrayList<String> judges=mChiefRE.getIDOfJudges();
 									//Judge的ID  序号与marks中的成绩单对应
@@ -1010,6 +1033,8 @@ public class ChiefRE extends JFrame {
 				mChiefRE.getMarkTablesFromServer();
 				//TODO:将打分写入到前端
 				ArrayList<ArrayList<Pair<String,Float>>> marks=mChiefRE.getMarkTables();
+				refereeNum = marks.size();//裁判人数
+				athleteNum = marks.get(0).size();//运动员人数
 				write(marks);
 				//数组成员： 数据对（运动员编号，分数）
 				ArrayList<String> judges=mChiefRE.getIDOfJudges();
