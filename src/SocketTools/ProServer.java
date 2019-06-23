@@ -388,6 +388,7 @@ class TProHandle implements Runnable {
                             sum+=mark;
                         }
                         sum=sum/marks.size() +bpmark.getValue1()-bpmark.getValue2();
+
                         if(isFinal){
                             myConn.ModifyJScore(ProID,group,bpmark.getValue0(),sum);
                         }else {

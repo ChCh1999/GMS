@@ -495,36 +495,36 @@ public class ChiefRE extends JFrame {
 							jf2.setVisible(true);
 						}else{
 							int i = 0;
-							player_Num1.setText(aths.get(0).getKey());
-							playername1.setText(aths.get(0).getValue());
+							player_Num1.setText(aths.get(0).getValue());
+							playername1.setText(aths.get(0).getKey());
 							i++;
 							if(i < j){
-								player_Num2.setText(aths.get(1).getKey());
-								playername2.setText(aths.get(1).getValue());
+								player_Num2.setText(aths.get(1).getValue());
+								playername2.setText(aths.get(1).getKey());
 							}i++;
 							if(i < j){
-								player_Num3.setText(aths.get(2).getKey());
-								playername3.setText(aths.get(2).getValue());
+								player_Num3.setText(aths.get(2).getValue());
+								playername3.setText(aths.get(2).getKey());
 							}i++;
 							if(i < j){
-								player_Num4.setText(aths.get(3).getKey());
-								playername4.setText(aths.get(3).getValue());
+								player_Num4.setText(aths.get(3).getValue());
+								playername4.setText(aths.get(3).getKey());
 							}i++;
 							if(i < j){
-								player_Num5.setText(aths.get(4).getKey());
-								playername5.setText(aths.get(4).getValue());
+								player_Num5.setText(aths.get(4).getValue());
+								playername5.setText(aths.get(4).getKey());
 							}i++;
 							if(i < j){
-								player_Num6.setText(aths.get(5).getKey());
-								playername6.setText(aths.get(5).getValue());
+								player_Num6.setText(aths.get(5).getValue());
+								playername6.setText(aths.get(5).getKey());
 							}i++;
 							if(i < j){
-								player_Num7.setText(aths.get(6).getKey());
-								playername7.setText(aths.get(6).getValue());
+								player_Num7.setText(aths.get(6).getValue());
+								playername7.setText(aths.get(6).getKey());
 							}i++;
 							if(i < j){
-								player_Num8.setText(aths.get(7).getKey());
-								playername8.setText(aths.get(7).getValue());
+								player_Num8.setText(aths.get(7).getValue());
+								playername8.setText(aths.get(7).getKey());
 							}i++;
 						}
 
@@ -1082,36 +1082,36 @@ public class ChiefRE extends JFrame {
 				//TODO:将运动员编号写入到前端
 				int j = aths.size();
 				int i = 0;
-				player_Num1.setText(aths.get(0).getKey());
-				playername1.setText(aths.get(0).getValue());
+				player_Num1.setText(aths.get(0).getValue());
+				playername1.setText(aths.get(0).getKey());
 				i++;
 				if(i < j){
-					player_Num2.setText(aths.get(1).getKey());
-					playername2.setText(aths.get(1).getValue());
+					player_Num2.setText(aths.get(1).getValue());
+					playername2.setText(aths.get(1).getKey());
 				}i++;
 				if(i < j){
-					player_Num3.setText(aths.get(2).getKey());
-					playername3.setText(aths.get(2).getValue());
+					player_Num3.setText(aths.get(2).getValue());
+					playername3.setText(aths.get(2).getKey());
 				}i++;
 				if(i < j){
-					player_Num4.setText(aths.get(3).getKey());
-					playername4.setText(aths.get(3).getValue());
+					player_Num4.setText(aths.get(3).getValue());
+					playername4.setText(aths.get(3).getKey());
 				}i++;
 				if(i < j){
-					player_Num5.setText(aths.get(4).getKey());
-					playername5.setText(aths.get(4).getValue());
+					player_Num5.setText(aths.get(4).getValue());
+					playername5.setText(aths.get(4).getKey());
 				}i++;
 				if(i < j){
-					player_Num6.setText(aths.get(5).getKey());
-					playername6.setText(aths.get(5).getValue());
+					player_Num6.setText(aths.get(5).getValue());
+					playername6.setText(aths.get(5).getKey());
 				}i++;
 				if(i < j){
-					player_Num7.setText(aths.get(6).getKey());
-					playername7.setText(aths.get(6).getValue());
+					player_Num7.setText(aths.get(6).getValue());
+					playername7.setText(aths.get(6).getKey());
 				}i++;
 				if(i < j){
-					player_Num8.setText(aths.get(7).getKey());
-					playername8.setText(aths.get(7).getValue());
+					player_Num8.setText(aths.get(7).getValue());
+					playername8.setText(aths.get(7).getKey());
 				}i++;
 				mChiefRE.getMarkTablesFromServer();
 				//TODO:将打分写入到前端
