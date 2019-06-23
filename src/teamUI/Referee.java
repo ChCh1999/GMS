@@ -59,7 +59,8 @@ public class Referee extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//					Referee frame = new Referee("S1");
+					org.javatuples.Pair<Integer,Socket> res=ClientTool.login("51","123");
+					Referee frame = new Referee("51",res.getValue1());
 //					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -327,39 +328,40 @@ public class Referee extends JFrame {
 					jf.getContentPane().add(jb);
 				}
 				else{
-					if(mReferee.SendMarkTable(marktable)){
-						//TODO:清空页面中上一组的运动员信息√
-						P_name1.setText("");
-						P_name2.setText("");
-						P_name3.setText("");
-						P_name4.setText("");
-						P_name5.setText("");
-						P_name6.setText("");
-						P_name7.setText("");
-						P_name8.setText("");
-						P_number1.setText("");
-						P_number2.setText("");
-						P_number3.setText("");
-						P_number4.setText("");
-						P_number5.setText("");
-						P_number6.setText("");
-						P_number7.setText("");
-						P_number8.setText("");
-						P_score1.setText("");
-						P_score2.setText("");
-						P_score3.setText("");
-						P_score4.setText("");
-						P_score5.setText("");
-						P_score6.setText("");
-						P_score7.setText("");
-						P_score8.setText("");
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								getAths();//第一组运动员名单
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							if(mReferee.SendMarkTable(marktable)){
+								//TODO:清空页面中上一组的运动员信息√
+								P_name1.setText("");
+								P_name2.setText("");
+								P_name3.setText("");
+								P_name4.setText("");
+								P_name5.setText("");
+								P_name6.setText("");
+								P_name7.setText("");
+								P_name8.setText("");
+								P_number1.setText("");
+								P_number2.setText("");
+								P_number3.setText("");
+								P_number4.setText("");
+								P_number5.setText("");
+								P_number6.setText("");
+								P_number7.setText("");
+								P_number8.setText("");
+								P_score1.setText("");
+								P_score2.setText("");
+								P_score3.setText("");
+								P_score4.setText("");
+								P_score5.setText("");
+								P_score6.setText("");
+								P_score7.setText("");
+								P_score8.setText("");
 							}
-						}).start();
-					}
+							getAths();//第一组运动员名单
+						}
+					}).start();
+
 				}
 
 

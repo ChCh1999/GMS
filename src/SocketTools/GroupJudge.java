@@ -76,6 +76,7 @@ public class GroupJudge{
                            currentAths.add(new Pair<String, String>(Num, Name));
                        }
                    }
+                   br.readLine();
                    //获取完成
                    bw.write("GroupJudge\n");
                    bw.flush();
@@ -101,11 +102,13 @@ public class GroupJudge{
             IDOfJudges=new ArrayList<>();
             MarkTables=new ArrayList<>();
             try {
-                br.readLine();//Send Start
+                System.out.println( br.readLine()+"开始接收");
+//                br.readLine();//Send Start
                 while (!br.readLine().equals("FinishSendMarks")){
-                    br.readLine();//SendMarkTable
+//	                System.out.println(br.readLine());;//SendMarkTable
                     IDOfJudges.add(br.readLine());//IDOfJudge
                     bw.write("ready\n");
+                    System.out.println("ready");
                     bw.flush();
                     ArrayList<Pair<String,Float>>MarkTable=new ArrayList<>();
                     String Num;
@@ -129,7 +132,7 @@ public class GroupJudge{
                             HashMap<String,ArrayList<Float>> marks){//运动员编号、B分、P分   marks
         if(sendConfirm){
             try {
-                bw.write(Boolean.TRUE.toString());
+                bw.write(Boolean.TRUE.toString()+"\n");
                 for (Triplet<String,Float,Float> message:messages) {
                     bw.write(message.getValue0()+"\n");
                     bw.write(message.getValue1()+"\n");
