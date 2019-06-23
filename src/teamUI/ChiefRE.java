@@ -1047,101 +1047,101 @@ public class ChiefRE extends JFrame {
 		B_Num7.setText("");B_Num8.setText("");
 
 	}
-	private String avgsum (ArrayList<Pair<String,Float>> arrayList){
-		float sum = arrayList.get(0).getValue()+arrayList.get(1).getValue()+arrayList.get(2).getValue()
-				+arrayList.get(3).getValue()+arrayList.get(4).getValue();
-		String avgsum = Float.toString(sum/5);
+	private String avgsum (ArrayList<ArrayList<Pair<String,Float>>> arrayList,int i){
+		float sum = arrayList.get(0).get(i).getValue()+arrayList.get(1).get(i).getValue()+arrayList.get(2).get(i).getValue()
+				+arrayList.get(3).get(i).getValue()+arrayList.get(4).get(i).getValue();
+		String avgsum = Float.toString(sum/arrayList.size());
 		return avgsum;
 	}
 
 	private void write(ArrayList<ArrayList<Pair<String,Float>>> marks){
-		int j = marks.size();
+		int j = marks.get(0).size();
 		int i = 0;
 		if(i < j){
 			score1_1.setText(marks.get(0).get(0).getValue().toString());
-			score1_2.setText(marks.get(0).get(1).getValue().toString());
-			score1_3.setText(marks.get(0).get(2).getValue().toString());
-			score1_4.setText(marks.get(0).get(3).getValue().toString());
-			score1_5.setText(marks.get(0).get(4).getValue().toString());
-			avgNum1.setText(avgsum(marks.get(0)));
+			score1_2.setText(marks.get(1).get(0).getValue().toString());
+			score1_3.setText(marks.get(2).get(0).getValue().toString());
+			score1_4.setText(marks.get(3).get(0).getValue().toString());
+			score1_5.setText(marks.get(4).get(0).getValue().toString());
+			avgNum1.setText(avgsum(marks,i));
 		}i++;
-		if(i < j){
-			score2_1.setText(marks.get(1).get(0).getValue().toString());
+		if((i < j)){
+			score2_1.setText(marks.get(0).get(1).getValue().toString());
 			score2_2.setText(marks.get(1).get(1).getValue().toString());
-			score2_3.setText(marks.get(1).get(2).getValue().toString());
-			score2_4.setText(marks.get(1).get(3).getValue().toString());
-			score2_5.setText(marks.get(1).get(4).getValue().toString());
-			avgNum2.setText(avgsum(marks.get(1)));
+			score2_3.setText(marks.get(2).get(1).getValue().toString());
+			score2_4.setText(marks.get(3).get(1).getValue().toString());
+			score2_5.setText(marks.get(4).get(1).getValue().toString());
+			avgNum2.setText(avgsum(marks,i));
 		}else{
-			B_Num2.setText("/");
 			P_Num2.setText("/");
+			B_Num2.setText("/");
 		}i++;
-		if(i < j){
-			score3_1.setText(marks.get(2).get(0).getValue().toString());
-			score3_2.setText(marks.get(2).get(1).getValue().toString());
+		if((i < j)){
+			score3_1.setText(marks.get(0).get(2).getValue().toString());
+			score3_2.setText(marks.get(1).get(2).getValue().toString());
 			score3_3.setText(marks.get(2).get(2).getValue().toString());
-			score3_4.setText(marks.get(2).get(3).getValue().toString());
-			score3_5.setText(marks.get(2).get(4).getValue().toString());
-			avgNum3.setText(avgsum(marks.get(2)));
+			score3_4.setText(marks.get(3).get(2).getValue().toString());
+			score3_5.setText(marks.get(4).get(2).getValue().toString());
+			avgNum3.setText(avgsum(marks,i));
 		}else{
-			B_Num3.setText("/");
 			P_Num3.setText("/");
+			B_Num3.setText("/");
 		}i++;
-		if(i < j){
-			score4_1.setText(marks.get(3).get(0).getValue().toString());
-			score4_2.setText(marks.get(3).get(1).getValue().toString());
-			score4_3.setText(marks.get(3).get(2).getValue().toString());
+		if((i < j)){
+			score4_1.setText(marks.get(0).get(3).getValue().toString());
+			score4_2.setText(marks.get(1).get(3).getValue().toString());
+			score4_3.setText(marks.get(2).get(3).getValue().toString());
 			score4_4.setText(marks.get(3).get(3).getValue().toString());
-			score4_5.setText(marks.get(3).get(4).getValue().toString());
-			avgNum4.setText(avgsum(marks.get(3)));
+			score4_5.setText(marks.get(4).get(3).getValue().toString());
+			avgNum4.setText(avgsum(marks,i));
 		}else{
-			B_Num4.setText("/");
 			P_Num4.setText("/");
+			B_Num4.setText("/");
 		}i++;
-		if(i < j){
-			score5_1.setText(marks.get(4).get(0).getValue().toString());
-			score5_2.setText(marks.get(4).get(1).getValue().toString());
-			score5_3.setText(marks.get(4).get(2).getValue().toString());
-			score5_4.setText(marks.get(4).get(3).getValue().toString());
+		if((i < j)){
+			score5_1.setText(marks.get(0).get(4).getValue().toString());
+			score5_2.setText(marks.get(1).get(4).getValue().toString());
+			score5_3.setText(marks.get(2).get(4).getValue().toString());
+			score5_4.setText(marks.get(3).get(4).getValue().toString());
 			score5_5.setText(marks.get(4).get(4).getValue().toString());
-			avgNum5.setText(avgsum(marks.get(4)));
+			avgNum5.setText(avgsum(marks,i));
 		}else{
-			B_Num5.setText("/");
 			P_Num5.setText("/");
+			B_Num5.setText("/");
 		}i++;
-		if(i < j){
-			score6_1.setText(marks.get(5).get(0).getValue().toString());
-			score6_2.setText(marks.get(5).get(1).getValue().toString());
-			score6_3.setText(marks.get(5).get(2).getValue().toString());
-			score6_4.setText(marks.get(5).get(3).getValue().toString());
-			score6_5.setText(marks.get(5).get(4).getValue().toString());
-			avgNum6.setText(avgsum(marks.get(5)));
+		if((i < j)){
+			score6_1.setText(marks.get(0).get(5).getValue().toString());
+			score6_2.setText(marks.get(1).get(5).getValue().toString());
+			score6_3.setText(marks.get(2).get(5).getValue().toString());
+			score6_4.setText(marks.get(3).get(5).getValue().toString());
+			score6_5.setText(marks.get(4).get(5).getValue().toString());
+			avgNum6.setText(avgsum(marks,i));
 		}else{
-			B_Num6.setText("/");
 			P_Num6.setText("/");
+			B_Num6.setText("/");
 		}i++;
-		if(i < j){
-			score7_1.setText(marks.get(6).get(0).getValue().toString());
-			score7_2.setText(marks.get(6).get(1).getValue().toString());
-			score7_3.setText(marks.get(6).get(2).getValue().toString());
-			score7_4.setText(marks.get(6).get(3).getValue().toString());
-			score7_5.setText(marks.get(6).get(4).getValue().toString());
-			avgNum7.setText(avgsum(marks.get(6)));
+		if((i < j)){
+			score7_1.setText(marks.get(0).get(6).getValue().toString());
+			score7_2.setText(marks.get(1).get(6).getValue().toString());
+			score7_3.setText(marks.get(2).get(6).getValue().toString());
+			score7_4.setText(marks.get(3).get(6).getValue().toString());
+			score7_5.setText(marks.get(4).get(6).getValue().toString());
+			avgNum7.setText(avgsum(marks,i));
 		}else{
-			B_Num7.setText("/");
 			P_Num7.setText("/");
+			B_Num7.setText("/");
 		}i++;
-		if(i < j){
-			score8_1.setText(marks.get(7).get(0).getValue().toString());
-			score8_2.setText(marks.get(7).get(1).getValue().toString());
-			score8_3.setText(marks.get(7).get(2).getValue().toString());
-			score8_4.setText(marks.get(7).get(3).getValue().toString());
-			score8_5.setText(marks.get(7).get(4).getValue().toString());
-			avgNum8.setText(avgsum(marks.get(7)));
+		if((i < j)){
+			score8_1.setText(marks.get(0).get(7).getValue().toString());
+			score8_2.setText(marks.get(1).get(7).getValue().toString());
+			score8_3.setText(marks.get(2).get(7).getValue().toString());
+			score8_4.setText(marks.get(3).get(7).getValue().toString());
+			score8_5.setText(marks.get(4).get(7).getValue().toString());
+			avgNum8.setText(avgsum(marks,i));
 		}else{
-			B_Num8.setText("/");
 			P_Num8.setText("/");
-		}
+			B_Num8.setText("/");
+		}i++;
 	}
 }
 
