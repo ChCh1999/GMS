@@ -1,6 +1,9 @@
 package Data;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import org.javatuples.*;
 
 public class DataOperation {
@@ -417,8 +420,9 @@ public class DataOperation {
         for(int i=0;i<arrayList.size();i++){
             if(teamID.equals(arrayList.get(i).getValue0())){
                 judge=true;
-                team.setAt0(arrayList.get(i).getValue2());
-                team.setAt1(arrayList.get(i).getValue1());
+//                team.setAt0(arrayList.get(i).getValue2());
+//                team.setAt1(arrayList.get(i).getValue1());
+                team=new Pair<>(arrayList.get(i).getValue2(),arrayList.get(i).getValue1());
                 break;
             }
         }
@@ -770,6 +774,61 @@ public class DataOperation {
             return false;
         }
     }
+    //判断team人数是否达标
+    public boolean JudgeteamProjectCount3(String TID,String ProjectID,int groupid){
+        String sql="select count3 from project where PID='"+ProjectID+"'";
+        int Count3=0;
+        boolean judge=false;
+        //首先查Count3的人数
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                Count3=rst.getInt("Count3");
+            }
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+        }
+        ArrayList<Pair<String,Integer>> arrayList=SearchteamProjectCount3(ProjectID,groupid);
+        for(int i=0;i<arrayList.size();i++){
+            if(TID.equals(arrayList.get(i).getValue0())){
+                if(arrayList.get(i).getValue1()>=Count3){
+                    judge=true;
+                }
+            }else {
+                judge=false;
+            }
+        }
+        return judge;
+    }
+    //用projectid groupid 查询各个team的人数
+    public  ArrayList<Pair<String,Integer>> SearchteamProjectCount3(String ProjectID,int groupid){
+        //然后查成绩表里对应队伍的athlete成绩有没有那么多的人，成绩为0则不算入其中。
+        String sql2="select * from athlete,gradegroup where athlete.AID=gradegroup.AID  AND athlete.GroupID=gradegroup.GroupID AND PID='"+ProjectID+"' and gradegroup.GroupID="+groupid+"";
+        ArrayList<Pair<String,Integer>> arrayList_TID=new ArrayList<>();
+        String TID=null;
+        boolean judge_TID=false;
+        try{
+            rst=state.executeQuery(sql2);
+            while(rst.next()){
+                TID=rst.getString("TID");
+                for(int i=0;i<arrayList_TID.size();i++){
+                    if(TID.equals(arrayList_TID.get(i).getValue0())){
+                        judge_TID=true;
+                        arrayList_TID.get(i).setAt1(arrayList_TID.get(i).getValue1()+1);
+                        break;
+                    }
+                }
+                if(!judge_TID){
+                    arrayList_TID.add(new Pair<>(TID,1));
+                }
+            }
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+        }
+        return arrayList_TID;
+    }
     //查询所有的PID
     public ArrayList<String> SearchAllPID(){
         String sql="select PID from project";
@@ -1036,67 +1095,239 @@ public class DataOperation {
         }
     }
     //PID，groupID 查询团队的排名情况,分数的获得情况
+//    public ArrayList<Triplet<String,Float,Integer>> SearchTheTeamRank(String ProjectID,int groupid){
+//        String sql="select * from athlete,gradegroup where athlete.AID=gradegroup.AID  AND athlete.GroupID=gradegroup.GroupID AND PID='"+ProjectID+"' and gradegroup.GroupID="+groupid+"";
+//        String TID=null;
+//        float cscore=0f,jscore=0f,grade=0f;
+//        int Count3=0;
+//        //String为TID,Float为分数,int 为排名
+//        ArrayList<Triplet<String,Float,Integer>> al1=new ArrayList<>();
+//        try{
+//            rst=state.executeQuery(sql);
+//            //
+//            //先找到不同的TID的分组
+//            while(rst.next()){
+//                boolean judge=false;
+//                TID=rst.getString("TID");
+//                for(int i=0;i<al1.size();i++){
+//                    if(TID.equals(al1.get(i).getValue0())){
+//                        judge=true;
+//                        break;
+//                    }
+//                }
+//                if (!judge){
+//                    al1.add(new Triplet<>(TID,0f,0));
+//                }
+//            }
+//        }catch (SQLException e){
+//            System.out.println("视图队伍查询成绩错误");
+//            e.printStackTrace();
+//        }
+//
+//        //将不满足条件的TID移除
+//        for(int i=0;i<al1.size();i++){
+//            if(!JudgeteamProjectCount3(al1.get(i).getValue0(),ProjectID,groupid)){
+//                al1.remove(i);
+//            }
+//        }
+//
+//        //这个team的所有该项目运动员的成绩
+//        ArrayList<Pair<String,Float>> arrayList_athlete=new ArrayList<>();
+//        try{
+//            rst=state.executeQuery(sql);
+//            //先找到不同的TID的分组
+//            //把成绩添加进去,
+//            while(rst.next()){
+//                //暂时的成绩
+//                float score=0f;
+//                TID=rst.getString("TID");
+//                for(int i=0;i<al1.size();i++){
+//                    if(TID.equals(al1.get(i).getValue0())){
+//                        cscore=rst.getFloat("CScore");
+//                        jscore=rst.getFloat("JScore");
+//                        //选择成绩最好的那个赋值
+//                        if(cscore >= jscore){
+//                            score=cscore;
+//                        }else {
+//                            score=jscore;
+//                        }
+//                        arrayList_athlete.add(new Pair<>(TID,score));
+////                        grade=grade+score;
+////                        al1.remove(i);
+////                        al1.add(new Triplet<>(TID,grade,i+1));
+//                        break;
+//                    }
+//                }
+//            }
+//
+//        }catch (SQLException e){
+//            System.out.println("视图队伍查询成绩错误");
+//            e.printStackTrace();
+//        }
+//
+//        String sql3="select Count3 from project where  PID='"+ProjectID+"'";
+//        try{
+//            rst=state.executeQuery(sql3);
+//            while(rst.next()){
+//                Count3=rst.getInt("Count3");
+//            }
+//        }catch (SQLException e){
+//            System.out.println("视图队伍查询成绩错误");
+//            e.printStackTrace();
+//        }
+//        //TID   ,成绩数组
+//        ArrayList<Pair<String,ArrayList<Float>>> arrayList4=new ArrayList<>();
+//        boolean judge=false;
+//        for(int i=0;i<arrayList_athlete.size();i++){
+//            for(int j=0;j<arrayList4.size();j++){
+//                if(arrayList_athlete.get(i).equals(arrayList4)){
+//                    arrayList4.get(j).getValue1().add(arrayList_athlete.get(i).getValue1());
+//                    judge=true;
+//                    break;
+//                }
+//            }
+//            if(judge){
+//                judge=false;
+//            }else {
+//                ArrayList<Float> newone=new ArrayList<>();
+//                newone.add(arrayList_athlete.get(i).getValue1());
+//                arrayList4.add(new Pair<>(arrayList_athlete.get(i).getValue0(),newone));
+//            }
+//        }
+//        //成绩前Count3排序
+//        arrayList_athlete.removeAll(arrayList_athlete);
+//        for(int i=0;i<arrayList4.size();i++){
+////            for(int j=0;j<arrayList_athlete.size()-1;j++){
+////                if(arrayList_athlete.get(j).getValue1()<=arrayList_athlete.get(j+1).getValue1()){
+////                    arrayList_athlete.add(j,new Pair<>(arrayList_athlete.get(j+1).getValue0(),arrayList_athlete.get(j+1).getValue1()));
+////                    arrayList_athlete.add(j+1,new Pair<>(arrayList_athlete.get(j).getValue0(),arrayList_athlete.get(j).getValue1()));
+////                    arrayList_athlete.remove(j+2);
+////                    arrayList_athlete.remove(j+3);
+////                }
+////            }
+//            for(int j=0;j<arrayList4.get(i).getValue1().size();j++){
+//                for(int k=0;k<arrayList4.get(i).getValue1().size()-1;k++){
+//                    if(arrayList4.get(i).getValue1().get(k)<=arrayList4.get(i).getValue1().get(k+1)){
+//                        arrayList4.get(i).getValue1().add(k,arrayList4.get(i).getValue1().get(k+1));
+//                        arrayList4.get(i).getValue1().add(k+1,arrayList4.get(i).getValue1().get(k));
+//                        arrayList4.get(i).getValue1().remove(k+2);
+//                        arrayList4.get(i).getValue1().remove(k+3);
+//                    }
+//                }
+//            }
+//            float sum=0f;
+//            for(int g=0;g<Count3;g++){
+//                sum=sum+arrayList4.get(i).getValue1().get(g);
+//            }
+//            arrayList_athlete.add(new Pair<>(TID,sum));
+//
+//        }
+//
+//
+//        //排序的函数
+//        for(int i=0;i<arrayList_athlete.size();i++){
+//            for(int j=0;j<arrayList_athlete.size()-1;j++){
+//                if(arrayList_athlete.get(j).getValue1()<=arrayList_athlete.get(j+1).getValue1()){
+//                    arrayList_athlete.add(j,new Pair<>(arrayList_athlete.get(j+1).getValue0(),arrayList_athlete.get(j+1).getValue1()));
+//                    arrayList_athlete.add(j+1,new Pair<>(arrayList_athlete.get(j).getValue0(),arrayList_athlete.get(j).getValue1()));
+//                    arrayList_athlete.remove(j+2);
+//                    arrayList_athlete.remove(j+3);
+//                }
+//            }
+//        }
+//        for(int i=0;i<arrayList_athlete.size();i++){
+//            al1.add(i,new Triplet<String,Float, Integer>(arrayList_athlete.get(i).getValue0(),arrayList_athlete.get(i).getValue1(),i+1));
+//        }
+//        return al1;
+//    }
+    //PID，groupID 查询团队的排名情况,分数的获得情况
     public ArrayList<Triplet<String,Float,Integer>> SearchTheTeamRank(String ProjectID,int groupid){
         String sql="select * from athlete,gradegroup where athlete.AID=gradegroup.AID  AND athlete.GroupID=gradegroup.GroupID AND PID='"+ProjectID+"' and gradegroup.GroupID="+groupid+"";
-        String TID=null;
+        String sql3="select Count3 from project where  PID='"+ProjectID+"'";
         float cscore=0f,jscore=0f,grade=0f;
+        int Count3=0;
         //String为TID,Float为分数,int 为排名
         ArrayList<Triplet<String,Float,Integer>> al1=new ArrayList<>();
+        HashMap<String,ArrayList<Float>>marks=new HashMap<>();
         try{
+            rst=state.executeQuery(sql3);
+            while(rst.next()){
+                Count3=rst.getInt("Count3");
+            }
             rst=state.executeQuery(sql);
+            //
             //先找到不同的TID的分组
             while(rst.next()){
                 boolean judge=false;
-                TID=rst.getString("TID");
-                for(int i=0;i<al1.size();i++){
-                    if(TID.equals(al1.get(i).getValue0())){
-                        judge=true;
-                        break;
-                    }
+                String TID=rst.getString("TID");
+                Float CScore=rst.getFloat("CScore");
+                Float JScore=rst.getFloat("JScore");
+                if(!marks.keySet().contains(TID)){
+                    marks.put(TID,new ArrayList<>());
+
                 }
-                if (!judge){
-                    al1.add(new Triplet<>(TID,0f,0));
-                }
+                if(CScore>=JScore){
+                    marks.get(TID).add(CScore);
+                }else
+                    marks.get(TID).add(JScore);
+
             }
-            //把成绩添加进去
-            while(rst.next()){
-                //暂时的成绩
-                float score=0f;
-                TID=rst.getString("TID");
-                for(int i=0;i<al1.size();i++){
-                    if(TID.equals(al1.get(i).getValue0())){
-                        cscore=rst.getFloat("CScore");
-                        jscore=rst.getFloat("JScore");
-                        //选择成绩最好的那个赋值
-                        if(cscore >= jscore){
-                            score=cscore;
-                        }else {
-                            score=jscore;
-                        }
-                        grade=grade+score;
-                        al1.remove(i);
-                        al1.add(new Triplet<>(TID,grade,i));
-                        break;
-                    }
-                }
-            }
-            //排序的函数
-            for(int i=0;i<al1.size();i++){
-                for(int j=0;j<al1.size()-1;j++){
-                    if(al1.get(j).getValue1()<=al1.get(j+1).getValue1()){
-                        al1.add(j,new Triplet<>(al1.get(j+1).getValue0(),al1.get(j+1).getValue1(),j));
-                        al1.add(j+1,new Triplet<>(al1.get(j).getValue0(),al1.get(j).getValue1(),j+1));
-                        al1.remove(j+2);
-                        al1.remove(j+3);
-                    }
-                }
-            }
-            return al1;
         }catch (SQLException e){
             System.out.println("视图队伍查询成绩错误");
             e.printStackTrace();
-            return null;
         }
-    }
 
+        for(String TID:marks.keySet()){
+            Triplet<String,Float,Integer> res;
+            ArrayList<Float> mark=marks.get(TID);
+            if (mark.size()>=Count3){
+                Float sum=0f;
+
+                for(;mark.size()>Count3;){
+                    float min=mark.get(0);
+                    int index=0;
+                    for(float a:mark){
+                        if(a<=min){
+                            min=a;
+                            index=mark.indexOf(a);
+                        }
+                    }
+                    mark.remove(index);
+                }
+                for(float a:mark)
+                    sum+=a;
+                res=new Triplet<>(TID,sum,0);
+            }else {
+                res=new Triplet<>(TID,0f,0);
+            }
+            al1.add(res);
+        }
+
+       if(!al1.isEmpty()){
+           //冒泡
+           for(int i=0;i<al1.size();i++){
+               for(int j=0;j<al1.size()-1;j++){
+                   if(al1.get(j).getValue1()<=al1.get(j+1).getValue1()){
+                       //交换
+                       Triplet temp=al1.get(j);
+                       al1.set(j,al1.get(j+1));
+                       al1.set(j+1,temp);
+                   }
+               }
+           }
+           //排序
+           int rank=1;
+           Triplet<String,Float,Integer> temp=al1.get(0);
+           Triplet<String,Float,Integer> newone=new Triplet<>(temp.getValue0(),temp.getValue1(),rank);
+           al1.set(0,newone);
+           for(int i=1;i<al1.size();i++){
+               if(al1.get(i).getValue1()<al1.get(i-1).getValue1()){
+                   rank++;
+               }
+               Triplet<String,Float,Integer> itemp=al1.get(i);
+               al1.set(i,new Triplet<>(itemp.getValue0(),itemp.getValue1(),rank));
+           }
+       }
+        return al1;
+    }
 }

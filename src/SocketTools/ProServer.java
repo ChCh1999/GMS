@@ -134,7 +134,7 @@ class TProMaster implements Runnable {
 //            System.out.println(br.readLine());
             } else {
                 System.out.println("Wrong");
-                MessageToClient.write("WrongRequest");
+                MessageToClient.write("WrongRequest\n");
             }
         }
 
@@ -306,6 +306,8 @@ class TProHandle implements Runnable {
             }
 
             bw.write("Send Start\n");
+            bw.flush();
+	        System.out.println("开始转发打分");
             for (TSendAthletesMessage mark : ListOfJudges) {
 //                for (Pair<String, Float>  markpair : mark.MarkTable
 //                     ) {
@@ -314,6 +316,7 @@ class TProHandle implements Runnable {
                 SendMarkTable(Group, mark);
             }
             bw.write("FinishSendMarks\n");
+	        System.out.println("完成转发打分");
             bw.flush();
 
             String feedback = br.readLine();//小组裁判的确认
@@ -419,6 +422,7 @@ class TProHandle implements Runnable {
                 tSender.start();
                 tSender.join();
                 bw.write("Send Start\n");
+//                bw.flush();
                 SendMarkTable(groupJudge,target);
                 bw.write("FinishSendMarks\n");
                 bw.flush();
@@ -454,14 +458,14 @@ class TProHandle implements Runnable {
         bw.write("SendMarkTable\n");
         bw.write(message.IDOfJudge+"\n");
         bw.flush();
-        String feedback;
-        while (!(feedback=br.readLine()).equals("ready")) ;//等待直到ready
+        String feedback=br.readLine();
+//        while (!(feedback=br.readLine()).equals("ready")) ;//等待直到ready
         for (Pair<String, Float> mark : message.MarkTable     //Pair<AthNum,Mark>
                 ) {
             bw.write(mark.getValue0().toString() + "\n");
             bw.write(mark.getValue1().toString() + "\n");
         }
-        bw.write("Done+\n");
+        bw.write("Done\n");
         bw.flush();
 //        bw.close();
 //        br.close();
@@ -495,7 +499,7 @@ class TSendAthletesMessage implements Runnable {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
         int size = Aths.size();
         if (size == 0) {
-            bw.write("Over");
+            bw.write("Over\n");
             return;
         }
         bw.write(Aths.size() + "\n");
@@ -507,17 +511,20 @@ class TSendAthletesMessage implements Runnable {
                 bw.write(Ath.getValue0() + "\n");
                 bw.write(Ath.getValue1() + "\n");
             }
-            bw.write("Finished");
+            bw.write("Finished\n");
             bw.flush();
-            if (br.readLine().equals("GroupJudge")) {
+            String temp;
+            if ((temp=br.readLine()).equals("GroupJudge")) {
+	            System.out.println("至小组裁判发送完成");
                 return;//目标是小组裁判时结束
             } else {
-                //TODO:获取分数
+                //获取分数
+	            System.out.println("等待"+IDOfJudge+"打分");
                 IDOfJudge=br.readLine();//等待客户端反馈命令
                 String command;
                 String AthNum;
                 float Marks;
-                while ((command = br.readLine()) != "Finished") {
+                while (!(command = br.readLine()) .equals("Finished")) {
                     AthNum = command;
                     Marks = Float.parseFloat(br.readLine());
                     MarkTable.add(new Pair(AthNum, Marks));
@@ -712,8 +719,13 @@ class THandle implements Runnable {
 
                 case "Search team by pro info":
                     String pName=br.readLine();
+                    proID=dbo.SearchPID(pName);
                     group=Integer.parseInt(br.readLine());
-                    tRes=dbo.SearchTeamAll(pName);
+                    ArrayList<Triplet<String,Float,Integer>> resTemp=dbo.SearchTheTeamRank(proID,group);
+	                tRes=new ArrayList<>();
+                    for(Triplet<String,Float,Integer> t:resTemp){
+                    	tRes.add(new Quintet<>(dbo.SearchTName(t.getValue0()),pName,group,t.getValue1(),t.getValue2()));
+                    }
                     for (Quintet m:tRes){
                         bw.write(m.getValue0()+"\n");
                         bw.write(m.getValue1()+"\n");

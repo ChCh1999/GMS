@@ -57,7 +57,8 @@ public class Judge {
                 System.out.println("等待运动员信息");
 //                while (connection==null);//等待连接成功
                 String message=br.readLine();
-                if(message.equals("over")){
+                System.out.println(message);
+                if(message.equals("Over")){
                     return Aths;
                 }
                 int amount=Integer.parseInt(message);
@@ -73,6 +74,7 @@ public class Judge {
                         Aths.add(new Pair<String,String>(Num,Name));
                     }
                 }
+                br.readLine();
                 bw.write("Judge\n");
                 bw.flush();
                 //获取完成
@@ -88,12 +90,12 @@ public class Judge {
     public boolean SendMarkTable(ArrayList<Pair<String,Float>> marktable ){
         if(logined&&sendmark){
             try {
-                bw.write(ID);
+                bw.write(ID+"\n");
                 for(Pair<String,Float> a:marktable){
-                    bw.write(a.getKey()+'\n');
-                    bw.write(a.getValue().toString()+'\n');
+                    bw.write(a.getKey()+"\n");
+                    bw.write(a.getValue().toString()+"\n");
                 }
-                bw.write("Finished");
+                bw.write("Finished\n");
                 bw.flush();
                 sendmark=false;
                 return true;
@@ -116,7 +118,7 @@ public class Judge {
         }else {
             try {
                 bw.write("Exit\n");
-                bw.write(ID);
+                bw.write(ID+"\n");
                 bw.flush();
                 return true;
             }catch (IOException ioe){

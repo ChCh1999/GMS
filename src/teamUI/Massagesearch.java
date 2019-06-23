@@ -261,12 +261,12 @@ public class Massagesearch extends JFrame {
 		tqueryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//TODO:更新队伍下拉框内容
-				//更新队伍数据
-				String[] str = new String[Teams.keySet().size()] ;
-				Teams.keySet().toArray(str);
-				teamNumBox.setModel(new DefaultComboBoxModel(str));
-				teamNumBox.updateUI();
+//				//更新队伍数据
+//				String[] str = new String[Teams.keySet().size()+1] ;
+//				Teams.keySet().toArray(str);
+//				string[Teams.keySet().size()]="全部";
+//				teamNumBox.setModel(new DefaultComboBoxModel(str));
+//				teamNumBox.updateUI();
 				//结果 Quartet<团队名，比赛项目，年龄组，团队成绩，团队排名>
 				ArrayList <Quintet<String,String,Integer,Float,Integer>> res=new ArrayList<>();
 				String teamKey = (String)teamNumBox.getSelectedItem();
@@ -287,7 +287,6 @@ public class Massagesearch extends JFrame {
 					if(!proName.equals("全部")){
 						for (Quintet m:res) {
 							if(!m.getValue1().equals(proName))
-								res.remove(m);
 								todelete.add(m);
 //								res.remove(m);
 						}
@@ -295,7 +294,6 @@ public class Massagesearch extends JFrame {
 					if(group!=0){
 						for (Quintet m:res) {
 							if(!m.getValue2().equals(group))
-								res.remove(m);
 								todelete.add(m);
 						}
 					}

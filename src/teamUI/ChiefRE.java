@@ -135,8 +135,8 @@ public class ChiefRE extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-//					ChiefRE frame = new ChiefRE("ch1");
-//					frame.setVisible(true);
+					org.javatuples.Pair<Integer,Socket> res=ClientTool.login("54","123");
+					ChiefRE frame = new ChiefRE("54",res.getValue1());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
