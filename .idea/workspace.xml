@@ -10,41 +10,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/teamUI/ChiefRE.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="441" column="44" selection-start-line="441" selection-start-column="44" selection-end-line="441" selection-end-column="44" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/teamUI/Massagesearch.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3192">
-              <caret line="189" column="51" selection-start-line="189" selection-start-column="51" selection-end-line="189" selection-end-column="51" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/teamUI/Referee.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7410">
-              <caret line="411" column="19" selection-start-line="411" selection-start-column="19" selection-end-line="411" selection-end-column="19" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <replaceStrings>
@@ -83,7 +49,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-221" />
     <option name="width" value="1286" />
     <option name="height" value="788" />
@@ -93,6 +59,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -128,7 +95,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -293,18 +259,18 @@
       <workItem from="1561185447414" duration="1048000" />
       <workItem from="1561258319376" duration="6822000" />
       <workItem from="1561275215162" duration="10635000" />
-      <workItem from="1561287388925" duration="288000" />
+      <workItem from="1561287388925" duration="329000" />
+      <workItem from="1561297328680" duration="103000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62386000" />
+    <option name="totallyTimeSpent" value="62530000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28971255" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29425114" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -324,7 +290,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50075644" side_tool="true" weight="0.32903227" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49924356" weight="0.32903227" />
+      <window_info active="true" anchor="bottom" id="Messages" order="12" sideWeight="0.49924356" visible="true" weight="0.3276923" />
       <window_info anchor="bottom" id="调试" order="13" weight="0.32903227" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -464,16 +430,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/teamUI/Login.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/teamUI/MainRefe.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4693">
@@ -589,6 +545,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/teamUI/Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/teamUI/ChiefRE.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
@@ -598,7 +561,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/teamUI/Massagesearch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3192">
+        <state relative-caret-position="349">
           <caret line="189" column="51" selection-start-line="189" selection-start-column="51" selection-end-line="189" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -608,7 +571,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/teamUI/Referee.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7410">
+        <state relative-caret-position="349">
           <caret line="411" column="19" selection-start-line="411" selection-start-column="19" selection-end-line="411" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />

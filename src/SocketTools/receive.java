@@ -34,6 +34,8 @@ class TsubHandle implements  Runnable{
     public void run() {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(Sub.getInputStream()));
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(Sub.getOutputStream()));
+
             String func = br.readLine();
             System.out.println(func);
             if(func.equals("tosubteam")){
@@ -42,14 +44,13 @@ class TsubHandle implements  Runnable{
                 TID=br.readLine();
                 TPassword = br.readLine();
                 TDoc = br.readLine();
+                br.close();
                 DataOperation con = new DataOperation();
                 con.InsertData(Tname,TID,TPassword,TDoc);
-                while(br.readLine().equals("end")){
-                    br.close();
-                }
             }
             else if (func.equals("tosubath")){
-                String Aname,ID,sex,TID;
+                String Aname,ID,sex,TID,PID;
+                String [] pid= new String[9];
                 int Age,GroupID,Grade;
                 Aname=br.readLine();
                 ID=br.readLine();
@@ -58,24 +59,27 @@ class TsubHandle implements  Runnable{
                 Grade=Integer.parseInt(br.readLine());
                 sex=br.readLine();
                 TID=br.readLine();
+                for(int i =0; i<9; i++){
+                    pid[i]=br.readLine();
+                }
                 if(sex.equals("men")){
-                    AID=Integer.toString(AIDmen );
+                    AID=Integer.toString(AIDmen);
                     aaa.AID=AIDmen;
                    aaa.AIDmen+=2;
-
                 }
                 else if(sex.equals("women")){
-                    AID = Integer.toString(AIDwomen );
+                    AID = Integer.toString(AIDwomen);
                     aaa.AID=AIDwomen;
                     aaa.AIDwomen+=2;
                 }
-
                 DataOperation con1 = new DataOperation();
                 con1.InsertData(Aname,ID,Age,GroupID,Grade,AID,TID);
-                while(br.readLine().equals("end")){
-                    br.close();
+                for(int i =0;i<9;i++){
+                    if(Integer.parseInt(pid[i])>0){
+                        con1.InsertData(pid[i],AID,GroupID);
+                    }
                 }
-
+                br.close();
             }
             else if(func.equals("tosubstuff")){
                 String Sname, ID, TEL,SID;
@@ -87,21 +91,7 @@ class TsubHandle implements  Runnable{
                 Stype = Integer.parseInt(br.readLine());
                 DataOperation con1 = new DataOperation();
                 con1.InsertData(SID, Sname, ID, TEL, Stype);
-
-                while (br.readLine().equals("end")) {
-                    br.close();
-                }
-            }
-            else if(func.equals("tosubgrade")){
-                String PID;
-                int GroupID;
-                PID=br.readLine();
-                GroupID = Integer.parseInt(br.readLine());
-                DataOperation con1 = new DataOperation();
-                con1.InsertData(PID,AID,GroupID);
-                while (br.readLine().equals("end")) {
-                    br.close();
-                }
+                br.close();
             }
             else {
                 System.out.println("error...");
@@ -109,6 +99,7 @@ class TsubHandle implements  Runnable{
             }
         } catch (IOException ioe) {
             System.out.println(ioe);
+            System.out.println("BAOZUO");
         }
         System.out.println("录入结束");
     }

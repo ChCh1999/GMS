@@ -298,72 +298,37 @@ public class Apply extends JFrame {
         btnNewButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent arg0) {
-                Tname=tnameText.getText();
-                leadname=leadername.getText();
-                leadid=leaderID.getText();
-                leadtel=leaderPhNum.getText();
-                leadsid=leaderSID.getText();
+                Tname = tnameText.getText();
+                leadname = leadername.getText();
+                leadid = leaderID.getText();
+                leadtel = leaderPhNum.getText();
+                leadsid = leaderSID.getText();
                 doctorname = Dname.getText();
-                doctorid=DID.getText();
-                doctortel=DPhNum.getText();
-                doctorsid=DrSID.getText();
-                trainname=trainername.getText();
-                trainid=trainerID.getText();
-                traintel=trainerPhNum.getText();
-                trainsid=trainerSID.getText();
-                judgename=refename.getText();
-                judgeid=refeID.getText();
+                doctorid = DID.getText();
+                doctortel = DPhNum.getText();
+                doctorsid = DrSID.getText();
+                trainname = trainername.getText();
+                trainid = trainerID.getText();
+                traintel = trainerPhNum.getText();
+                trainsid = trainerSID.getText();
+                judgename = refename.getText();
+                judgeid = refeID.getText();
                 judgetel = refePhNum.getText();
-                judgesid= refeSID.getText();
-                TID= teamnumber.getText();
-                data aaa=new data();
-                aaa.AIDmen=Integer.parseInt(TID)*50;
-                aaa.AIDwomen=Integer.parseInt(TID)*50;
-                for(int i=0;i<6;i++){error[i]=" ";}
-                if(conn.JudgeTID(TID)){error[0]="代表队账号";};
-                if(conn.JudgeSID(leadsid)){error[1]="领队职工号";};
-                if(conn.JudgeSID(doctorsid)){error[2]="队医职工号";};
-                if(conn.JudgeSID(trainsid)){error[3]="教练职工号";};
-                if(conn.JudgeSID(judgesid)){error[4]="裁判职工号";};
-                int flag=0;
-                for(int j=0;j<5;j++){
-                    if(error[j]!=" "){
-                        flag=1;
-                        break;
-                    }
-                }
-                if(leadsid.equals(doctorsid)||leadsid.equals(trainsid)||leadsid.equals(judgesid)
-                        ||doctorsid.equals(trainsid)||doctorsid.equals(judgesid)||trainsid.equals(judgesid)){
-                    error[5]="职工号命名重复";
-                    flag=1;
-                }
+                judgesid = refeSID.getText();
+                TID = teamnumber.getText();
 
-                String it =comboBox.getSelectedItem().toString();
-                if(it.equals("男子单杠")){PID="1";}
-                if(it.equals("男子双杠")){PID="2";}
-                if(it.equals("男子吊环")){PID="3";}
-                if(it.equals("男子跳马")){PID="4";}
-                if(it.equals("男子自由体操")){PID="5";}
-                if(it.equals("男子鞍马")){PID="6";}
-                if(it.equals("男子蹦床")){PID="7";}
-                if(it.equals("男子高低杠")){PID="8";}
-                if(it.equals("男子平衡木")){PID="9";}
-                if(it.equals("无")){PID="10";}
-                if(it.equals("女子跳马")){PID="14";}
-                if(it.equals("女子高低杠")){PID="18";}
-                if(it.equals("女子平衡木")){PID="19";}
-                if(it.equals("女子自由体操")){PID="15";}
-                if(it.equals("女子蹦床")){PID="17";}
-
-                if(flag==1) {
-                    JFrame jf=new JFrame();
-                    jf.setTitle("录入数据已经存在！！！");
+                if (TID.equals("")||Tname.equals("")||TDoc.equals("")
+                        ||leadname.equals("")|| leadid.equals("")||leadsid.equals("")||leadtel.equals("")
+                        ||doctorname.equals("")||doctorid.equals("")||doctortel.equals("")||doctorsid.equals("")
+                        ||trainname.equals("")||trainid.equals("")||traintel.equals("")||trainsid.equals("")
+                        ||judgename.equals("")||judgeid.equals("")||judgetel.equals("")||judgesid.equals("")) {
+                    JFrame jf = new JFrame();
+                    jf.setTitle("录入数据异常");
                     jf.setBounds(400, 250, 450, 300);
                     jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     jf.getContentPane().setLayout(null);
 
-                    JLabel jl = new JLabel(error[0]+error[1]+error[2]
-                            +error[3]+error[4]+error[5]);
+                    JLabel jl = new JLabel("输入数据不能为空");
                     jl.setFont(new Font("宋体", Font.PLAIN, 18));
                     jl.setBounds(170, 100, 200, 30);
                     jf.getContentPane().add(jl);
@@ -380,25 +345,136 @@ public class Apply extends JFrame {
                     });
                     jf.getContentPane().add(jb);
                 }
-                else{
-                    entering enter = new entering();
-                    enter.subteam(Tname,TID,TPassword,TDoc);
-                    enter.substuff(leadsid,leadname,leadid,leadtel,4);
-                    enter.substuff(doctorsid,doctorname,doctorid,doctortel,5);
-                    enter.substuff(trainsid,trainname,trainid,traintel,6);
-                    enter.substuff(judgesid,judgename,judgeid,judgetel,1);
-                    System.out.println();
-                    INathlete inathlete =new INathlete(TID);
+                else {
+                    data aaa = new data();
+                    aaa.AIDmen = Integer.parseInt(TID) * 50;
+                    aaa.AIDwomen = Integer.parseInt(TID) * 50 + 1;
+                    for (int i = 0; i < 6; i++) {
+                        error[i] = " ";
+                    }
+                    if (conn.JudgeTID(TID)) {
+                        error[0] = "代表队账号";
+                    }
+
+                    //判断职工号是否已经存在
+                    if (conn.JudgeSID(leadsid)) {
+                        error[1] = "领队职工号";
+                    }
+                    if (conn.JudgeSID(doctorsid)) {
+                        error[2] = "队医职工号";
+                    }
+                    if (conn.JudgeSID(trainsid)) {
+                        error[3] = "教练职工号";
+                    }
+                    if (conn.JudgeSID(judgesid)) {
+                        error[4] = "裁判职工号";
+                    }
+                    int flag = 0;
+                    for (int j = 0; j < 5; j++) {
+                        if (error[j] != " ") {
+                            flag = 1;
+                            break;
+                        }
+                    }
+
+                    //判断职工号是否输入重复
+                    if (leadsid.equals(doctorsid) || leadsid.equals(trainsid) || leadsid.equals(judgesid)
+                            || doctorsid.equals(trainsid) || doctorsid.equals(judgesid) || trainsid.equals(judgesid)) {
+                        error[5] = "职工号命名重复";
+                        flag = 1;
+                    }
+                    //得到下拉框返回值
+                    String it = comboBox.getSelectedItem().toString();
+                    if (it.equals("男子单杠")) {
+                        PID = "1";
+                    }
+                    if (it.equals("男子双杠")) {
+                        PID = "2";
+                    }
+                    if (it.equals("男子吊环")) {
+                        PID = "3";
+                    }
+                    if (it.equals("男子跳马")) {
+                        PID = "4";
+                    }
+                    if (it.equals("男子自由体操")) {
+                        PID = "5";
+                    }
+                    if (it.equals("男子鞍马")) {
+                        PID = "6";
+                    }
+                    if (it.equals("男子蹦床")) {
+                        PID = "7";
+                    }
+                    if (it.equals("男子高低杠")) {
+                        PID = "8";
+                    }
+                    if (it.equals("男子平衡木")) {
+                        PID = "9";
+                    }
+                    if (it.equals("无")) {
+                        PID = "10";
+                    }
+                    if (it.equals("女子跳马")) {
+                        PID = "14";
+                    }
+                    if (it.equals("女子高低杠")) {
+                        PID = "18";
+                    }
+                    if (it.equals("女子平衡木")) {
+                        PID = "19";
+                    }
+                    if (it.equals("女子自由体操")) {
+                        PID = "15";
+                    }
+                    if (it.equals("女子蹦床")) {
+                        PID = "17";
+                    }
+
+                    //异常提醒
+                    if (flag == 1) {
+                        JFrame jf = new JFrame();
+                        jf.setTitle("录入数据已经存在！！！");
+                        jf.setBounds(400, 250, 450, 300);
+                        jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                        jf.getContentPane().setLayout(null);
+
+                        JLabel jl = new JLabel(error[0] + error[1] + error[2]
+                                + error[3] + error[4] + error[5]);
+                        jl.setFont(new Font("宋体", Font.PLAIN, 18));
+                        jl.setBounds(170, 100, 200, 30);
+                        jf.getContentPane().add(jl);
+                        jf.setVisible(true);
+
+                        JButton jb = new JButton("返回");
+                        jb.setFont(new Font("宋体", Font.PLAIN, 18));
+                        jb.setBounds(170, 150, 100, 30);
+                        jb.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent arg0) {
+                                jf.dispose();
+                            }
+                        });
+                        jf.getContentPane().add(jb);
+                    } else {
+                        entering enter = new entering();
+                        enter.subteam(Tname, TID, TPassword, TDoc);
+                        enter.substuff(leadsid, leadname, leadid, leadtel, 4);
+                        enter.substuff(doctorsid, doctorname, doctorid, doctortel, 5);
+                        enter.substuff(trainsid, trainname, trainid, traintel, 6);
+                        enter.substuff(judgesid, judgename, judgeid, judgetel, 1);
+                        System.out.println();
+                        INathlete inathlete = new INathlete(TID);
+                    }
+                    conn.ModifyPID(judgesid, PID);
+
+                    ArrayList<String> a = conn.SearchProjectList();
+                    int len = a.size();
+                    String str[] = new String[len];
+                    a.toArray(str);
+                    comboBox.setModel(new DefaultComboBoxModel(str));
+                    comboBox.updateUI();
                 }
-                conn.ModifyPID(judgesid,PID);
-
-                ArrayList<String> a= conn.SearchProjectList();
-                int len =a.size();
-                String str[] = new String[len];
-                a.toArray(str);
-                comboBox.setModel(new DefaultComboBoxModel(str));
-                comboBox.updateUI();
-
             }
         });
         btnNewButton.addActionListener(new ActionListener() {

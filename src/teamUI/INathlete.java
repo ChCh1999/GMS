@@ -28,7 +28,8 @@ public class INathlete extends JFrame {
 	private JTextField name;
 	private JTextField IDnumber;
 	private JTextField age;
-	String Aname,ID,TID,sex;
+	String Aname,ID,TID;
+	String sex="";
 	int Age, GroupID, Grade;
 	/**
 	 * Launch the application.
@@ -180,115 +181,134 @@ public class INathlete extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				Aname=name.getText();
-				ID=IDnumber.getText();
-				Grade=Integer.parseInt(subGradetext.getText());
-				Age=Integer.parseInt(age.getText());
-				if(Age==7||Age==8) GroupID=1;
-				else if(Age==9||Age==10) GroupID=2;
-				else if (Age==11||Age==12) GroupID=3;
-				entering enter = new entering();
-				if(((JRadioButton)panel_1.getComponent(0)).isSelected()){
-					sex="men";
-					enter.subath(Aname,ID,Age,GroupID,Grade,sex,TID);
-					int sum=0;
-					for(int i=0;i<100;i++){
-						for(int j=0;j<100;j++){
-							sum +=j;
-						}
-					}
-				}
-				else if(((JRadioButton)panel_1.getComponent(1)).isSelected()){
-					sex="women";
-				}
-				int numpid = panel.getComponentCount();
-				int [] check = new int[numpid];
-				if(sex.equals("men")) {
-					for (int i = 0; i < numpid; i++) {
-						if (((JCheckBox) panel.getComponent(i)).isSelected()) {
-							check[i] = i + 1;
-							System.out.println(check[i]);
-							enter.subgrade(Integer.toString(check[i]),GroupID);
-						}
-					}
-					name.setText("");
-					IDnumber.setText("");
-					age.setText("");
-					subGradetext.setText("");
-				}
-				else if(sex.equals("women")){
-					if(((JCheckBox) panel.getComponent(0)).isSelected()||
-							((JCheckBox) panel.getComponent(1)).isSelected()||
-							((JCheckBox) panel.getComponent(2)).isSelected()||
-							((JCheckBox) panel.getComponent(5)).isSelected()){
-						JFrame jf=new JFrame();
-						jf.setTitle("异常提醒");
-						jf.setBounds(400, 250, 450, 300);
-						jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-						jf.getContentPane().setLayout(null);
+				Aname = name.getText();
+				ID = IDnumber.getText();
 
-						JLabel jl = new JLabel("女子项目选择错误");
-						jl.setFont(new Font("宋体", Font.PLAIN, 18));
-						jl.setBounds(170, 100, 200, 30);
-						jf.getContentPane().add(jl);
-						jf.setVisible(true);
-
-						JButton jb = new JButton("返回");
-						jb.setFont(new Font("宋体", Font.PLAIN, 18));
-						jb.setBounds(170, 150, 100, 30);
-						jb.addMouseListener(new MouseAdapter() {
-							@Override
-							public void mouseClicked(MouseEvent arg0) {
-								jf.dispose();
-							}
-						});
-						jf.getContentPane().add(jb);
+				if (((JRadioButton) panel_1.getComponent(0)).isSelected()) {
+					sex = "men";
+				}
+				else if (((JRadioButton) panel_1.getComponent(1)).isSelected()) {
+					sex = "women";
+				}
+				boolean boxselceted = false;
+				for(int i=0;i<9;i++){
+					if(((JCheckBox) panel.getComponent(i)).isSelected()){
+						boxselceted=true;
+						break;
 					}
-					else{
-						enter.subath(Aname,ID,Age,GroupID,Grade,sex,TID);
-						int sum=0;
-						for(int i=0;i<100;i++){
-							for(int j=0;j<100;j++){
-								sum +=j;
+				}
+				if (Aname.equals("") || ID.equals("") || subGradetext.getText().equals("")
+						|| age.getText().equals("") || sex.equals("")||!boxselceted
+				){
+					JFrame jf = new JFrame();
+					jf.setTitle("异常输入提醒");
+					jf.setBounds(400, 250, 450, 300);
+					jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					jf.getContentPane().setLayout(null);
+
+					JLabel jl = new JLabel("输入数据不能为空");
+					jl.setFont(new Font("宋体", Font.PLAIN, 18));
+					jl.setBounds(170, 100, 200, 30);
+					jf.getContentPane().add(jl);
+					jf.setVisible(true);
+
+					JButton jb = new JButton("返回");
+					jb.setFont(new Font("宋体", Font.PLAIN, 18));
+					jb.setBounds(170, 150, 100, 30);
+					jb.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+							jf.dispose();
+						}
+					});
+					jf.getContentPane().add(jb);
+				}
+				else {
+					Grade = Integer.parseInt(subGradetext.getText());
+					Age = Integer.parseInt(age.getText());
+					if (Age == 7 || Age == 8) GroupID = 1;
+					else if (Age == 9 || Age == 10) GroupID = 2;
+					else if (Age == 11 || Age == 12) GroupID = 3;
+					entering enter = new entering();
+
+					int numpid = panel.getComponentCount();
+					int[] check = new int[numpid];
+					for(int i=0;i<9;i++){
+						check[i]=-1;
+					}
+					if (sex.equals("men")) {
+						for (int i = 0; i < numpid; i++) {
+							if (((JCheckBox) panel.getComponent(i)).isSelected()) {
+								check[i] = i + 1;
 							}
 						}
-						String sportid;
-						if(((JCheckBox) panel.getComponent(3)).isSelected()){
-							sportid="14";
-							enter.subgrade(sportid,GroupID);
-						}
-						if(((JCheckBox) panel.getComponent(4)).isSelected()){
-							sportid="15";
-							enter.subgrade(sportid,GroupID);
-						}
-						if(((JCheckBox) panel.getComponent(7)).isSelected()){
-							sportid="18";
-							enter.subgrade(sportid,GroupID);
-						}
-						if(((JCheckBox) panel.getComponent(6)).isSelected()){
-							sportid="17";
-							enter.subgrade(sportid,GroupID);
-						}
-						if(((JCheckBox) panel.getComponent(8)).isSelected()){
-							sportid="19";
-							enter.subgrade(sportid,GroupID);
-						}
+						enter.subath(Aname, ID, Age, GroupID, Grade, sex, TID,check);
 						name.setText("");
 						IDnumber.setText("");
 						age.setText("");
 						subGradetext.setText("");
 					}
-				}
+					else if (sex.equals("women")) {
+						if (((JCheckBox) panel.getComponent(0)).isSelected() ||
+								((JCheckBox) panel.getComponent(1)).isSelected() ||
+								((JCheckBox) panel.getComponent(2)).isSelected() ||
+								((JCheckBox) panel.getComponent(5)).isSelected()) {
+							JFrame jf = new JFrame();
+							jf.setTitle("异常提醒");
+							jf.setBounds(400, 250, 450, 300);
+							jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							jf.getContentPane().setLayout(null);
 
-				checkBox_1.setSelected(false);
-				checkBox_2.setSelected(false);
-				checkBox_3.setSelected(false);
-				checkBox_4.setSelected(false);
-				checkBox_5.setSelected(false);
-				checkBox_6.setSelected(false);
-				checkBox_7.setSelected(false);
-				checkBox_8.setSelected(false);
-				checkBox_9.setSelected(false);
+							JLabel jl = new JLabel("女子项目选择错误");
+							jl.setFont(new Font("宋体", Font.PLAIN, 18));
+							jl.setBounds(170, 100, 200, 30);
+							jf.getContentPane().add(jl);
+							jf.setVisible(true);
+
+							JButton jb = new JButton("返回");
+							jb.setFont(new Font("宋体", Font.PLAIN, 18));
+							jb.setBounds(170, 150, 100, 30);
+							jb.addMouseListener(new MouseAdapter() {
+								@Override
+								public void mouseClicked(MouseEvent arg0) {
+									jf.dispose();
+								}
+							});
+							jf.getContentPane().add(jb);
+						}
+						else {
+							if (((JCheckBox) panel.getComponent(3)).isSelected()) {
+								check[1] = 14;
+							}
+							if (((JCheckBox) panel.getComponent(4)).isSelected()) {
+								check[2] = 15;
+							}
+							if (((JCheckBox) panel.getComponent(7)).isSelected()) {
+								check[3] = 18;
+							}
+							if (((JCheckBox) panel.getComponent(6)).isSelected()) {
+								check[4] = 17;
+							}
+							if (((JCheckBox) panel.getComponent(8)).isSelected()) {
+								check[5] = 18;
+							}
+							enter.subath(Aname, ID, Age, GroupID, Grade, sex, TID,check);
+							name.setText("");
+							IDnumber.setText("");
+							age.setText("");
+							subGradetext.setText("");
+						}
+					}
+					checkBox_1.setSelected(false);
+					checkBox_2.setSelected(false);
+					checkBox_3.setSelected(false);
+					checkBox_4.setSelected(false);
+					checkBox_5.setSelected(false);
+					checkBox_6.setSelected(false);
+					checkBox_7.setSelected(false);
+					checkBox_8.setSelected(false);
+					checkBox_9.setSelected(false);
+				}
 
 			}
 		});

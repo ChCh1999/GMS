@@ -38,29 +38,21 @@ public class entering {
             return;
         }
     }
-    public void subath(String Aname,String ID, int Age, int GroupID, int Grade,String sex, String  TID){
+    public void subath(String Aname,String ID, int Age, int GroupID, int Grade,String sex, String  TID,int [] check){
         try{
+            int[] pid=new int[9];
             Socket conn = new Socket(IP_SERVER,port);
             bw=new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             bw.write("tosubath"+"\n");
             bw.write(Aname+"\n"+ID+"\n"+Integer.toString(Age)+"\n"+Integer.toString(GroupID)+"\n");
             bw.write(Integer.toString(Grade)+"\n"+sex+"\n"+TID+"\n");
+            for(int i =0;i<9;i++){
+                pid[i]=check[i];
+                bw.write(Integer.toString(pid[i])+"\n");
+            }
             bw.write("end"+"\n");
             bw.flush();
         }catch (IOException ioe){
-            return;
-        }
-    }
-    public void subgrade(String PID,int GroupID ){
-        try {
-            Socket conn = new Socket(IP_SERVER, port);
-            bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            bw.write("tosubgrade"+"\n");
-            bw.write(PID+"\n"+Integer.toString(GroupID)+"\n");
-            bw.write("end"+"\n");
-            bw.flush();
-        }
-        catch(IOException ioe){
             return;
         }
     }
