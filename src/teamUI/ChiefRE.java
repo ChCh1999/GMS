@@ -303,76 +303,159 @@ public class ChiefRE extends JFrame {
 					public void run() {
 						ArrayList<Triplet<String,Float,Float>> BPMarks=new ArrayList<>();
 						//TODO ；传入数据 每个成员<运动员编号 B分 P分>
+						for(int i=0;i<athleteNum;i++){
+							BPMarks.add(new Triplet<>(" ",0f,0f));
+						}
 						switch(athleteNum){
 							case 8:Triplet<String,Float,Float> triplet8 = new Triplet<String,Float,Float>(player_Num8.getText(),Float.valueOf(B_Num8.getText()),Float.valueOf(P_Num8.getText()));
-								BPMarks.add(8,triplet8);
+								BPMarks.set(7,triplet8);
 							case 7:Triplet<String,Float,Float> triplet7 = new Triplet<String,Float,Float>(player_Num7.getText(),Float.valueOf(B_Num7.getText()),Float.valueOf(P_Num7.getText()));
-								BPMarks.add(7,triplet7);
+								BPMarks.set(6,triplet7);
 							case 6:Triplet<String,Float,Float> triplet6 = new Triplet<String,Float,Float>(player_Num6.getText(),Float.valueOf(B_Num6.getText()),Float.valueOf(P_Num6.getText()));
-								BPMarks.add(6,triplet6);
+								BPMarks.set(5,triplet6);
 							case 5:Triplet<String,Float,Float> triplet5 = new Triplet<String,Float,Float>(player_Num5.getText(),Float.valueOf(B_Num5.getText()),Float.valueOf(P_Num5.getText()));
-								BPMarks.add(5,triplet5);
+								BPMarks.set(4,triplet5);
 							case 4:Triplet<String,Float,Float> triplet4 = new Triplet<String,Float,Float>(player_Num4.getText(),Float.valueOf(B_Num4.getText()),Float.valueOf(P_Num4.getText()));
-								BPMarks.add(4,triplet4);
+								BPMarks.set(3,triplet4);
 							case 3:Triplet<String,Float,Float> triplet3 = new Triplet<String,Float,Float>(player_Num3.getText(),Float.valueOf(B_Num3.getText()),Float.valueOf(P_Num3.getText()));
-								BPMarks.add(3,triplet3);
+								BPMarks.set(2,triplet3);
 							case 2:Triplet<String,Float,Float> triplet2 = new Triplet<String,Float,Float>(player_Num2.getText(),Float.valueOf(B_Num2.getText()),Float.valueOf(P_Num2.getText()));
-								BPMarks.add(2,triplet2);
+								BPMarks.set(1,triplet2);
 							case 1:Triplet<String,Float,Float> triplet1 = new Triplet<String,Float,Float>(player_Num1.getText(),Float.valueOf(B_Num1.getText()),Float.valueOf(P_Num1.getText()));
-								BPMarks.add(1,triplet1);
+								BPMarks.set(0,triplet1);
 								break;
 								default:System.out.println("default");break;
 						}
 
 						HashMap<String,ArrayList<Float>> marks=new HashMap<>();
-						//TODO:传入数据  key值为运动员编号  值为哥哥裁判对该运动员的打分
+						//TODO:传入数据  key值为运动员编号  值为各个裁判对该运动员的打分
 						int count = 0;
-						if(count<refereeNum){
+						if(count<athleteNum){
 							ArrayList<Float> all1 = new ArrayList<>();
-							all1.add(Float.valueOf(score1_1.getText()));all1.add(Float.valueOf(score1_2.getText()));all1.add(Float.valueOf(score1_3.getText()));
-							all1.add(Float.valueOf(score1_4.getText()));all1.add(Float.valueOf(score1_5.getText()));
+							switch (refereeNum){
+								case 5:
+									all1.add(Float.valueOf(score1_5.getText()));
+								case 4:
+									all1.add(Float.valueOf(score1_4.getText()));
+								case 3:
+									all1.add(Float.valueOf(score1_3.getText()));
+								case 2:
+									all1.add(Float.valueOf(score1_2.getText()));
+								case 1:
+									all1.add(Float.valueOf(score1_1.getText()));
+							}
 							marks.put(player_Num1.getText(),all1);
 						}count++;
-						if(count<refereeNum){
+						if(count<athleteNum){
 							ArrayList<Float> all2 = new ArrayList<>();
-							all2.add(Float.valueOf(score2_1.getText()));all2.add(Float.valueOf(score2_2.getText()));all2.add(Float.valueOf(score2_3.getText()));
-							all2.add(Float.valueOf(score2_4.getText()));all2.add(Float.valueOf(score2_5.getText()));
+							switch (refereeNum){
+								case 5:
+									all2.add(Float.valueOf(score2_5.getText()));
+								case 4:
+									all2.add(Float.valueOf(score2_4.getText()));
+								case 3:
+									all2.add(Float.valueOf(score2_3.getText()));
+								case 2:
+									all2.add(Float.valueOf(score2_2.getText()));
+								case 1:
+									all2.add(Float.valueOf(score2_1.getText()));
+							}
 							marks.put(player_Num2.getText(),all2);
 						}count++;
-						if(count<refereeNum){
+						if(count<athleteNum){
 							ArrayList<Float> all3 = new ArrayList<>();
-							all3.add(Float.valueOf(score3_1.getText()));all3.add(Float.valueOf(score3_2.getText()));all3.add(Float.valueOf(score3_3.getText()));
-							all3.add(Float.valueOf(score3_4.getText()));all3.add(Float.valueOf(score3_5.getText()));
+							switch (refereeNum){
+								case 5:
+									all3.add(Float.valueOf(score3_5.getText()));
+								case 4:
+									all3.add(Float.valueOf(score3_4.getText()));
+								case 3:
+									all3.add(Float.valueOf(score3_3.getText()));
+								case 2:
+									all3.add(Float.valueOf(score3_2.getText()));
+								case 1:
+									all3.add(Float.valueOf(score3_1.getText()));
+							}
 							marks.put(player_Num3.getText(),all3);
 						}count++;
-						if(count<refereeNum){
+						if(count<athleteNum){
 							ArrayList<Float> all4 = new ArrayList<>();
-							all4.add(Float.valueOf(score4_1.getText()));all4.add(Float.valueOf(score4_2.getText()));all4.add(Float.valueOf(score4_3.getText()));
-							all4.add(Float.valueOf(score4_4.getText()));all4.add(Float.valueOf(score4_5.getText()));
+							switch (refereeNum){
+								case 5:
+									all4.add(Float.valueOf(score4_5.getText()));
+								case 4:
+									all4.add(Float.valueOf(score4_4.getText()));
+								case 3:
+									all4.add(Float.valueOf(score4_3.getText()));
+								case 2:
+									all4.add(Float.valueOf(score4_2.getText()));
+								case 1:
+									all4.add(Float.valueOf(score4_1.getText()));
+							}
 							marks.put(player_Num4.getText(),all4);
 						}count++;
-						if(count<refereeNum){
+						if(count<athleteNum){
 							ArrayList<Float> all5 = new ArrayList<>();
-							all5.add(Float.valueOf(score5_1.getText()));all5.add(Float.valueOf(score5_2.getText()));all5.add(Float.valueOf(score5_3.getText()));
-							all5.add(Float.valueOf(score5_4.getText()));all5.add(Float.valueOf(score5_5.getText()));
+							switch (refereeNum){
+								case 5:
+									all5.add(Float.valueOf(score5_5.getText()));
+								case 4:
+									all5.add(Float.valueOf(score5_4.getText()));
+								case 3:
+									all5.add(Float.valueOf(score5_3.getText()));
+								case 2:
+									all5.add(Float.valueOf(score5_2.getText()));
+								case 1:
+									all5.add(Float.valueOf(score5_1.getText()));
+							}
 							marks.put(player_Num5.getText(),all5);
 						}count++;
-						if(count<refereeNum){
+						if(count<athleteNum){
 							ArrayList<Float> all6 = new ArrayList<>();
-							all6.add(Float.valueOf(score6_1.getText()));all6.add(Float.valueOf(score6_2.getText()));all6.add(Float.valueOf(score6_3.getText()));
-							all6.add(Float.valueOf(score6_4.getText()));all6.add(Float.valueOf(score6_5.getText()));
+							switch (refereeNum){
+								case 5:
+									all6.add(Float.valueOf(score6_5.getText()));
+								case 4:
+									all6.add(Float.valueOf(score6_4.getText()));
+								case 3:
+									all6.add(Float.valueOf(score6_3.getText()));
+								case 2:
+									all6.add(Float.valueOf(score6_2.getText()));
+								case 1:
+									all6.add(Float.valueOf(score6_1.getText()));
+							}
 							marks.put(player_Num6.getText(),all6);
 						}count++;
-						if(count<refereeNum){
+						if(count<athleteNum){
 							ArrayList<Float> all7 = new ArrayList<>();
-							all7.add(Float.valueOf(score7_1.getText()));all7.add(Float.valueOf(score7_2.getText()));all7.add(Float.valueOf(score7_3.getText()));
-							all7.add(Float.valueOf(score7_4.getText()));all7.add(Float.valueOf(score7_5.getText()));
+							switch (refereeNum){
+								case 5:
+									all7.add(Float.valueOf(score7_5.getText()));
+								case 4:
+									all7.add(Float.valueOf(score7_4.getText()));
+								case 3:
+									all7.add(Float.valueOf(score7_3.getText()));
+								case 2:
+									all7.add(Float.valueOf(score7_2.getText()));
+								case 1:
+									all7.add(Float.valueOf(score7_1.getText()));
+							}
 							marks.put(player_Num7.getText(),all7);
 						}count++;
-						if(count<refereeNum){
+						if(count<athleteNum){
 							ArrayList<Float> all8 = new ArrayList<>();
-							all8.add(Float.valueOf(score8_1.getText()));all8.add(Float.valueOf(score8_2.getText()));all8.add(Float.valueOf(score8_3.getText()));
-							all8.add(Float.valueOf(score8_4.getText()));all8.add(Float.valueOf(score8_5.getText()));
+							switch (refereeNum){
+								case 5:
+									all8.add(Float.valueOf(score8_5.getText()));
+								case 4:
+									all8.add(Float.valueOf(score8_4.getText()));
+								case 3:
+									all8.add(Float.valueOf(score8_3.getText()));
+								case 2:
+									all8.add(Float.valueOf(score8_2.getText()));
+								case 1:
+									all8.add(Float.valueOf(score8_1.getText()));
+							}
 							marks.put(player_Num8.getText(),all8);
 						}
 						

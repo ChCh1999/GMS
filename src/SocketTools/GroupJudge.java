@@ -104,6 +104,7 @@ public class GroupJudge{
             try {
                 System.out.println( br.readLine()+"开始接收");
 //                br.readLine();//Send Start
+	            IDOfJudges.removeAll(IDOfJudges);
                 while (!br.readLine().equals("FinishSendMarks")){
 //	                System.out.println(br.readLine());;//SendMarkTable
                     IDOfJudges.add(br.readLine());//IDOfJudge
