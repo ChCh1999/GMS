@@ -146,6 +146,7 @@ public class Massagesearch extends JFrame {
 									res.get(i).getValue4(),res.get(i).getValue5(),res.get(i).getValue6()};
 							add(ptable,obj);
 						}
+						//res为七元组  运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
 						return;
 					}
 				}
@@ -174,6 +175,8 @@ public class Massagesearch extends JFrame {
 					jf.getContentPane().add(jb);
 					jf.setVisible(true);
 				}
+
+				//TODO:提示输入无效
 
 			}
 		});
@@ -258,7 +261,8 @@ public class Massagesearch extends JFrame {
 		tqueryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//TODO:更新队伍下拉框内容√
+				//TODO:更新队伍下拉框内容
+				//更新队伍数据
 				String[] str = new String[Teams.keySet().size()] ;
 				Teams.keySet().toArray(str);
 				teamNumBox.setModel(new DefaultComboBoxModel(str));
@@ -279,17 +283,24 @@ public class Massagesearch extends JFrame {
 					}
 				}else {
 					res.addAll(ClientTool.SearchTeamGradeByTID(Teams.get(teamKey)));
+					ArrayList<Quintet>todelete=new ArrayList<>();
 					if(!proName.equals("全部")){
 						for (Quintet m:res) {
 							if(!m.getValue1().equals(proName))
 								res.remove(m);
+								todelete.add(m);
+//								res.remove(m);
 						}
 					}
 					if(group!=0){
 						for (Quintet m:res) {
 							if(!m.getValue2().equals(group))
 								res.remove(m);
+								todelete.add(m);
 						}
+					}
+					for(Quintet m:todelete){
+						res.remove(m);
 					}
 				}
 				if(res.isEmpty()){
@@ -317,7 +328,10 @@ public class Massagesearch extends JFrame {
 					jf2.getContentPane().add(jb2);
 					jf2.setVisible(true);
 				}else {
-					//TODO:清空现有记录.将res输出到前端√
+					//TODO:清空现有记录.将res输出到前端
+					System.out.println("搜索结果：");
+					for(Quintet m:res)
+						System.out.println(m.getValue0()+" "+m.getValue1()+" "+m.getValue2()+" "+m.getValue3()+" ");
 					//res Quartet<团队名，比赛项目，年龄组，团队成绩，团队排名>
 					tmodel.setRowCount(0);//清空输出结果
 					for(int i = 0;i < res.size();i++){
@@ -466,7 +480,10 @@ public class Massagesearch extends JFrame {
 					jf3.getContentPane().add(jb3);
 					jf3.setVisible(true);
 				}else {
-					//TODO:清空现有记录.将res输出到前端√
+					//TODO:清空现有记录.将res输出到前端
+					System.out.println("搜索结果：");
+					for(Septet m:res)
+						System.out.println(m.getValue0()+" "+m.getValue1()+" "+m.getValue2()+" "+m.getValue3()+" ");
 					//res:运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名 Septet<String,String,String,Float,Integer,Float,Integer>
 					imodel.setRowCount(0);
 					int i = 0;

@@ -148,14 +148,14 @@ public class ClientTool {
         return null;
     }
     //使用项目信息  查找成绩 运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
-    public static ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchAthByPro(String proname,int group){
+    public static ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> SearchAthByPro(String proName,int group){
         ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>>res=new ArrayList<>();
         try {
             Socket search = new Socket(IP_SERVER,PORT_LOGIN);
             BufferedReader br=new BufferedReader(new InputStreamReader(search.getInputStream()));
             BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(search.getOutputStream()));
             bw.write("Search ath by proname\n");
-            bw.write(proname+"\n");
+            bw.write(proName+"\n");
             bw.write(group+"\n");
             bw.flush();
             String num;

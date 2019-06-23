@@ -679,8 +679,9 @@ class THandle implements Runnable {
                     break;
                 case "Search ath by proname":
                     String proname=br.readLine();
+                    String proID=dbo.SearchPID(proname);
                     int group=Integer.parseInt(br.readLine());
-                    aRes = dbo.SearchProjectGrade(proname,group);
+                    aRes = dbo.SearchProjectGrade(proID,group);
                     for (Septet m: aRes ) {
                         bw.write(m.getValue0()+"\n");
                         bw.write(m.getValue1()+"\n");
