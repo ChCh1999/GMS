@@ -24,6 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class Massagesearch extends JFrame {
 
 	private JPanel p_contentPane;
+	private String SID;
 	private HashMap<String,String>Teams;
 	/**
 	 * Launch the application.
@@ -32,7 +33,7 @@ public class Massagesearch extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Massagesearch frame = new Massagesearch();
+					Massagesearch frame = new Massagesearch("60");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,10 +42,18 @@ public class Massagesearch extends JFrame {
 		});
 	}
 
+	@Override
+	protected void finalize() throws Throwable {
+		super.finalize();
+		ClientTool.exit(SID);
+	}
+
 	/**
 	 * Create the frame.
 	 */
-	public Massagesearch() {
+
+	public Massagesearch(String sid) {
+		this.SID=sid;
 		//获取队伍信息
 		Teams=ClientTool.getAllTeamName();
 
@@ -127,6 +136,9 @@ public class Massagesearch extends JFrame {
 							ClientTool.SearchAthByNum(athNum);
 					if(!res.isEmpty()) {
 						//TODO:清空当前查询结果界面，输出结果到前端
+						for(Septet s:res){
+							System.out.println(s.getValue0()+" "+s.getValue1()+" "+s.getValue2()+" "+s.getValue3()+" "+s.getValue4()+" "+s.getValue5()+" "+s.getValue6());
+						}
 						//res为七元组  运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
 						return;
 					}

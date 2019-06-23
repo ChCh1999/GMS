@@ -84,8 +84,10 @@ class TProMaster implements Runnable {
         int indexc=proName.indexOf("预赛");
         if(indexc!=-1){
             proName_part=proName.substring(0,indexc);
+            dbo.ModifyMatch_Judge(proName,String.valueOf(group),1);
         }else {
             proName_part=proName.substring(0,indexj);
+            dbo.ModifyMatch_Judge(proName,String.valueOf(group),3);
         }
         //未进行的初赛、已完成相应初赛且尚未进行的决赛则进入后流程
         boolean isPlaying=false;
@@ -103,14 +105,14 @@ class TProMaster implements Runnable {
         }else
         {
             if ((indexj==-1&&dbo.SearchMatch(proName_part,group)==0) ||
-                    (indexj!=-1&&dbo.SearchMatch(proName_part,group)==3)) {
+                    (indexj!=-1&&dbo.SearchMatch(proName_part,group)==2)) {
                 TProHandle handle=new TProHandle(proName, group, socket);
                 Thread prohandle = new Thread(handle);
 
                 //开始处理比赛信息
                 prohandle.start();
                 //输出流回应一下客户端
-                MessageToClient.write("Start" + '\n');
+                MessageToClient.write("Start" + "\n");
                 MessageToClient.flush();
                 System.out.println(proName+"Start");
 
@@ -120,10 +122,14 @@ class TProMaster implements Runnable {
                 prohandle.join();
 
 
-                MessageToClient.write(handle.getMessage() + '\n');
+                MessageToClient.write(handle.getMessage() + "\n");
                 MessageToClient.flush();
                 //TODO:修改比赛状态
-
+                if(indexc!=-1){
+                    dbo.ModifyMatch_Judge(proName,String.valueOf(group),2);
+                }else {
+                    dbo.ModifyMatch_Judge(proName,String.valueOf(group),4);
+                }
                 System.out.println("End");
 //            System.out.println(br.readLine());
             } else {
@@ -217,9 +223,8 @@ class TProHandle implements Runnable {
 
                 Socket Stemp =TServer.getJudges().get(SID);
                 Judges.add(Stemp);
-                System.out.println("hh");
                 BufferedWriter bwtemp=new BufferedWriter(new OutputStreamWriter(Stemp.getOutputStream()));
-                bwtemp.write(ProName+'\n');
+                bwtemp.write(ProName+"\n");
                 bwtemp.flush();
             }
             BufferedWriter bw=new BufferedWriter(new OutputStreamWriter(Group.getOutputStream()));
@@ -449,11 +454,12 @@ class TProHandle implements Runnable {
         bw.write("SendMarkTable\n");
         bw.write(message.IDOfJudge+"\n");
         bw.flush();
-        while (!br.readLine().equals("ready")) ;//等待直到ready
+        String feedback;
+        while (!(feedback=br.readLine()).equals("ready")) ;//等待直到ready
         for (Pair<String, Float> mark : message.MarkTable     //Pair<AthNum,Mark>
                 ) {
-            bw.write(mark.getValue0().toString() + '\n');
-            bw.write(mark.getValue1().toString() + '\n');
+            bw.write(mark.getValue0().toString() + "\n");
+            bw.write(mark.getValue1().toString() + "\n");
         }
         bw.write("Done+\n");
         bw.flush();
@@ -484,6 +490,7 @@ class TSendAthletesMessage implements Runnable {
 
     //    发送运动员名单
     public void SendMessage(Socket s, ArrayList<Pair<String, String>> Aths) throws Exception {
+	    System.out.println("开始发送运动员名单到"+s.getInetAddress());
         BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
         int size = Aths.size();
@@ -491,13 +498,14 @@ class TSendAthletesMessage implements Runnable {
             bw.write("Over");
             return;
         }
-        bw.write(Aths.size() + '\n');
+        bw.write(Aths.size() + "\n");
         bw.flush();
         IDOfJudge = br.readLine();
+	    System.out.println(IDOfJudge);
         if (br.readLine().equals("ready")) {//裁判准备好
             for (Pair<String, String> Ath : Aths) {
-                bw.write(Ath.getValue0() + '\n');
-                bw.write(Ath.getValue1() + '\n');
+                bw.write(Ath.getValue0() + "\n");
+                bw.write(Ath.getValue1() + "\n");
             }
             bw.write("Finished");
             bw.flush();
@@ -592,7 +600,7 @@ class THandle implements Runnable {
                     String SID = br.readLine();
                     String Password=br.readLine();
                     if (checkIDOfJudge(SID,Password)){
-                        bw.write(Boolean.TRUE.toString() + '\n');
+                        bw.write(Boolean.TRUE.toString() + "\n");
                         //状态检索以及相应的修改
                         if(dbo.Search_SLogin(SID)){
                             bw.write(String.valueOf(-1)+ "\n");
@@ -608,10 +616,10 @@ class THandle implements Runnable {
                     }
                     else
                         if(checkIDofGroup(SID,Password)){
-                            bw.write(Boolean.TRUE.toString() + '\n');
-                            bw.write(String.valueOf(ServerData.NumOfGroup)+ '\n');
+                            bw.write(Boolean.TRUE.toString() + "\n");
+                            bw.write(String.valueOf(ServerData.NumOfGroup)+ "\n");
                         }else
-                            bw.write(Boolean.FALSE.toString() + '\n');
+                            bw.write(Boolean.FALSE.toString() + "\n");
 
                     bw.flush();
                     break;
@@ -626,9 +634,9 @@ class THandle implements Runnable {
                     String TPassword=br.readLine();
                     String newpassword=br.readLine();
                     if(changePassword(TID,TPassword,newpassword)){
-                        bw.write(Boolean.TRUE.toString() + '\n');
+                        bw.write(Boolean.TRUE.toString() + "\n");
                     }else {
-                        bw.write(Boolean.FALSE.toString() + '\n');
+                        bw.write(Boolean.FALSE.toString() + "\n");
                     }
                     bw.flush();
                     break;

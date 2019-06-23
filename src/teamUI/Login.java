@@ -167,7 +167,8 @@ public class Login {
 						case 6:
 						case 9:
 							frame.dispose();
-							Massagesearch messagesearch = new Massagesearch();
+							Massagesearch messagesearch = new Massagesearch(userID);
+							messagesearch.setVisible(true);
 							break;
 						//TODO:-1账号已经在线  0登录失败 1裁判 2小组裁判  3总裁判  4领队  5队医 6教练员 9(serverData.NumOfGroup)代表队账号
 						default:

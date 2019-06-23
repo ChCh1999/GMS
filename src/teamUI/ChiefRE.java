@@ -329,7 +329,7 @@ public class ChiefRE extends JFrame {
 					});
 					jf.getContentPane().add(jb);
 				}
-				
+
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
@@ -1100,6 +1100,7 @@ public class ChiefRE extends JFrame {
 				//注销登录状态
 				ClientTool.exit(sid);
 				dispose();
+				System.exit(0);
 			}
 		});
 		logoutjb.setFont(new Font("宋体", Font.PLAIN, 18));

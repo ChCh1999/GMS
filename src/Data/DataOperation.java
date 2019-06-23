@@ -100,7 +100,7 @@ public class DataOperation {
     //增加成绩 初始化（没有预赛成绩和决赛成绩）
     public boolean InsertData(String PID,String AID,int GroupID){
         String sql="insert into gradegroup(PID,AID,GroupID,CScore,JScore) values " +
-                "('"+PID+"','"+AID+"','"+GroupID+"',0f,0f)";
+                "('"+PID+"','"+AID+"','"+GroupID+"',0,0)";
         try {
             state.executeUpdate(sql);
             return true;
@@ -274,9 +274,9 @@ public class DataOperation {
         return b;
     }
     //修改match表的比赛状态
-    public boolean ModifyMatch_Judge(String PName,int Judge){
+    public boolean ModifyMatch_Judge(String PName,String GroupID,int Judge){
         String formName="game";
-        String condition="PName=\'"+PName+"\'" ;
+        String condition="PName=\'"+PName+"\' AND GroupID="+GroupID ;
         String modified="Judge="+Judge+"";
         boolean b=ModifyData(formName,condition,modified);
         return b;
@@ -463,7 +463,7 @@ public class DataOperation {
     }
     //用PID和SType(不同种类的裁判)去查询负责该项目的裁判IP
     public ArrayList<String> SearchProject_IP(String PID,int SType){
-        String sql="select * from stuff where PID='"+PID+"' AND SType="+SType +" AND SLogin = 1";
+        String sql="select * from stuff where PID='"+PID+"' AND SType="+SType+" AND SLogin = 1";
         ArrayList<String> arrayList=new ArrayList<>();
         String IP=null;
         try{
@@ -636,7 +636,7 @@ public class DataOperation {
     //项目ID groupid 检索决赛选手 姓名+编号
     public ArrayList<Pair<String,String>> SearchFinalPeopleList(String ProjectID,int GroupID){
         //sql语句
-        String sql="select * from gradegroup where PID='"+ProjectID+"' GroupID="+GroupID+"  ORDER BY CScore DESC";
+        String sql="select * from gradegroup where PID='"+ProjectID+"'AND GroupID="+GroupID+"  ORDER BY CScore DESC";
         ArrayList<String> ListAthleteID=new ArrayList();
         ArrayList<Pair<String,String>> al= new ArrayList();
         String AID=null;
@@ -717,6 +717,46 @@ public class DataOperation {
             while(rst.next()){
                 SID=rst.getString("SID");
                 if(SID.equals(StuffID)){
+                    judge=true;
+                }
+            }
+            return judge;
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //判断AID,是否存在
+    public boolean JudgeAID(String AthleteID){
+        String sql="select AID from athlete ";
+        String AID=null;
+        boolean judge=false;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                AID=rst.getString("AID");
+                if(AID.equals(AthleteID)){
+                    judge=true;
+                }
+            }
+            return judge;
+        }catch (SQLException e){
+            System.out.println("视图队伍查询成绩错误");
+            e.printStackTrace();
+            return false;
+        }
+    }
+    //判断GroupID,是否存在
+    public boolean JudgeGroupID(String groupID){
+        String sql="select GroupID from athlete ";
+        String GroupID=null;
+        boolean judge=false;
+        try{
+            rst=state.executeQuery(sql);
+            while(rst.next()){
+                GroupID=rst.getString("AID");
+                if(GroupID.equals(groupID)){
                     judge=true;
                 }
             }
@@ -963,7 +1003,7 @@ public class DataOperation {
     }
     //用PID，查询选手的排名情况
     public ArrayList<Quartet<String,String,Integer,Float>> SearchTheAtheleteRank(String tablename,String PID,int GroupID){
-        String sql="select * from "+tablename+" where PID='"+PID+"' GroupID="+GroupID+"";
+        String sql="select * from "+tablename+" where PID='"+PID+"' AND GroupID="+GroupID+"";
         String AID=null;
         Float Score=0f;
         int rank=0;
@@ -994,7 +1034,7 @@ public class DataOperation {
     }
     //PID，groupID 查询团队的排名情况,分数的获得情况
     public ArrayList<Triplet<String,Float,Integer>> SearchTheTeamRank(String ProjectID,int groupid){
-        String sql="select * from athlete,gradegroup where PID='"+ProjectID+"' and GroupID="+groupid+"";
+        String sql="select * from athlete,gradegroup where athlete.AID=gradegroup.AID AND PID='"+ProjectID+"' and GroupID="+groupid+"";
         String TID=null;
         float cscore=0f,jscore=0f,grade=0f;
         //String为TID,Float为分数,int 为排名

@@ -66,7 +66,8 @@ public class GroupJudge{
                    String Name;
                    String Num;
                    int amount=Integer.parseInt(br.readLine());
-                   bw.write("ready");
+                   bw.write(ID+"\n");
+                   bw.write("ready\n");
                    bw.flush();
                    for(int i=0;i<amount;i++){
                        if ((Num=br.readLine())!="Finished") {

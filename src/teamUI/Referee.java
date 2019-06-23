@@ -373,6 +373,7 @@ public class Referee extends JFrame {
 				//TODO：取消登录状态
 				ClientTool.exit(SID);
 				dispose();
+				System.exit(0);
 			}
 		});
 		logout.setFont(new Font("宋体", Font.PLAIN, 18));

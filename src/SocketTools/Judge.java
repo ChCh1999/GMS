@@ -54,13 +54,17 @@ public class Judge {
             try {
                 String Num;
                 String Name;
+                System.out.println("等待运动员信息");
 //                while (connection==null);//等待连接成功
                 String message=br.readLine();
                 if(message.equals("over")){
                     return Aths;
                 }
                 int amount=Integer.parseInt(message);
-                bw.write("ready");
+                System.out.println("发送ID");
+                bw.write(ID+"\n");
+                bw.flush();
+                bw.write("ready\n");
                 bw.flush();
                 for(int i=0;i<amount;i++){
                     if ((Num=br.readLine())!="Finished"){
@@ -70,6 +74,7 @@ public class Judge {
                     }
                 }
                 bw.write("Judge\n");
+                bw.flush();
                 //获取完成
                 sendmark=true;
                 return Aths;
