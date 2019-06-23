@@ -1048,100 +1048,101 @@ public class ChiefRE extends JFrame {
 
 	}
 	private String avgsum (ArrayList<ArrayList<Pair<String,Float>>> arrayList,int i){
-		float sum = arrayList.get(0).get(i).getValue()+arrayList.get(1).get(i).getValue()+arrayList.get(2).get(i).getValue()
-				+arrayList.get(3).get(i).getValue()+arrayList.get(4).get(i).getValue();
+		float sum = arrayList.get(0).get(i).getValue();
+		for(int j = 1;j<arrayList.size();j++){
+			sum = sum + arrayList.get(j).get(i).getValue();
+		}
 		String avgsum = Float.toString(sum/arrayList.size());
 		return avgsum;
 	}
 
 	private void write(ArrayList<ArrayList<Pair<String,Float>>> marks){
-		int j = marks.get(0).size();
 		int i = 0;
+		int j = marks.size();//裁判人数
+		int k = marks.get(0).size();//运动员数
 		if(i < j){
-			score1_1.setText(marks.get(0).get(0).getValue().toString());
-			score1_2.setText(marks.get(1).get(0).getValue().toString());
-			score1_3.setText(marks.get(2).get(0).getValue().toString());
-			score1_4.setText(marks.get(3).get(0).getValue().toString());
-			score1_5.setText(marks.get(4).get(0).getValue().toString());
-			avgNum1.setText(avgsum(marks,i));
+			switch (k){
+				case 8:score8_1.setText(marks.get(0).get(7).getValue().toString());
+				case 7:score7_1.setText(marks.get(0).get(6).getValue().toString());
+				case 6:score6_1.setText(marks.get(0).get(5).getValue().toString());
+				case 5:score5_1.setText(marks.get(0).get(4).getValue().toString());
+				case 4:score4_1.setText(marks.get(0).get(3).getValue().toString());
+				case 3:score3_1.setText(marks.get(0).get(2).getValue().toString());
+				case 2:score2_1.setText(marks.get(0).get(1).getValue().toString());
+				case 1:score1_1.setText(marks.get(0).get(0).getValue().toString());break;
+				default:System.out.println("default");break;
+			}
 		}i++;
-		if((i < j)){
-			score2_1.setText(marks.get(0).get(1).getValue().toString());
-			score2_2.setText(marks.get(1).get(1).getValue().toString());
-			score2_3.setText(marks.get(2).get(1).getValue().toString());
-			score2_4.setText(marks.get(3).get(1).getValue().toString());
-			score2_5.setText(marks.get(4).get(1).getValue().toString());
-			avgNum2.setText(avgsum(marks,i));
-		}else{
-			P_Num2.setText("/");
-			B_Num2.setText("/");
+		if(i < j){
+			switch (k){
+				case 8:score8_2.setText(marks.get(1).get(7).getValue().toString());
+				case 7:score7_2.setText(marks.get(1).get(6).getValue().toString());
+				case 6:score6_2.setText(marks.get(1).get(5).getValue().toString());
+				case 5:score5_2.setText(marks.get(1).get(4).getValue().toString());
+				case 4:score4_2.setText(marks.get(1).get(3).getValue().toString());
+				case 3:score3_2.setText(marks.get(1).get(2).getValue().toString());
+				case 2:score2_2.setText(marks.get(1).get(1).getValue().toString());
+				case 1:score1_2.setText(marks.get(1).get(0).getValue().toString());break;
+				default:System.out.println("default");break;
+			}
 		}i++;
-		if((i < j)){
-			score3_1.setText(marks.get(0).get(2).getValue().toString());
-			score3_2.setText(marks.get(1).get(2).getValue().toString());
-			score3_3.setText(marks.get(2).get(2).getValue().toString());
-			score3_4.setText(marks.get(3).get(2).getValue().toString());
-			score3_5.setText(marks.get(4).get(2).getValue().toString());
-			avgNum3.setText(avgsum(marks,i));
-		}else{
-			P_Num3.setText("/");
-			B_Num3.setText("/");
+		if(i < j){
+			switch (k){
+				case 8:score8_3.setText(marks.get(2).get(7).getValue().toString());
+				case 7:score7_3.setText(marks.get(2).get(6).getValue().toString());
+				case 6:score6_3.setText(marks.get(2).get(5).getValue().toString());
+				case 5:score5_3.setText(marks.get(2).get(4).getValue().toString());
+				case 4:score4_3.setText(marks.get(2).get(3).getValue().toString());
+				case 3:score3_3.setText(marks.get(2).get(2).getValue().toString());
+				case 2:score2_3.setText(marks.get(2).get(1).getValue().toString());
+				case 1:score1_3.setText(marks.get(2).get(0).getValue().toString());break;
+				default:System.out.println("default");break;
+			}
 		}i++;
-		if((i < j)){
-			score4_1.setText(marks.get(0).get(3).getValue().toString());
-			score4_2.setText(marks.get(1).get(3).getValue().toString());
-			score4_3.setText(marks.get(2).get(3).getValue().toString());
-			score4_4.setText(marks.get(3).get(3).getValue().toString());
-			score4_5.setText(marks.get(4).get(3).getValue().toString());
-			avgNum4.setText(avgsum(marks,i));
-		}else{
-			P_Num4.setText("/");
-			B_Num4.setText("/");
+		if(i < j){
+			switch (k){
+				case 8:score8_4.setText(marks.get(3).get(7).getValue().toString());
+				case 7:score7_4.setText(marks.get(3).get(6).getValue().toString());
+				case 6:score6_4.setText(marks.get(3).get(5).getValue().toString());
+				case 5:score5_4.setText(marks.get(3).get(4).getValue().toString());
+				case 4:score4_4.setText(marks.get(3).get(3).getValue().toString());
+				case 3:score3_4.setText(marks.get(3).get(2).getValue().toString());
+				case 2:score2_4.setText(marks.get(3).get(1).getValue().toString());
+				case 1:score1_4.setText(marks.get(3).get(0).getValue().toString());break;
+				default:System.out.println("default");break;
+			}
 		}i++;
-		if((i < j)){
-			score5_1.setText(marks.get(0).get(4).getValue().toString());
-			score5_2.setText(marks.get(1).get(4).getValue().toString());
-			score5_3.setText(marks.get(2).get(4).getValue().toString());
-			score5_4.setText(marks.get(3).get(4).getValue().toString());
-			score5_5.setText(marks.get(4).get(4).getValue().toString());
-			avgNum5.setText(avgsum(marks,i));
-		}else{
-			P_Num5.setText("/");
-			B_Num5.setText("/");
+		if(i < j){
+			switch (k){
+				case 8:score8_5.setText(marks.get(4).get(7).getValue().toString());
+				case 7:score7_5.setText(marks.get(4).get(6).getValue().toString());
+				case 6:score6_5.setText(marks.get(4).get(5).getValue().toString());
+				case 5:score5_5.setText(marks.get(4).get(4).getValue().toString());
+				case 4:score4_5.setText(marks.get(4).get(3).getValue().toString());
+				case 3:score3_5.setText(marks.get(4).get(2).getValue().toString());
+				case 2:score2_5.setText(marks.get(4).get(1).getValue().toString());
+				case 1:score1_5.setText(marks.get(4).get(0).getValue().toString());break;
+				default:System.out.println("default");break;
+			}
 		}i++;
-		if((i < j)){
-			score6_1.setText(marks.get(0).get(5).getValue().toString());
-			score6_2.setText(marks.get(1).get(5).getValue().toString());
-			score6_3.setText(marks.get(2).get(5).getValue().toString());
-			score6_4.setText(marks.get(3).get(5).getValue().toString());
-			score6_5.setText(marks.get(4).get(5).getValue().toString());
-			avgNum6.setText(avgsum(marks,i));
-		}else{
-			P_Num6.setText("/");
-			B_Num6.setText("/");
-		}i++;
-		if((i < j)){
-			score7_1.setText(marks.get(0).get(6).getValue().toString());
-			score7_2.setText(marks.get(1).get(6).getValue().toString());
-			score7_3.setText(marks.get(2).get(6).getValue().toString());
-			score7_4.setText(marks.get(3).get(6).getValue().toString());
-			score7_5.setText(marks.get(4).get(6).getValue().toString());
-			avgNum7.setText(avgsum(marks,i));
-		}else{
-			P_Num7.setText("/");
-			B_Num7.setText("/");
-		}i++;
-		if((i < j)){
-			score8_1.setText(marks.get(0).get(7).getValue().toString());
-			score8_2.setText(marks.get(1).get(7).getValue().toString());
-			score8_3.setText(marks.get(2).get(7).getValue().toString());
-			score8_4.setText(marks.get(3).get(7).getValue().toString());
-			score8_5.setText(marks.get(4).get(7).getValue().toString());
-			avgNum8.setText(avgsum(marks,i));
-		}else{
-			P_Num8.setText("/");
-			B_Num8.setText("/");
-		}i++;
+		switch (k){
+			case 1:P_Num2.setText("/");
+			       B_Num2.setText("/");
+			case 2:P_Num3.setText("/");
+			       B_Num8.setText("/");
+			case 3:P_Num4.setText("/");
+				   B_Num4.setText("/");
+			case 4:P_Num5.setText("/");
+				   B_Num5.setText("/");
+			case 5:P_Num6.setText("/");
+			       B_Num6.setText("/");
+			case 6:P_Num7.setText("/");
+			       B_Num8.setText("/");
+			case 7:P_Num8.setText("/");
+			       B_Num8.setText("/");
+			       break;
+			       default:System.out.println("default");break;
+		}
 	}
 }
 
