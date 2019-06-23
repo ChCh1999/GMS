@@ -187,7 +187,7 @@ public class Massagesearch extends JFrame {
 		tabbedPane.addTab("团队查询", null, teamsearch, null);
 		teamsearch.setLayout(null);
 
-		String[] tcolumnNames = {"团队名","比赛项目","年龄组","性别","团队成绩","团队排名"};
+		String[] tcolumnNames = {"团队名","比赛项目","年龄组","团队成绩","团队排名"};
 
 		Object[][] trowData = {};
 

@@ -207,56 +207,30 @@ public class ChiefRE extends JFrame {
 		contentPane.add(refe_5);
 		
 		score1_1 = new JTextField();//运动员1的裁判1打分
-		score1_1.addMouseListener(new MouseAdapter() {
-			@Override
-			//按压触发
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score1_1.setBounds(273, 72, 72, 30);
 		score1_1.setEditable(false);
 		contentPane.add(score1_1);
 		score1_1.setColumns(10);
 		
 		score1_2 = new JTextField();//得分2
-		score1_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score1_2.setColumns(10);
 		score1_2.setEditable(false);
 		score1_2.setBounds(355, 72, 72, 30);
 		contentPane.add(score1_2);
 		
 		score1_3 = new JTextField();//得分3
-		score1_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score1_3.setColumns(10);
 		score1_3.setEditable(false);
 		score1_3.setBounds(437, 72, 72, 30);
 		contentPane.add(score1_3);
 		
 		score1_4 = new JTextField();//得分4
-		score1_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score1_4.setColumns(10);
 		score1_4.setEditable(false);
 		score1_4.setBounds(519, 72, 72, 30);
 		contentPane.add(score1_4);
 		
 		score1_5 = new JTextField();//得分5
-		score1_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score1_5.setColumns(10);
 		score1_5.setEditable(false);
 		score1_5.setBounds(601, 72, 72, 30);
@@ -335,20 +309,128 @@ public class ChiefRE extends JFrame {
 					public void run() {
 						ArrayList<Triplet<String,Float,Float>> BPMarks=new ArrayList<>();
 						//TODO ；传入数据 每个成员<运动员编号 B分 P分>
+						Triplet<String,Float,Float> triplet1 = new Triplet<String,Float,Float>(player_Num1.getText(),Float.valueOf(B_Num1.getText()),Float.valueOf(P_Num1.getText()));
+						Triplet<String,Float,Float> triplet2 = new Triplet<String,Float,Float>(player_Num2.getText(),Float.valueOf(B_Num2.getText()),Float.valueOf(P_Num2.getText()));
+						Triplet<String,Float,Float> triplet3 = new Triplet<String,Float,Float>(player_Num3.getText(),Float.valueOf(B_Num3.getText()),Float.valueOf(P_Num3.getText()));
+						Triplet<String,Float,Float> triplet4 = new Triplet<String,Float,Float>(player_Num4.getText(),Float.valueOf(B_Num4.getText()),Float.valueOf(P_Num4.getText()));
+						Triplet<String,Float,Float> triplet5 = new Triplet<String,Float,Float>(player_Num5.getText(),Float.valueOf(B_Num5.getText()),Float.valueOf(P_Num5.getText()));
+						Triplet<String,Float,Float> triplet6 = new Triplet<String,Float,Float>(player_Num6.getText(),Float.valueOf(B_Num6.getText()),Float.valueOf(P_Num6.getText()));
+						Triplet<String,Float,Float> triplet7 = new Triplet<String,Float,Float>(player_Num7.getText(),Float.valueOf(B_Num7.getText()),Float.valueOf(P_Num7.getText()));
+						Triplet<String,Float,Float> triplet8 = new Triplet<String,Float,Float>(player_Num8.getText(),Float.valueOf(B_Num8.getText()),Float.valueOf(P_Num8.getText()));
+
+						BPMarks.add(triplet1);BPMarks.add(triplet2);BPMarks.add(triplet3);
+						BPMarks.add(triplet4);BPMarks.add(triplet5);BPMarks.add(triplet6);
+						BPMarks.add(triplet7);BPMarks.add(triplet8);
 
 						HashMap<String,ArrayList<Float>> marks=new HashMap<>();
 						//TODO:传入数据  key值为运动员编号  值为哥哥裁判对该运动员的打分
+						ArrayList<Float> all1 = new ArrayList<>();
+						all1.add(Float.valueOf(score1_1.getText()));all1.add(Float.valueOf(score1_2.getText()));all1.add(Float.valueOf(score1_3.getText()));
+						all1.add(Float.valueOf(score1_4.getText()));all1.add(Float.valueOf(score1_5.getText()));
+						marks.put(player_Num1.getText(),all1);
+						ArrayList<Float> all2 = new ArrayList<>();
+						all2.add(Float.valueOf(score2_1.getText()));all2.add(Float.valueOf(score2_2.getText()));all2.add(Float.valueOf(score2_3.getText()));
+						all2.add(Float.valueOf(score2_4.getText()));all2.add(Float.valueOf(score2_5.getText()));
+						marks.put(player_Num2.getText(),all2);
+						ArrayList<Float> all3 = new ArrayList<>();
+						all3.add(Float.valueOf(score3_1.getText()));all3.add(Float.valueOf(score3_2.getText()));all3.add(Float.valueOf(score3_3.getText()));
+						all3.add(Float.valueOf(score3_4.getText()));all3.add(Float.valueOf(score3_5.getText()));
+						marks.put(player_Num3.getText(),all3);
+						ArrayList<Float> all4 = new ArrayList<>();
+						all4.add(Float.valueOf(score4_1.getText()));all4.add(Float.valueOf(score4_2.getText()));all4.add(Float.valueOf(score4_3.getText()));
+						all4.add(Float.valueOf(score4_4.getText()));all4.add(Float.valueOf(score4_5.getText()));
+						marks.put(player_Num4.getText(),all4);
+						ArrayList<Float> all5 = new ArrayList<>();
+						all5.add(Float.valueOf(score5_1.getText()));all5.add(Float.valueOf(score5_2.getText()));all5.add(Float.valueOf(score5_3.getText()));
+						all5.add(Float.valueOf(score5_4.getText()));all5.add(Float.valueOf(score5_5.getText()));
+						marks.put(player_Num5.getText(),all5);
+						ArrayList<Float> all6 = new ArrayList<>();
+						all6.add(Float.valueOf(score6_1.getText()));all6.add(Float.valueOf(score6_2.getText()));all6.add(Float.valueOf(score6_3.getText()));
+						all6.add(Float.valueOf(score6_4.getText()));all6.add(Float.valueOf(score6_5.getText()));
+						marks.put(player_Num6.getText(),all6);
+						ArrayList<Float> all7 = new ArrayList<>();
+						all7.add(Float.valueOf(score7_1.getText()));all7.add(Float.valueOf(score7_2.getText()));all7.add(Float.valueOf(score7_3.getText()));
+						all7.add(Float.valueOf(score7_4.getText()));all7.add(Float.valueOf(score7_5.getText()));
+						marks.put(player_Num7.getText(),all7);
+						ArrayList<Float> all8 = new ArrayList<>();
+						all8.add(Float.valueOf(score8_1.getText()));all8.add(Float.valueOf(score8_2.getText()));all8.add(Float.valueOf(score8_3.getText()));
+						all8.add(Float.valueOf(score8_4.getText()));all8.add(Float.valueOf(score8_5.getText()));
+						marks.put(player_Num8.getText(),all8);
+
 						mChiefRE.sendConform(BPMarks,marks);
 
 						//TODO:清空界面
+						clear();
 
 						//以下部分与末尾的初始化部分相同
 						ArrayList<Pair<String,String>>aths = mChiefRE.wait_Aths();//aths  运动员编号  姓名
 						//TODO:将运动员编号写入到前端
+						int j = aths.size();
+						if(j == 0){
+							JFrame jf2=new JFrame();
+							jf2.setTitle("比赛结束");
+							jf2.setBounds(400, 250, 450, 300);
+							jf2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+							jf2.getContentPane().setLayout(null);
+
+							JLabel jl2 = new JLabel("该项目比赛已结束");
+							jl2.setFont(new Font("宋体", Font.PLAIN, 18));
+							jl2.setBounds(150, 100, 250, 30);
+							jf2.getContentPane().add(jl2);
+
+
+							JButton jb2 = new JButton("确认");
+							jb2.setFont(new Font("宋体", Font.PLAIN, 18));
+							jb2.setBounds(170, 150, 100, 30);
+							jb2.addMouseListener(new MouseAdapter() {
+								@Override
+								public void mouseClicked(MouseEvent arg0) {
+									jf2.dispose();
+									//TODO:???
+								}
+							});
+							jf2.getContentPane().add(jb2);
+							jf2.setVisible(true);
+						}else{
+							int i = 0;
+							player_Num1.setText(aths.get(0).getKey());
+							playername1.setText(aths.get(0).getValue());
+							i++;
+							if(i < j){
+								player_Num2.setText(aths.get(1).getKey());
+								playername2.setText(aths.get(1).getValue());
+							}i++;
+							if(i < j){
+								player_Num3.setText(aths.get(2).getKey());
+								playername3.setText(aths.get(2).getValue());
+							}i++;
+							if(i < j){
+								player_Num4.setText(aths.get(3).getKey());
+								playername4.setText(aths.get(3).getValue());
+							}i++;
+							if(i < j){
+								player_Num5.setText(aths.get(4).getKey());
+								playername5.setText(aths.get(4).getValue());
+							}i++;
+							if(i < j){
+								player_Num6.setText(aths.get(5).getKey());
+								playername6.setText(aths.get(5).getValue());
+							}i++;
+							if(i < j){
+								player_Num7.setText(aths.get(6).getKey());
+								playername7.setText(aths.get(6).getValue());
+							}i++;
+							if(i < j){
+								player_Num8.setText(aths.get(7).getKey());
+								playername8.setText(aths.get(7).getValue());
+							}i++;
+						}
+
 						mChiefRE.getMarkTablesFromServer();
 						//TODO:将打分写入到前端
 						ArrayList<ArrayList<Pair<String,Float>>> newmarks=mChiefRE.getMarkTables();
 						//数组成员： 数据对（运动员编号，分数）
+						write(newmarks);
 						ArrayList<String> judges=mChiefRE.getIDOfJudges();
 						//Judge的ID  序号与marks中的成绩单对应
 
@@ -386,55 +468,30 @@ public class ChiefRE extends JFrame {
 		contentPane.add(player_Num2);
 		
 		score2_1 = new JTextField();
-		score2_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score2_1.setEditable(false);
 		score2_1.setColumns(10);
 		score2_1.setBounds(273, 122, 72, 30);
 		contentPane.add(score2_1);
 		
 		score2_2 = new JTextField();
-		score2_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score2_2.setEditable(false);
 		score2_2.setColumns(10);
 		score2_2.setBounds(355, 122, 72, 30);
 		contentPane.add(score2_2);
 		
 		score2_3 = new JTextField();
-		score2_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score2_3.setEditable(false);
 		score2_3.setColumns(10);
 		score2_3.setBounds(437, 122, 72, 30);
 		contentPane.add(score2_3);
 		
 		score2_4 = new JTextField();
-		score2_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score2_4.setEditable(false);
 		score2_4.setColumns(10);
 		score2_4.setBounds(519, 122, 72, 30);
 		contentPane.add(score2_4);
 		
 		score2_5 = new JTextField();
-		score2_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score2_5.setEditable(false);
 		score2_5.setColumns(10);
 		score2_5.setBounds(601, 122, 72, 30);
@@ -480,55 +537,30 @@ public class ChiefRE extends JFrame {
 		contentPane.add(player_Num3);
 		
 		score3_1 = new JTextField();
-		score3_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score3_1.setEditable(false);
 		score3_1.setColumns(10);
 		score3_1.setBounds(273, 170, 72, 30);
 		contentPane.add(score3_1);
 		
 		score3_2 = new JTextField();
-		score3_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score3_2.setEditable(false);
 		score3_2.setColumns(10);
 		score3_2.setBounds(355, 170, 72, 30);
 		contentPane.add(score3_2);
 		
 		score3_3 = new JTextField();
-		score3_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score3_3.setEditable(false);
 		score3_3.setColumns(10);
 		score3_3.setBounds(437, 170, 72, 30);
 		contentPane.add(score3_3);
 		
 		score3_4 = new JTextField();
-		score3_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score3_4.setEditable(false);
 		score3_4.setColumns(10);
 		score3_4.setBounds(519, 170, 72, 30);
 		contentPane.add(score3_4);
 		
 		score3_5 = new JTextField();
-		score3_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score3_5.setEditable(false);
 		score3_5.setColumns(10);
 		score3_5.setBounds(601, 170, 72, 30);
@@ -574,55 +606,30 @@ public class ChiefRE extends JFrame {
 		contentPane.add(player_Num4);
 		
 		score4_1 = new JTextField();
-		score4_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score4_1.setEditable(false);
 		score4_1.setColumns(10);
 		score4_1.setBounds(273, 215, 72, 30);
 		contentPane.add(score4_1);
 		
 		score4_2 = new JTextField();
-		score4_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score4_2.setEditable(false);
 		score4_2.setColumns(10);
 		score4_2.setBounds(355, 215, 72, 30);
 		contentPane.add(score4_2);
 		
 		score4_3 = new JTextField();
-		score4_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score4_3.setEditable(false);
 		score4_3.setColumns(10);
 		score4_3.setBounds(437, 215, 72, 30);
 		contentPane.add(score4_3);
 		
 		score4_4 = new JTextField();
-		score4_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score4_4.setEditable(false);
 		score4_4.setColumns(10);
 		score4_4.setBounds(519, 215, 72, 30);
 		contentPane.add(score4_4);
 		
 		score4_5 = new JTextField();
-		score4_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score4_5.setEditable(false);
 		score4_5.setColumns(10);
 		score4_5.setBounds(601, 215, 72, 30);
@@ -668,55 +675,30 @@ public class ChiefRE extends JFrame {
 		contentPane.add(player_Num5);
 		
 		score5_1 = new JTextField();
-		score5_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score5_1.setEditable(false);
 		score5_1.setColumns(10);
 		score5_1.setBounds(273, 261, 72, 30);
 		contentPane.add(score5_1);
 		
 		score5_2 = new JTextField();
-		score5_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score5_2.setEditable(false);
 		score5_2.setColumns(10);
 		score5_2.setBounds(355, 261, 72, 30);
 		contentPane.add(score5_2);
 		
 		score5_3 = new JTextField();
-		score5_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score5_3.setEditable(false);
 		score5_3.setColumns(10);
 		score5_3.setBounds(437, 261, 72, 30);
 		contentPane.add(score5_3);
 		
 		score5_4 = new JTextField();
-		score5_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score5_4.setEditable(false);
 		score5_4.setColumns(10);
 		score5_4.setBounds(519, 261, 72, 30);
 		contentPane.add(score5_4);
 		
 		score5_5 = new JTextField();
-		score5_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score5_5.setEditable(false);
 		score5_5.setColumns(10);
 		score5_5.setBounds(601, 261, 72, 30);
@@ -762,55 +744,30 @@ public class ChiefRE extends JFrame {
 		contentPane.add(player_Num6);
 		
 		score6_1 = new JTextField();
-		score6_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score6_1.setEditable(false);
 		score6_1.setColumns(10);
 		score6_1.setBounds(273, 307, 72, 30);
 		contentPane.add(score6_1);
 		
 		score6_2 = new JTextField();
-		score6_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score6_2.setEditable(false);
 		score6_2.setColumns(10);
 		score6_2.setBounds(355, 307, 72, 30);
 		contentPane.add(score6_2);
 		
 		score6_3 = new JTextField();
-		score6_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score6_3.setEditable(false);
 		score6_3.setColumns(10);
 		score6_3.setBounds(437, 307, 72, 30);
 		contentPane.add(score6_3);
 		
 		score6_4 = new JTextField();
-		score6_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score6_4.setEditable(false);
 		score6_4.setColumns(10);
 		score6_4.setBounds(519, 307, 72, 30);
 		contentPane.add(score6_4);
 		
 		score6_5 = new JTextField();
-		score6_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score6_5.setEditable(false);
 		score6_5.setColumns(10);
 		score6_5.setBounds(601, 307, 72, 30);
@@ -856,55 +813,30 @@ public class ChiefRE extends JFrame {
 		contentPane.add(player_Num7);
 		
 		score7_1 = new JTextField();
-		score7_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score7_1.setEditable(false);
 		score7_1.setColumns(10);
 		score7_1.setBounds(273, 353, 72, 30);
 		contentPane.add(score7_1);
 		
 		score7_2 = new JTextField();
-		score7_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score7_2.setEditable(false);
 		score7_2.setColumns(10);
 		score7_2.setBounds(355, 353, 72, 30);
 		contentPane.add(score7_2);
 		
 		score7_3 = new JTextField();
-		score7_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score7_3.setEditable(false);
 		score7_3.setColumns(10);
 		score7_3.setBounds(437, 353, 72, 30);
 		contentPane.add(score7_3);
 		
 		score7_4 = new JTextField();
-		score7_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score7_4.setEditable(false);
 		score7_4.setColumns(10);
 		score7_4.setBounds(519, 353, 72, 30);
 		contentPane.add(score7_4);
 		
 		score7_5 = new JTextField();
-		score7_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score7_5.setEditable(false);
 		score7_5.setColumns(10);
 		score7_5.setBounds(601, 353, 72, 30);
@@ -950,55 +882,30 @@ public class ChiefRE extends JFrame {
 		contentPane.add(player_Num8);
 		
 		score8_1 = new JTextField();
-		score8_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score8_1.setEditable(false);
 		score8_1.setColumns(10);
 		score8_1.setBounds(273, 401, 72, 30);
 		contentPane.add(score8_1);
 		
 		score8_2 = new JTextField();
-		score8_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score8_2.setEditable(false);
 		score8_2.setColumns(10);
 		score8_2.setBounds(355, 401, 72, 30);
 		contentPane.add(score8_2);
 		
 		score8_3 = new JTextField();
-		score8_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score8_3.setEditable(false);
 		score8_3.setColumns(10);
 		score8_3.setBounds(437, 401, 72, 30);
 		contentPane.add(score8_3);
 		
 		score8_4 = new JTextField();
-		score8_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score8_4.setEditable(false);
 		score8_4.setColumns(10);
 		score8_4.setBounds(519, 401, 72, 30);
 		contentPane.add(score8_4);
 		
 		score8_5 = new JTextField();
-		score8_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-		});
 		score8_5.setEditable(false);
 		score8_5.setColumns(10);
 		score8_5.setBounds(601, 401, 72, 30);
@@ -1077,12 +984,14 @@ public class ChiefRE extends JFrame {
 									//TODO:将打分写入到前端（与后面接受打分表相同，刷新整个打分表）
 									ArrayList<ArrayList<Pair<String,Float>>> marks=mChiefRE.getMarkTables();
 									//数组成员： 数据对（运动员编号，分数）
+									write(marks);
 									ArrayList<String> judges=mChiefRE.getIDOfJudges();
 									//Judge的ID  序号与marks中的成绩单对应
 								}
 							}).start();
 						}else {
 							//TODO:提示输入有误
+							retext.setText("请确认输入是否正确");
 						}
 					}
 				});
@@ -1117,9 +1026,43 @@ public class ChiefRE extends JFrame {
 				mChiefRE.start(conn);
 				ArrayList<Pair<String,String>>aths = mChiefRE.wait_Aths();//aths  运动员编号  姓名
 				//TODO:将运动员编号写入到前端
+				int j = aths.size();
+				int i = 0;
+				player_Num1.setText(aths.get(0).getKey());
+				playername1.setText(aths.get(0).getValue());
+				i++;
+				if(i < j){
+					player_Num2.setText(aths.get(1).getKey());
+					playername2.setText(aths.get(1).getValue());
+				}i++;
+				if(i < j){
+					player_Num3.setText(aths.get(2).getKey());
+					playername3.setText(aths.get(2).getValue());
+				}i++;
+				if(i < j){
+					player_Num4.setText(aths.get(3).getKey());
+					playername4.setText(aths.get(3).getValue());
+				}i++;
+				if(i < j){
+					player_Num5.setText(aths.get(4).getKey());
+					playername5.setText(aths.get(4).getValue());
+				}i++;
+				if(i < j){
+					player_Num6.setText(aths.get(5).getKey());
+					playername6.setText(aths.get(5).getValue());
+				}i++;
+				if(i < j){
+					player_Num7.setText(aths.get(6).getKey());
+					playername7.setText(aths.get(6).getValue());
+				}i++;
+				if(i < j){
+					player_Num8.setText(aths.get(7).getKey());
+					playername8.setText(aths.get(7).getValue());
+				}i++;
 				mChiefRE.getMarkTablesFromServer();
 				//TODO:将打分写入到前端
 				ArrayList<ArrayList<Pair<String,Float>>> marks=mChiefRE.getMarkTables();
+				write(marks);
 				//数组成员： 数据对（运动员编号，分数）
 				ArrayList<String> judges=mChiefRE.getIDOfJudges();
 				//Judge的ID  序号与marks中的成绩单对应
@@ -1127,8 +1070,130 @@ public class ChiefRE extends JFrame {
 			}
 		}).start();
 
+	}
 
+	private void clear(){
+		playername1.setText(""); playername2.setText("");playername3.setText("");
+		playername4.setText("");playername5.setText("");playername6.setText("");
+		playername7.setText("");playername8.setText("");
 
+		player_Num1.setText("");player_Num2.setText("");player_Num3.setText("");
+		player_Num4.setText("");player_Num5.setText("");player_Num6.setText("");
+		player_Num7.setText("");player_Num8.setText("");
+
+		score1_1.setText("");score1_2.setText("");score1_3.setText("");score1_4.setText("");score1_5.setText("");
+		score2_1.setText("");score2_2.setText("");score2_3.setText("");score2_4.setText("");score2_5.setText("");
+		score3_1.setText("");score3_2.setText("");score3_3.setText("");score3_4.setText("");score3_5.setText("");
+		score4_1.setText("");score4_2.setText("");score4_3.setText("");score4_4.setText("");score4_5.setText("");
+		score5_1.setText("");score5_2.setText("");score5_3.setText("");score5_4.setText("");score5_5.setText("");
+		score6_1.setText("");score6_2.setText("");score6_3.setText("");score6_4.setText("");score6_5.setText("");
+		score7_1.setText("");score7_2.setText("");score7_3.setText("");score7_4.setText("");score7_5.setText("");
+		score8_1.setText("");score8_2.setText("");score8_3.setText("");score8_4.setText("");score8_5.setText("");
+
+		P_Num1.setText("");P_Num2.setText("");P_Num3.setText("");
+		P_Num4.setText("");P_Num5.setText("");P_Num6.setText("");
+		P_Num7.setText("");P_Num8.setText("");
+
+		B_Num1.setText("");B_Num2.setText("");B_Num3.setText("");
+		B_Num4.setText("");B_Num5.setText("");B_Num6.setText("");
+		B_Num7.setText("");B_Num8.setText("");
+
+	}
+	private String avgsum (ArrayList<Pair<String,Float>> arrayList){
+		float sum = arrayList.get(0).getValue()+arrayList.get(1).getValue()+arrayList.get(2).getValue()
+				+arrayList.get(3).getValue()+arrayList.get(4).getValue();
+		String avgsum = Float.toString(sum/5);
+		return avgsum;
+	}
+
+	private void write(ArrayList<ArrayList<Pair<String,Float>>> marks){
+		int j = marks.size();
+		int i = 0;
+		if(i < j){
+			score1_1.setText(marks.get(0).get(0).getValue().toString());
+			score1_2.setText(marks.get(0).get(1).getValue().toString());
+			score1_3.setText(marks.get(0).get(2).getValue().toString());
+			score1_4.setText(marks.get(0).get(3).getValue().toString());
+			score1_5.setText(marks.get(0).get(4).getValue().toString());
+			avgNum1.setText(avgsum(marks.get(0)));
+		}i++;
+		if(i < j){
+			score2_1.setText(marks.get(1).get(0).getValue().toString());
+			score2_2.setText(marks.get(1).get(1).getValue().toString());
+			score2_3.setText(marks.get(1).get(2).getValue().toString());
+			score2_4.setText(marks.get(1).get(3).getValue().toString());
+			score2_5.setText(marks.get(1).get(4).getValue().toString());
+			avgNum2.setText(avgsum(marks.get(1)));
+		}else{
+			B_Num2.setText("/");
+			P_Num2.setText("/");
+		}i++;
+		if(i < j){
+			score3_1.setText(marks.get(2).get(0).getValue().toString());
+			score3_2.setText(marks.get(2).get(1).getValue().toString());
+			score3_3.setText(marks.get(2).get(2).getValue().toString());
+			score3_4.setText(marks.get(2).get(3).getValue().toString());
+			score3_5.setText(marks.get(2).get(4).getValue().toString());
+			avgNum3.setText(avgsum(marks.get(2)));
+		}else{
+			B_Num3.setText("/");
+			P_Num3.setText("/");
+		}i++;
+		if(i < j){
+			score4_1.setText(marks.get(3).get(0).getValue().toString());
+			score4_2.setText(marks.get(3).get(1).getValue().toString());
+			score4_3.setText(marks.get(3).get(2).getValue().toString());
+			score4_4.setText(marks.get(3).get(3).getValue().toString());
+			score4_5.setText(marks.get(3).get(4).getValue().toString());
+			avgNum4.setText(avgsum(marks.get(3)));
+		}else{
+			B_Num4.setText("/");
+			P_Num4.setText("/");
+		}i++;
+		if(i < j){
+			score5_1.setText(marks.get(4).get(0).getValue().toString());
+			score5_2.setText(marks.get(4).get(1).getValue().toString());
+			score5_3.setText(marks.get(4).get(2).getValue().toString());
+			score5_4.setText(marks.get(4).get(3).getValue().toString());
+			score5_5.setText(marks.get(4).get(4).getValue().toString());
+			avgNum5.setText(avgsum(marks.get(4)));
+		}else{
+			B_Num5.setText("/");
+			P_Num5.setText("/");
+		}i++;
+		if(i < j){
+			score6_1.setText(marks.get(5).get(0).getValue().toString());
+			score6_2.setText(marks.get(5).get(1).getValue().toString());
+			score6_3.setText(marks.get(5).get(2).getValue().toString());
+			score6_4.setText(marks.get(5).get(3).getValue().toString());
+			score6_5.setText(marks.get(5).get(4).getValue().toString());
+			avgNum6.setText(avgsum(marks.get(5)));
+		}else{
+			B_Num6.setText("/");
+			P_Num6.setText("/");
+		}i++;
+		if(i < j){
+			score7_1.setText(marks.get(6).get(0).getValue().toString());
+			score7_2.setText(marks.get(6).get(1).getValue().toString());
+			score7_3.setText(marks.get(6).get(2).getValue().toString());
+			score7_4.setText(marks.get(6).get(3).getValue().toString());
+			score7_5.setText(marks.get(6).get(4).getValue().toString());
+			avgNum7.setText(avgsum(marks.get(6)));
+		}else{
+			B_Num7.setText("/");
+			P_Num7.setText("/");
+		}i++;
+		if(i < j){
+			score8_1.setText(marks.get(7).get(0).getValue().toString());
+			score8_2.setText(marks.get(7).get(1).getValue().toString());
+			score8_3.setText(marks.get(7).get(2).getValue().toString());
+			score8_4.setText(marks.get(7).get(3).getValue().toString());
+			score8_5.setText(marks.get(7).get(4).getValue().toString());
+			avgNum8.setText(avgsum(marks.get(7)));
+		}else{
+			B_Num8.setText("/");
+			P_Num8.setText("/");
+		}
 	}
 }
 
