@@ -278,10 +278,7 @@ public class Referee extends JFrame {
 
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				/*if() {
-					
-				}*/
-				//提交成绩,导入下一位运动员
+
 				ArrayList<Pair<String,Float>> marktable=new ArrayList<>();
 				//TODO：判断数据完整性，将数据添加到marktable√
 				Pair<String,Float> pair1 = new Pair<String,Float>(P_number1.getText(),Float.valueOf(P_score1.getText()));
@@ -332,6 +329,22 @@ public class Referee extends JFrame {
 				else{
 					if(mReferee.SendMarkTable(marktable)){
 						//TODO:清空页面中上一组的运动员信息√
+						P_name1.setText("");
+						P_name2.setText("");
+						P_name3.setText("");
+						P_name4.setText("");
+						P_name5.setText("");
+						P_name6.setText("");
+						P_name7.setText("");
+						P_name8.setText("");
+						P_number1.setText("");
+						P_number2.setText("");
+						P_number3.setText("");
+						P_number4.setText("");
+						P_number5.setText("");
+						P_number6.setText("");
+						P_number7.setText("");
+						P_number8.setText("");
 						P_score1.setText("");
 						P_score2.setText("");
 						P_score3.setText("");
@@ -395,24 +408,62 @@ public class Referee extends JFrame {
 	private void getAths(){
 		while (!mReferee.isWorking&&!mReferee.sendmark);//等待裁判就绪
 		ArrayList<Pair<String,String>> aths = mReferee.wait_Aths();
-		//TODO:将aths的信息保存到界面√
-		P_name1.setText(aths.get(0).getKey());
-		P_name2.setText(aths.get(1).getKey());
-		P_name3.setText(aths.get(2).getKey());
-		P_name4.setText(aths.get(3).getKey());
-		P_name5.setText(aths.get(4).getKey());
-		P_name6.setText(aths.get(5).getKey());
-		P_name7.setText(aths.get(6).getKey());
-		P_name8.setText(aths.get(7).getKey());
+		int j = aths.size();
+		if(j == 0){
+			P_item.setText("比赛结束");
+		}else{
+			//TODO:将aths的信息保存到界面√
+			int i = 0;
+			P_name1.setText(aths.get(0).getKey());
+			P_number1.setText(aths.get(0).getValue());
+			i++;
+			if(i < j){
+				P_name2.setText(aths.get(1).getKey());
+				P_number2.setText(aths.get(1).getValue());
+			}
+			else{
+				P_score2.setText("/");
+			}i++;
+			if(i < j){
+				P_name3.setText(aths.get(2).getKey());
+				P_number3.setText(aths.get(2).getValue());
+			}
+			else{
+				P_score3.setText("/");
+			}i++;
+			if(i < j){
+				P_name4.setText(aths.get(3).getKey());
+				P_number4.setText(aths.get(3).getValue());
+			}
+			else{
+				P_score4.setText("/");
+			}i++;
+			if(i < j){
+				P_name5.setText(aths.get(4).getKey());
+				P_number5.setText(aths.get(4).getValue());
+			}else{
+				P_score5.setText("/");
+			}i++;
+			if(i < j){
+				P_name6.setText(aths.get(5).getKey());
+				P_number6.setText(aths.get(5).getValue());
+			}else{
+				P_score6.setText("/");
+			}i++;
+			if(i < j){
+				P_name7.setText(aths.get(6).getKey());
+				P_number7.setText(aths.get(6).getValue());
+			}else{
+				P_score7.setText("/");
+			}i++;
+			if(i < j){
+				P_name8.setText(aths.get(7).getKey());
+				P_number8.setText(aths.get(7).getValue());
+			}else{
+				P_score8.setText("/");
+			}
+		}
 
-		P_number1.setText(aths.get(0).getValue());
-		P_number2.setText(aths.get(1).getValue());
-		P_number3.setText(aths.get(2).getValue());
-		P_number4.setText(aths.get(3).getValue());
-		P_number5.setText(aths.get(4).getValue());
-		P_number6.setText(aths.get(5).getValue());
-		P_number7.setText(aths.get(6).getValue());
-		P_number8.setText(aths.get(7).getValue());
 	}
 
 }

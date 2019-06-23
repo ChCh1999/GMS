@@ -135,16 +135,45 @@ public class Massagesearch extends JFrame {
 					ArrayList<Septet<String,String,String,Float,Integer,Float,Integer>> res =
 							ClientTool.SearchAthByNum(athNum);
 					if(!res.isEmpty()) {
-						//TODO:清空当前查询结果界面，输出结果到前端
-						for(Septet s:res){
-							System.out.println(s.getValue0()+" "+s.getValue1()+" "+s.getValue2()+" "+s.getValue3()+" "+s.getValue4()+" "+s.getValue5()+" "+s.getValue6());
-						}
+						//TODO:清空当前查询结果界面，输出结果到前端√
+//						for(Septet s:res){
+//							System.out.println(s.getValue0()+" "+s.getValue1()+" "+s.getValue2()+" "+s.getValue3()+" "+s.getValue4()+" "+s.getValue5()+" "+s.getValue6());
+//						}
 						//res为七元组  运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名
+						pmodel.setRowCount(0);//清空输出结果
+						for(int i = 0;i < res.size();i++){
+							Object[] obj = {res.get(i).getValue0(),res.get(i).getValue1(),res.get(i).getValue2(),res.get(i).getValue3(),
+									res.get(i).getValue4(),res.get(i).getValue5(),res.get(i).getValue6()};
+							add(ptable,obj);
+						}
 						return;
 					}
 				}
+				//TODO:提示输入无效√
+				else{
+					JFrame jf=new JFrame();
+					jf.setTitle("查询失败");
+					jf.setBounds(400, 250, 450, 300);
+					jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					jf.getContentPane().setLayout(null);
 
-				//TODO:提示输入无效
+					JLabel jl = new JLabel("查询失败，请检查是否输入正确");
+					jl.setFont(new Font("宋体", Font.PLAIN, 18));
+					jl.setBounds(100, 100, 300, 30);
+					jf.getContentPane().add(jl);
+
+					JButton jb = new JButton("返回");
+					jb.setFont(new Font("宋体", Font.PLAIN, 18));
+					jb.setBounds(170, 150, 100, 30);
+					jb.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+							jf.dispose();
+						}
+					});
+					jf.getContentPane().add(jb);
+					jf.setVisible(true);
+				}
 
 			}
 		});
@@ -229,8 +258,7 @@ public class Massagesearch extends JFrame {
 		tqueryButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				//TODO:更新队伍下拉框内容
-				//更新队伍数据
+				//TODO:更新队伍下拉框内容√
 				String[] str = new String[Teams.keySet().size()] ;
 				Teams.keySet().toArray(str);
 				teamNumBox.setModel(new DefaultComboBoxModel(str));
@@ -265,10 +293,38 @@ public class Massagesearch extends JFrame {
 					}
 				}
 				if(res.isEmpty()){
-					//TODO:提示结果为空
+					//TODO:提示结果为空√
+					JFrame jf2=new JFrame();
+					jf2.setTitle("查询失败");
+					jf2.setBounds(400, 250, 450, 300);
+					jf2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					jf2.getContentPane().setLayout(null);
+
+					JLabel jl2 = new JLabel("查询失败，结果为空");
+					jl2.setFont(new Font("宋体", Font.PLAIN, 18));
+					jl2.setBounds(140, 100, 250, 30);
+					jf2.getContentPane().add(jl2);
+
+					JButton jb2 = new JButton("返回");
+					jb2.setFont(new Font("宋体", Font.PLAIN, 18));
+					jb2.setBounds(170, 150, 100, 30);
+					jb2.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+							jf2.dispose();
+						}
+					});
+					jf2.getContentPane().add(jb2);
+					jf2.setVisible(true);
 				}else {
-					//TODO:清空现有记录.将res输出到前端
+					//TODO:清空现有记录.将res输出到前端√
 					//res Quartet<团队名，比赛项目，年龄组，团队成绩，团队排名>
+					tmodel.setRowCount(0);//清空输出结果
+					for(int i = 0;i < res.size();i++){
+						Object[] obj = {res.get(i).getValue0(),res.get(i).getValue1(),res.get(i).getValue2(),res.get(i).getValue3(),
+								res.get(i).getValue4()};
+						add(ttable,obj);
+					}
 				}
 
 
@@ -385,10 +441,40 @@ public class Massagesearch extends JFrame {
 					res=ClientTool.SearchAthByPro(proName,group);
 				}
 				if(res.isEmpty()){
-					//TODO:提示结果为空
+					//TODO:提示结果为空√
+					JFrame jf3=new JFrame();
+					jf3.setTitle("查询失败");
+					jf3.setBounds(400, 250, 450, 300);
+					jf3.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					jf3.getContentPane().setLayout(null);
+
+					JLabel jl3 = new JLabel("查询失败，结果为空");
+					jl3.setFont(new Font("宋体", Font.PLAIN, 18));
+					jl3.setBounds(140, 100, 250, 30);
+					jf3.getContentPane().add(jl3);
+
+
+					JButton jb3 = new JButton("返回");
+					jb3.setFont(new Font("宋体", Font.PLAIN, 18));
+					jb3.setBounds(170, 150, 100, 30);
+					jb3.addMouseListener(new MouseAdapter() {
+						@Override
+						public void mouseClicked(MouseEvent arg0) {
+							jf3.dispose();
+						}
+					});
+					jf3.getContentPane().add(jb3);
+					jf3.setVisible(true);
 				}else {
-					//TODO:清空现有记录.将res输出到前端
+					//TODO:清空现有记录.将res输出到前端√
 					//res:运动员编号 姓名 比赛项目 初赛成绩  初赛排名 决赛成绩 决赛排名 Septet<String,String,String,Float,Integer,Float,Integer>
+					imodel.setRowCount(0);
+					int i = 0;
+					while(i < res.size()){
+						Object[] obj = {res.get(i).getValue0(),res.get(i).getValue1(),res.get(i).getValue2(),res.get(i).getValue3(),
+								res.get(i).getValue4(),res.get(i).getValue5(),res.get(i).getValue6()};
+						add(itable,obj);
+					}
 				}
 
 			}
