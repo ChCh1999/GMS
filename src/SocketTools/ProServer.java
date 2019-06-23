@@ -712,8 +712,13 @@ class THandle implements Runnable {
 
                 case "Search team by pro info":
                     String pName=br.readLine();
+                    proID=dbo.SearchPID(pName);
                     group=Integer.parseInt(br.readLine());
-                    tRes=dbo.SearchTeamAll(pName);
+                    ArrayList<Triplet<String,Float,Integer>> resTemp=dbo.SearchTheTeamRank(proID,group);
+	                tRes=new ArrayList<>();
+                    for(Triplet<String,Float,Integer> t:resTemp){
+                    	tRes.add(new Quintet<>(dbo.SearchTName(t.getValue0()),pName,group,t.getValue1(),t.getValue2()));
+                    }
                     for (Quintet m:tRes){
                         bw.write(m.getValue0()+"\n");
                         bw.write(m.getValue1()+"\n");
