@@ -150,7 +150,7 @@ public class ChiefRE extends JFrame {
 	public ChiefRE(String sid, Socket conn) {
 		setTitle("小组裁判页");//总裁判
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1098, 565);
+        setBounds(100, 100, 992, 565);
 		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -439,20 +439,10 @@ public class ChiefRE extends JFrame {
 			}
 		});
 		button.setFont(new Font("宋体", Font.PLAIN, 18));
-		button.setBounds(761, 475, 100, 30);
+        button.setBounds(722, 475, 100, 30);
 		contentPane.add(button);
-		
-		JLabel final_score = new JLabel("最后得分");
-		final_score.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_score.setBounds(965, 10, 84, 30);
-		contentPane.add(final_score);
-		
-		final_Num1 = new JTextField();//最终分
-		final_Num1.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_Num1.setColumns(10);
-		final_Num1.setBounds(965, 72, 84, 30);
-		contentPane.add(final_Num1);
-		
+
+
 		playername2 = new JTextField();
 		playername2.setFont(new Font("宋体", Font.PLAIN, 18));
 		playername2.setEditable(false);
@@ -515,12 +505,6 @@ public class ChiefRE extends JFrame {
 		P_Num2.setColumns(10);
 		P_Num2.setBounds(871, 122, 84, 30);
 		contentPane.add(P_Num2);
-		
-		final_Num2 = new JTextField();
-		final_Num2.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_Num2.setColumns(10);
-		final_Num2.setBounds(965, 122, 84, 30);
-		contentPane.add(final_Num2);
 		
 		playername3 = new JTextField();
 		playername3.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -585,12 +569,6 @@ public class ChiefRE extends JFrame {
 		P_Num3.setBounds(871, 170, 84, 30);
 		contentPane.add(P_Num3);
 		
-		final_Num3 = new JTextField();
-		final_Num3.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_Num3.setColumns(10);
-		final_Num3.setBounds(965, 170, 84, 30);
-		contentPane.add(final_Num3);
-		
 		playername4 = new JTextField();
 		playername4.setFont(new Font("宋体", Font.PLAIN, 18));
 		playername4.setEditable(false);
@@ -653,12 +631,6 @@ public class ChiefRE extends JFrame {
 		P_Num4.setColumns(10);
 		P_Num4.setBounds(871, 215, 84, 30);
 		contentPane.add(P_Num4);
-		
-		final_Num4 = new JTextField();
-		final_Num4.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_Num4.setColumns(10);
-		final_Num4.setBounds(965, 215, 84, 30);
-		contentPane.add(final_Num4);
 		
 		playername5 = new JTextField();
 		playername5.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -723,12 +695,6 @@ public class ChiefRE extends JFrame {
 		P_Num5.setBounds(871, 261, 84, 30);
 		contentPane.add(P_Num5);
 		
-		final_Num5 = new JTextField();
-		final_Num5.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_Num5.setColumns(10);
-		final_Num5.setBounds(965, 261, 84, 30);
-		contentPane.add(final_Num5);
-		
 		playername6 = new JTextField();
 		playername6.setFont(new Font("宋体", Font.PLAIN, 18));
 		playername6.setEditable(false);
@@ -791,12 +757,6 @@ public class ChiefRE extends JFrame {
 		P_Num6.setColumns(10);
 		P_Num6.setBounds(871, 306, 84, 30);
 		contentPane.add(P_Num6);
-		
-		final_Num6 = new JTextField();
-		final_Num6.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_Num6.setColumns(10);
-		final_Num6.setBounds(965, 306, 84, 30);
-		contentPane.add(final_Num6);
 		
 		playername7 = new JTextField();
 		playername7.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -861,12 +821,6 @@ public class ChiefRE extends JFrame {
 		P_Num7.setBounds(871, 353, 84, 30);
 		contentPane.add(P_Num7);
 		
-		final_Num7 = new JTextField();
-		final_Num7.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_Num7.setColumns(10);
-		final_Num7.setBounds(965, 353, 84, 30);
-		contentPane.add(final_Num7);
-		
 		playername8 = new JTextField();
 		playername8.setFont(new Font("宋体", Font.PLAIN, 18));
 		playername8.setEditable(false);
@@ -929,12 +883,6 @@ public class ChiefRE extends JFrame {
 		P_Num8.setColumns(10);
 		P_Num8.setBounds(871, 401, 84, 30);
 		contentPane.add(P_Num8);
-		
-		final_Num8 = new JTextField();
-		final_Num8.setFont(new Font("宋体", Font.PLAIN, 18));
-		final_Num8.setColumns(10);
-		final_Num8.setBounds(965, 401, 84, 30);
-		contentPane.add(final_Num8);
 		
 		JButton ReButton = new JButton("重评");
 		ReButton.setFont(new Font("宋体", Font.PLAIN, 18));
@@ -999,7 +947,7 @@ public class ChiefRE extends JFrame {
 				jf.setVisible(true);
 			}
 		});
-		ReButton.setBounds(510, 475, 100, 30);
+        ReButton.setBounds(473, 475, 100, 30);
 		contentPane.add(ReButton);
 
 		JButton logoutjb = new JButton("注销");
@@ -1013,7 +961,7 @@ public class ChiefRE extends JFrame {
 			}
 		});
 		logoutjb.setFont(new Font("宋体", Font.PLAIN, 18));
-		logoutjb.setBounds(260, 475, 100, 30);
+        logoutjb.setBounds(227, 475, 100, 30);
 		contentPane.add(logoutjb);
 		this.setVisible(true);
 
